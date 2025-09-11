@@ -174,4 +174,4 @@ cython_debug/
 output/
 .pdf
 database/*.csv
-.db
+database/*.db
