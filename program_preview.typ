@@ -1,6 +1,6 @@
 #import "icphilcomp25.typ": icphilcomp25, schedule, timetable
 #show: icphilcomp25.with(
-  titulo: "Conference program preview",
+  titulo: "Programa preliminar",
   edition: 3
 )
 

@@ -12,64 +12,62 @@
   titulo: str,
   edition: 1,
   fecha: datetime.today(),
-  abstract: [],
   doc,
 ) = {
+  set document(
+    title: titulo,
+    author: "Grupo de Investigación en Filosofía de la Computación UNAM",
+    date: fecha,
+  )
 
-set document(
-  title: titulo,
-  author: "PHILCOMP",
-  description: abstract,
-  date: fecha,
-)
-
-set page(
-  paper: "us-letter",
-  header: context [
-    #set align(left)
-    #set text(fill: gray)
-  ],
-  footer: context [
-    #set align(right)
-    #set text(fill: gray)
-    #h(1fr)
-    #if counter(page).get().first() > 0 [
-      #counter(page).display("1", both: false)
+  set page(
+    paper: "us-letter",
+    header: context [
+      #set align(left)
+      #set text(fill: gray)
+    ],
+    footer: context [
+      #set align(right)
+      #set text(fill: gray)
+      #h(1fr)
+      #if counter(page).get().first() > 0 [
+        #counter(page).display("1", both: false)
+      ]
     ]
+  )
+
+  set text(
+    size: 12pt,
+    font: "Inter",
+    lang: "es"
+  )
+
+  show heading: set text(fill: accent_color)
+  show "|": bar => text(fill: accent_color)[#sym.diamond.filled.medium]
+
+  let portada() = align(left + top)[
+    #set page(
+      background:
+        rect(
+          fill: main_color,
+          width: 100%,
+          height: 100%
+        ),
+      footer: [],
+      header: []
+    )
+    #set text(
+      fill: ac_color
+    )
+    #v(50%)
+    #text(size: 28pt, fill: ac_color, weight: "bold")[#titulo]\
+    #image("assets/banner-vertical-en-color.svg", width: 50%)
+    #v(1fr)
+    Last updated: #read(".cut"), Revision #edition
   ]
-)
-
-set text(
-  size: 12pt,
-  font: "Inter",
-  lang: "en"
-)
-
-show heading: set text(fill: accent_color)
-
-let portada() = align(left + top)[
-  #set page(
-    background:
-      rect(
-        fill: main_color,
-        width: 100%,
-        height: 100%
-      ),
-    footer: [],
-    header: []
-  )
-  #set text(
-    fill: ac_color
-  )
-  #v(50%)
-  #text(size: 28pt, fill: ac_color, weight: "bold")[#titulo]\
-  #image("assets/banner-vertical-en-color.svg", width: 50%)
-  #v(1fr)
-  Last updated: #fecha.display(), Revision #edition
-]
-portada()
-pagebreak()
-doc
+  portada()
+  pagebreak()
+  doc
 }
 
 #let chip(color: ac_color, content) = {
@@ -85,6 +83,7 @@ doc
 #let schedule(path) = {
   let sessions = csv(path, row-type: dictionary)
   for session in sessions {
+    // Session header
     pad(top: 10pt,
     box(
       width: 100%,
@@ -96,21 +95,21 @@ doc
       #text(size:12pt, weight: "bold", fill: accent_color)[
         #if session.bloque.first() != "X" {
           [== Bloque #session.bloque: #session.tematica]
-          text(size: 12pt, fill: black, weight: "regular")[#if session.nombre != "" [#session.nombre #linebreak()]]
+          text(size: 12pt, fill: black, weight: "regular")[#if session.nombre != "" [#session.nombre]]
         } else {[== #session.nombre]}
 
       ]
       #box(image("assets/door.svg",height: 0.8em,)) #session.sala #h(5pt)#box(image("assets/clock.svg",height: 0.8em,)) #session.inicia - #session.termina (#session.duracion min.)
-      #if session.host != "" [#h(5pt) #box(image("assets/user.svg",height: 0.8em,)) #session.host]\
+      #if session.host != "" [#h(5pt) #box(image("assets/user.svg",height: 0.8em,)) #session.host]
       ]
     ))
 
     let presentations = csv("database/" + session.bloque + ".csv", row-type: dictionary)
 
     // These are used to compute the timeframes between presentations
-    let timesplit = session.inicia.split(regex("[:]"))
-    let starting_time = datetime(hour: int(timesplit.at(0)),minute: int(timesplit.at(1)),second:0)
-    let runtime = starting_time
+    let start_time_split = session.inicia.split(regex("[:]"))
+    let start_time = datetime(hour: int(start_time_split.at(0)),minute: int(start_time_split.at(1)),second:0)
+    let runtime = start_time
 
     // Does this session needs an intro?
     if int(session.delay) > 0 {
@@ -139,8 +138,10 @@ doc
       )
      // The unavoidable pass of time...
      let timespan = duration(minutes: int(presentation.timeframe))
-     runtime = runtime + timespan
+     runtime = runtime + timespan + duration(minutes: 5)
     }
+    [Closing by: *#runtime.display("[hour]:[minute]")*]
+
   }
   pagebreak()
 }
