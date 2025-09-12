@@ -4,14 +4,19 @@
   edition: 3
 )
 
+// English translations
 #show "Inauguración": [Opening]
 #show "Presentación oral (30 min. + 10 min. preguntas)": [Oral presentation (max 30 min. + 10 min. Q&A)]
 #show "Introducción por el host": [Introduction by our host]
+#show "Presentaciones de libros": [Book presentations]
 #show "Presentación de libro" : [Book presentation]
 #show "Acto inaugural": [Opening speech]
-#show "Obra de teatro": [Theatre play]
+#show "Obra de Teatro": [Theatre play]
 #show "Mesa redonda": [Round table]
+#show "Mesa Redonda": [Round Table]
 #show "Otros contenidos": [Others]
+#show "Clausura y concierto": [Ending]
+#show "Concierto y actos de Clausura": [Ending ceremony & concert]
 
 = Day 1 (Mon, October 27)
 #schedule("database/2025-10-27.csv")

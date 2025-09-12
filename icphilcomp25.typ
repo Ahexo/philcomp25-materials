@@ -15,16 +15,15 @@
   doc,
 ) = {
   set document(
-    title: titulo,
-    author: "Grupo de Investigación en Filosofía de la Computación UNAM",
+    title: titulo + " - ICPHILCOMP25 @ UNAM CDMX",
+    author: "philcomp.org",
     date: fecha,
   )
 
   set page(
     paper: "a4",
-    header: context [
-      #set align(left)
-      #set text(fill: gray)
+    header: context[
+      #query(selector(heading).before(here()))
     ],
     footer: context [
       #set align(right)
@@ -157,7 +156,7 @@
   // Una funcioncita para convertir datetimes a strings de la forma HH:MM
   let disp(timestamp) = {timestamp.display("[hour]:[minute]")}
 
-  // Generar una lista de horarios con steps de media hora entre en inicio y el final
+  // Generar una lista de horarios con steps de media hora entre el inicio y el final
   let timestamps = (start,)
   while cursor < finish {
     cursor = cursor + step

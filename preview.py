@@ -4,7 +4,13 @@ import sys
 from datetime import datetime
 import database.main as db
 
+
 def write_time_to_cut():
+    """
+    Typst is unable to fetch the current system fulltime (date only),
+    this is a helper function to do it from Python and write it to a
+    local helper file that typst templates can query.
+    """
     now = datetime.now().isoformat()
     with open(".cut", "w", encoding="utf-8") as f:
         f.write(now)
@@ -12,7 +18,7 @@ def write_time_to_cut():
 
 def run_command(command, cwd=None):
     """
-    A helper function to run a command in a subprocess, stream its output,
+    A wrapper function to run a command in a subprocess, stream its output,
     and exit if the command fails.
     """
     # Use sys.executable to ensure we're using the Python interpreter
@@ -45,13 +51,12 @@ def main():
     # Assume this script is in the project root directory.
     write_time_to_cut()
     project_root = os.path.dirname(os.path.abspath(__file__))
-    database_dir = os.path.join(project_root, "database")
     output_dir = os.path.join(project_root, "output")
     typst_input_file = os.path.join(project_root, "program_preview.typ")
     typst_output_file = os.path.join(output_dir, "program_preview.pdf")
 
     # --- Step 1 & 2: Run database and daily scripts ---
-    # These commands will be run from within the 'database' directory.
+    # These commands will be run from within the 'database' module.
     print("--- Initializing database and exporting CSVs ---")
     db.run()
 
@@ -64,7 +69,7 @@ def main():
     print("\n--- Compiling Typst document ---")
     run_command(["typst", "compile", typst_input_file, typst_output_file])
 
-    print(f"\nPreview build completed!")
+    print("\nPreview build completed!")
     print(f"PDF generated at: {typst_output_file}")
 
 
