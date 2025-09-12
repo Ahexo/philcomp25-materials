@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 from datetime import datetime
-
+import database.main as db
 
 def write_time_to_cut():
     now = datetime.now().isoformat()
@@ -53,8 +53,7 @@ def main():
     # --- Step 1 & 2: Run database and daily scripts ---
     # These commands will be run from within the 'database' directory.
     print("--- Initializing database and exporting CSVs ---")
-    run_command(["python", "database.py"], cwd=database_dir)
-    run_command(["python", "daily.py"], cwd=database_dir)
+    db.run()
 
     # --- Step 3: Create the output directory ---
     print("\n--- Preparing output directory ---")

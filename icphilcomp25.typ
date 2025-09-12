@@ -1,11 +1,11 @@
 // Metadata
 #let main_color = rgb("#291F3A")
-#let ac_color = rgb("#CC97E2")
+#let third_color = rgb("#CC97E2")
 #let accent_color = rgb("#773898")
-#let reduced_ac_color = rgb(
-    ac_color.components().at(0),
-    ac_color.components().at(1),
-    ac_color.components().at(2),
+#let reduced_third_color = rgb(
+    third_color.components().at(0),
+    third_color.components().at(1),
+    third_color.components().at(2),
     40)
 
 #let icphilcomp25(
@@ -21,7 +21,7 @@
   )
 
   set page(
-    paper: "us-letter",
+    paper: "a4",
     header: context [
       #set align(left)
       #set text(fill: gray)
@@ -39,7 +39,7 @@
   set text(
     size: 12pt,
     font: "Inter",
-    lang: "es"
+    lang: "en"
   )
 
   show heading: set text(fill: accent_color)
@@ -57,20 +57,19 @@
       header: []
     )
     #set text(
-      fill: ac_color
+      fill: third_color
     )
     #v(50%)
-    #text(size: 28pt, fill: ac_color, weight: "bold")[#titulo]\
+    #text(size: 28pt, fill: third_color, weight: "bold")[#titulo]\
     #image("assets/banner-vertical-en-color.svg", width: 50%)
     #v(1fr)
     Last updated: #read(".cut"), Revision #edition
   ]
   portada()
-  pagebreak()
   doc
 }
 
-#let chip(color: ac_color, content) = {
+#let chip(color: third_color, content) = {
   box(
     width: auto,
     inset: 0.3em,
@@ -84,17 +83,17 @@
   let sessions = csv(path, row-type: dictionary)
   for session in sessions {
     // Session header
-    pad(top: 10pt,
+    pad(top: 5pt,
     box(
       width: 100%,
-      stroke: ac_color,
-      fill: reduced_ac_color,
+      stroke: third_color,
+      fill: reduced_third_color,
       inset: 0.7em,
       text(size: 10pt)[
 
       #text(size:12pt, weight: "bold", fill: accent_color)[
         #if session.bloque.first() != "X" {
-          [== Bloque #session.bloque: #session.tematica]
+          [== Session #session.bloque: #session.tematica]
           text(size: 12pt, fill: black, weight: "regular")[#if session.nombre != "" [#session.nombre]]
         } else {[== #session.nombre]}
 
@@ -117,22 +116,26 @@
           columns: (auto, 1fr),
           rows: (auto),
           gutter: 4pt,
-          [#box(width: auto, inset: 0.5em, fill: reduced_ac_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
-          [#box(width: auto, inset: 0.5em, [*Presentación*])]
+          [#box(width: auto, inset: 0.5em, fill: reduced_third_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
+          [#box(width: auto, inset: 0.5em, [*Introducción por el host*])]
       )
       runtime = runtime + duration(minutes: int(session.delay))
     }
 
+    // Layout presentations
     for presentation in presentations {
       grid(
         columns: (auto, 1fr),
         rows: (auto),
         gutter: 4pt,
-        [#box(width: auto, inset: 0.5em, fill: reduced_ac_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
+        [#box(width: auto, inset: 0.5em, fill: reduced_third_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
         [
           #chip([#presentation.formato])
           *#presentation.titulo*\
-          #presentation.autores\ #text(size:10pt, fill: accent_color)[#presentation.afiliacion]
+          #if presentation.autores != "" [#presentation.autores\ ]
+          #if presentation.afiliacion != "" {
+            text(size:10pt, fill: accent_color)[#presentation.afiliacion]
+          }
           #linebreak()
         ]
       )
@@ -140,23 +143,46 @@
      let timespan = duration(minutes: int(presentation.timeframe))
      runtime = runtime + timespan + duration(minutes: 5)
     }
-    [Closing by: *#runtime.display("[hour]:[minute]")*]
-
   }
-  pagebreak()
+  //pagebreak()
 }
 
 #let timetable(path) = {
   let sessions = csv(path, row-type: dictionary)
-  let columnas = ("",)
+  let start = datetime(hour:9, minute:0, second:0)
+  let cursor = start
+  let finish = datetime(hour:19, minute:0, second:0)
+  let step = duration(minutes:30)
+
+  // Una funcioncita para convertir datetimes a strings de la forma HH:MM
+  let disp(timestamp) = {timestamp.display("[hour]:[minute]")}
+
+  // Generar una lista de horarios con steps de media hora entre en inicio y el final
+  let timestamps = (start,)
+  while cursor < finish {
+    cursor = cursor + step
+    let frame = cursor
+    timestamps.push(frame)
+  }
+
+  let columnas = ()
   for session in sessions {
     if not columnas.contains(session.sala) {columnas.push(session.sala)}
   }
+  set table.hline(stroke: .6pt)
   table(
-  columns: (1fr,) * columnas.len(),
-  inset: 10pt,
-  align: horizon,
-  ..columnas
-)
+    fill: (x, y) =>
+    if x == 0 or y == 0 {
+      third_color.lighten(40%)
+    },
+    rows: (1.5fr, (1fr,) * timestamps.len()).flatten(),
+    columns: (0.5fr, ((1fr,) * columnas.len())).flatten(),
+    align: bottom,
+    stroke: none,
+    [],
+    table.vline(start: 1),
+    ..columnas,
+    ..timestamps.map(disp),
+  )
   pagebreak()
 }
