@@ -1,6 +1,12 @@
+![icphilcomp25_banner](assets/icphilcomp25_banner_long.png)
+
 # PHILCOMP 25 Materials
  - [x] Program preview
- - [ ] EN/ES ver
+ - [ ] Full program
+ - [ ] Add speakers to database
+ - [ ] Sessions calendar
+ - [ ] Talkcards (Title + author + time + session)
+ - [ ] ID Badges
  
 ## How to build
 1. Set up a virtual environment and install dependencies as usual. [uv](https://github.com/astral-sh/uv) usage is highly recommended:
@@ -19,6 +25,6 @@ URL_SPEAKERS="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=.
 
 2. Get into your virtual environment and issue:
 ```sh 
-python build.sh
+python build.py
 ```
-this automatically download the required data, build a database, query for the needed information in the correct format and compile the documents from the Typst templates into an `output/` directory.
+this will automatically download all of the required data, build a sqlite database, query for the needed information in the correct format and compile the documents from the Typst templates into an `output/` directory.

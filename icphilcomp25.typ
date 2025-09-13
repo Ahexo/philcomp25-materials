@@ -59,11 +59,15 @@
   )
 }
 
-#let schedule(title, path) = {
+#let schedule(title, path, show_timetable: false) = {
   [
     #v(1fr)
-    #heading(level: 1, [#title])
-    #timetable(path)
+    #if show_timetable == true {
+      heading(level: 1, [#title])
+      timetable(path)
+    } else {
+      text(24pt)[#heading(level: 1, [#title])]
+    }
     #v(1fr)
   ]
   set page(
@@ -150,6 +154,7 @@
   titulo: str,
   edition: 1,
   fecha: datetime.today(),
+  updates_url: "https://philcomp.org/programa/",
   doc,
 ) = {
   set document(
@@ -195,7 +200,7 @@
     #v(1fr)
     Last updated: #read(".cut"), Revision #edition.
 
-    #link("https://drive.google.com/file/d/1kR97YspS40mHsdXjjjF-reV81PQmhc1J/view?usp=sharing")[Check for updates following this link]
+    #link(updates_url)[Check for updates following this link]
   ]
   portada()
   doc

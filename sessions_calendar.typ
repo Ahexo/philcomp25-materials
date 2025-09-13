@@ -1,13 +1,14 @@
 #import "icphilcomp25.typ": icphilcomp25, schedule, timetable
 #show: icphilcomp25.with(
   titulo: "Sessions calendar",
+  updates_url: "https://drive.google.com/file/d/1kR97YspS40mHsdXjjjF-reV81PQmhc1J/view?usp=sharing",
   edition: 3
 )
 
 // English translations
 #show "Inauguración": [Opening]
 #show "Presentación oral (30 min. + 10 min. preguntas)": [Oral presentation (max 30 min. + 10 min. Q&A)]
-#show "Introducción por el host": [Introduction by our host]
+#show "Introducción por el host": [Introduction by the host]
 #show "Presentaciones de libros": [Book presentations]
 #show "Presentación de libro" : [Book presentation]
 #show "Acto inaugural": [Opening speech]
