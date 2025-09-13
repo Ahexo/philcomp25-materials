@@ -53,7 +53,7 @@ def main():
     project_root = os.path.dirname(os.path.abspath(__file__))
     output_dir = os.path.join(project_root, "output")
     typst_input_file = os.path.join(project_root, "sessions_calendar.typ")
-    typst_output_file = os.path.join(output_dir, "icphilcomp_sessions_calendar.pdf")
+    typst_output_file = os.path.join(output_dir, "icphilcomp25_sessions_calendar.pdf")
 
     # --- Step 1 & 2: Run database and daily scripts ---
     # These commands will be run from within the 'database' module.
