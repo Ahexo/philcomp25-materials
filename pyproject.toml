@@ -8,7 +8,7 @@ requires-python = ">=3.13"
 dependencies = []
 
 [project.scripts]
-preview = "preview:main"
+preview = "build:main"
 
 [build-system]
 requires = ["setuptools"]

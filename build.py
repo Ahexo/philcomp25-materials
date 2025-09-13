@@ -52,8 +52,8 @@ def main():
     write_time_to_cut()
     project_root = os.path.dirname(os.path.abspath(__file__))
     output_dir = os.path.join(project_root, "output")
-    typst_input_file = os.path.join(project_root, "program_preview.typ")
-    typst_output_file = os.path.join(output_dir, "program_preview.pdf")
+    typst_input_file = os.path.join(project_root, "sessions_calendar.typ")
+    typst_output_file = os.path.join(output_dir, "icphilcomp_sessions_calendar.pdf")
 
     # --- Step 1 & 2: Run database and daily scripts ---
     # These commands will be run from within the 'database' module.

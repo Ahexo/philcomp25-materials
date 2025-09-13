@@ -22,17 +22,6 @@
 
   set page(
     paper: "a4",
-    header: context[
-      #query(selector(heading).before(here()))
-    ],
-    footer: context [
-      #set align(right)
-      #set text(fill: gray)
-      #h(1fr)
-      #if counter(page).get().first() > 0 [
-        #counter(page).display("1", both: false)
-      ]
-    ]
   )
 
   set text(
@@ -78,7 +67,65 @@
   linebreak()
 }
 
-#let schedule(path) = {
+#let timetable(path) = {
+  let sessions = csv(path, row-type: dictionary)
+  let start = datetime(hour:9, minute:0, second:0)
+  let cursor = start
+  let finish = datetime(hour:19, minute:0, second:0)
+  let step = duration(minutes:30)
+
+  // Una funcioncita para convertir datetimes a strings de la forma HH:MM
+  let disp(timestamp) = {timestamp.display("[hour]:[minute]")}
+
+  // Generar una lista de horarios con steps de media hora entre el inicio y el final
+  let timestamps = (start,)
+  while cursor < finish {
+    cursor = cursor + step
+    let frame = cursor
+    timestamps.push(frame)
+  }
+
+  let columnas = ()
+  for session in sessions {
+    if not columnas.contains(session.sala) {columnas.push(session.sala)}
+  }
+  set table.hline(stroke: .6pt)
+  table(
+    fill: (x, y) =>
+    if x == 0 or y == 0 {
+      third_color.lighten(40%)
+    },
+    rows: (1.5fr, (1fr,) * timestamps.len()).flatten(),
+    columns: (0.5fr, ((1fr,) * columnas.len())).flatten(),
+    align: bottom,
+    stroke: none,
+    [],
+    table.vline(start: 1),
+    ..columnas,
+    ..timestamps.map(disp),
+  )
+}
+
+#let schedule(title, path) = {
+  [
+    #v(1fr)
+    #heading(level: 1, [#title])
+    #timetable(path)
+    #v(1fr)
+  ]
+  set page(
+    header: context{
+      set align(right)
+      set text(size: 10pt)
+      let current_day = query(selector(heading.where(level: 1)).before(here()))
+      if current_day.len() > 0 [#current_day.last().body]
+      h(1fr)
+      if counter(page).get().first() > 0 [
+        #counter(page).display("1", both: false)
+      ]
+    }
+  )
+
   let sessions = csv(path, row-type: dictionary)
   for session in sessions {
     // Session header
@@ -144,44 +191,4 @@
     }
   }
   //pagebreak()
-}
-
-#let timetable(path) = {
-  let sessions = csv(path, row-type: dictionary)
-  let start = datetime(hour:9, minute:0, second:0)
-  let cursor = start
-  let finish = datetime(hour:19, minute:0, second:0)
-  let step = duration(minutes:30)
-
-  // Una funcioncita para convertir datetimes a strings de la forma HH:MM
-  let disp(timestamp) = {timestamp.display("[hour]:[minute]")}
-
-  // Generar una lista de horarios con steps de media hora entre el inicio y el final
-  let timestamps = (start,)
-  while cursor < finish {
-    cursor = cursor + step
-    let frame = cursor
-    timestamps.push(frame)
-  }
-
-  let columnas = ()
-  for session in sessions {
-    if not columnas.contains(session.sala) {columnas.push(session.sala)}
-  }
-  set table.hline(stroke: .6pt)
-  table(
-    fill: (x, y) =>
-    if x == 0 or y == 0 {
-      third_color.lighten(40%)
-    },
-    rows: (1.5fr, (1fr,) * timestamps.len()).flatten(),
-    columns: (0.5fr, ((1fr,) * columnas.len())).flatten(),
-    align: bottom,
-    stroke: none,
-    [],
-    table.vline(start: 1),
-    ..columnas,
-    ..timestamps.map(disp),
-  )
-  pagebreak()
 }

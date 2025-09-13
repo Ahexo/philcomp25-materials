@@ -18,22 +18,18 @@
 #show "Clausura y concierto": [Ending]
 #show "Concierto y actos de Clausura": [Ending ceremony & concert]
 
-= Day 1 (Mon, October 27)
-#schedule("database/2025-10-27.csv")
+
+#schedule("Day 1 (Mon, October 27)", "database/2025-10-27.csv")
 #pagebreak()
 
-= Day 2 (Tue, October 28)
-#schedule("database/2025-10-28.csv")
+#schedule("Day 2 (Tue, October 28)", "database/2025-10-28.csv")
 #pagebreak()
 
-= Day 3 (Wed, October 29)
-#schedule("database/2025-10-29.csv")
+#schedule("Day 3 (Wed, October 29)", "database/2025-10-29.csv")
 #pagebreak()
 
-= Day 4 (Thu, October 30)
-#schedule("database/2025-10-30.csv")
+#schedule("Day 4 (Thu, October 30)", "database/2025-10-30.csv")
 #pagebreak()
 
-= Day 6 (Fri, October 31)
-#schedule("database/2025-10-31.csv")
+#schedule("Day 6 (Fri, October 31)", "database/2025-10-31.csv")
 
