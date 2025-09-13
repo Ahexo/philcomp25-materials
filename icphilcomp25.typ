@@ -1,61 +1,14 @@
 // Metadata
 #let main_color = rgb("#291F3A")
-#let third_color = rgb("#CC97E2")
 #let accent_color = rgb("#773898")
+#let third_color = rgb("#CC97E2")
 #let reduced_third_color = rgb(
     third_color.components().at(0),
     third_color.components().at(1),
     third_color.components().at(2),
     40)
 
-#let icphilcomp25(
-  titulo: str,
-  edition: 1,
-  fecha: datetime.today(),
-  doc,
-) = {
-  set document(
-    title: titulo + " - ICPHILCOMP25 @ UNAM CDMX",
-    author: "philcomp.org",
-    date: fecha,
-  )
-
-  set page(
-    paper: "a4",
-  )
-
-  set text(
-    size: 12pt,
-    font: "Inter",
-    lang: "en"
-  )
-
-  show heading: set text(fill: accent_color)
-  show "|": bar => text(fill: accent_color)[#sym.diamond.filled.medium]
-
-  let portada() = align(left + top)[
-    #set page(
-      background:
-        rect(
-          fill: main_color,
-          width: 100%,
-          height: 100%
-        ),
-      footer: [],
-      header: []
-    )
-    #set text(
-      fill: third_color
-    )
-    #v(50%)
-    #text(size: 28pt, fill: third_color, weight: "bold")[#titulo]\
-    #image("assets/banner-vertical-en-color.svg", width: 50%)
-    #v(1fr)
-    Last updated: #read(".cut"), Revision #edition
-  ]
-  portada()
-  doc
-}
+#let external_img = bytes(read("/assets/external.svg").replace("#000", accent_color.to-hex(),))
 
 #let chip(color: third_color, content) = {
   box(
@@ -191,4 +144,59 @@
     }
   }
   //pagebreak()
+}
+
+#let icphilcomp25(
+  titulo: str,
+  edition: 1,
+  fecha: datetime.today(),
+  doc,
+) = {
+  set document(
+    title: titulo + " - ICPHILCOMP25 @ UNAM CDMX",
+    author: "philcomp.org",
+    date: fecha,
+  )
+
+  set page(
+    paper: "a4",
+  )
+
+  set text(
+    size: 12pt,
+    font: "Inter",
+    lang: "en"
+  )
+
+  // Colored headings
+  show heading: set text(fill: accent_color)
+  // Pretty separators
+  show "|": bar => text(fill: accent_color)[#sym.diamond.filled.medium]
+  // Show the external icon after all links
+  show link: content => box[#content #box(image(external_img ,height: 0.7em))]
+
+  let portada() = align(left + top)[
+    #set page(
+      background:
+        rect(
+          fill: main_color,
+          width: 100%,
+          height: 100%
+        ),
+      footer: [],
+      header: []
+    )
+    #set text(
+      fill: third_color
+    )
+    #v(50%)
+    #text(size: 28pt, fill: third_color, weight: "bold")[#titulo]\
+    #image("assets/banner-vertical-en-color.svg", width: 50%)
+    #v(1fr)
+    Last updated: #read(".cut"), Revision #edition.
+
+    #link("https://drive.google.com/file/d/1kR97YspS40mHsdXjjjF-reV81PQmhc1J/view?usp=sharing")[Check for updates following this link]
+  ]
+  portada()
+  doc
 }
