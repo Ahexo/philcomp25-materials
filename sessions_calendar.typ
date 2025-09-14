@@ -32,5 +32,5 @@
 #schedule("Day 4 (Thu, October 30)", "database/2025-10-30.csv")
 #pagebreak()
 
-#schedule("Day 6 (Fri, October 31)", "database/2025-10-31.csv")
+#schedule("Day 5 (Fri, October 31)", "database/2025-10-31.csv")
 

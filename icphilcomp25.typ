@@ -8,7 +8,9 @@
     third_color.components().at(2),
     40)
 
-#let external_img = bytes(read("/assets/external.svg").replace("#000", accent_color.to-hex(),))
+#let icon_external = bytes(read("/assets/external.svg").replace("#000", accent_color.to-hex(),))
+#let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
+#let illust = bytes(read("/assets/tiles/tile4-front5.svg").replace("#000", third_color.to-hex(),))
 
 #let chip(color: third_color, content) = {
   box(
@@ -20,6 +22,8 @@
   linebreak()
 }
 
+/* Es una tabla que por defecto va de las 9 a las 19 y despliega las salas y
+ * sesiones en orden cronológico */
 #let timetable(path) = {
   let sessions = csv(path, row-type: dictionary)
   let start = datetime(hour:9, minute:0, second:0)
@@ -59,8 +63,18 @@
   )
 }
 
+/* La sección completa destinada a una sola jornada de la conferencia. */
 #let schedule(title, path, show_timetable: false) = {
   [
+    #set page(
+      background:
+        rect(
+          fill: third_color,
+          width: 100%,
+          height: 100%
+        ),
+    )
+    #set text(fill: accent_color)
     #v(1fr)
     #if show_timetable == true {
       heading(level: 1, [#title])
@@ -68,17 +82,24 @@
     } else {
       text(24pt)[#heading(level: 1, [#title])]
     }
+    Registration and coffee table start at 9:00, open all day.\
+    Break from 15:00 to 16:00.
     #v(1fr)
   ]
   set page(
     header: context{
-      set align(right)
       set text(size: 10pt)
-      let current_day = query(selector(heading.where(level: 1)).before(here()))
-      if current_day.len() > 0 [#current_day.last().body]
-      h(1fr)
-      if counter(page).get().first() > 0 [
-        #counter(page).display("1", both: false)
+      let current_day = query(selector(heading.where(level: 1)).before(here())).last().body
+      box(width: 26pt, height: 22pt)[
+        #box(height: 100%)[#align(horizon)[#image(icon_icphilcomp)]]
+      ]
+      box(width: 1fr, height: 22pt)[
+        #box(height: 100%)[#align(horizon)[#text(fill: accent_color, weight: "bold", "ICPHILCOMP25 ") #current_day]]
+      ]
+      box(width: 22pt, height: 22pt)[
+        #if counter(page).get().first() > 0 [
+          #align(horizon+center)[#counter(page).display("1", both: false)]
+        ]
       ]
     }
   )
@@ -134,6 +155,7 @@
         [#box(width: auto, inset: 0.5em, fill: reduced_third_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
         [
           #chip([#presentation.formato])
+
           *#presentation.titulo*\
           #if presentation.autores != "" [#presentation.autores\ ]
           #if presentation.afiliacion != "" {
@@ -178,7 +200,7 @@
   // Pretty separators
   show "|": bar => text(fill: accent_color)[#sym.diamond.filled.medium]
   // Show the external icon after all links
-  show link: content => box[#content #box(image(external_img ,height: 0.7em))]
+  show link: content => box[#content #box(image(icon_external ,height: 0.7em))]
 
   let portada() = align(left + top)[
     #set page(
@@ -194,13 +216,22 @@
     #set text(
       fill: third_color
     )
-    #v(50%)
-    #text(size: 28pt, fill: third_color, weight: "bold")[#titulo]\
-    #image("assets/banner-vertical-en-color.svg", width: 50%)
     #v(1fr)
+    #grid(
+      columns: (10em, 1fr),
+      gutter: 18pt,
+      align(horizon)[#box(image(illust ,height: auto))],
+      align(horizon)[
+        #text(size: 32pt, fill: third_color, weight: "bold")[#titulo]\
+        #image("assets/banner-vertical-en-color.svg", width: 90%)
+      ]
+    )
+    #v(1fr)
+
     Last updated: #read(".cut"), Revision #edition.
 
-    #link(updates_url)[Check for updates following this link]
+    #link(updates_url)[Check for updates following this link]\
+    Our materials are usally re-compiled and deployed daily.
   ]
   portada()
   doc
