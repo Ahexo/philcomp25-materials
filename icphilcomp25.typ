@@ -230,8 +230,7 @@
 
     Last updated: #read(".cut"), Revision #edition.
 
-    #link(updates_url)[Check for updates following this link]\
-    Our materials are usally re-compiled and deployed daily.
+    #link(updates_url)[Check for updates following this link] as our materials are usually featured with new details, re-compiled and deployed daily.
   ]
   portada()
   doc
