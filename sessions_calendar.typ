@@ -2,7 +2,7 @@
 #show: icphilcomp25.with(
   titulo: "Sessions calendar",
   updates_url: "https://drive.google.com/file/d/1kR97YspS40mHsdXjjjF-reV81PQmhc1J/view?usp=sharing",
-  edition: 3
+  edition: 4
 )
 
 // English translations
