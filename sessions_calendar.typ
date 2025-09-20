@@ -2,7 +2,25 @@
 #show: icphilcomp25.with(
   titulo: "Sessions calendar",
   updates_url: "https://drive.google.com/file/d/1kR97YspS40mHsdXjjjF-reV81PQmhc1J/view?usp=sharing",
-  edition: 4
+  edition: 5,
+  partners: (
+    (
+      logo: "assets/partners/agile_design_studio.svg",
+      adaptive: false,
+    ),
+    (
+      logo: "assets/partners/philcomp.svg",
+      adaptive: true,
+    ),
+    (
+      logo: "assets/partners/licenciaturacc.svg",
+      adaptive: true,
+    ),
+    (
+      logo: "assets/partners/fciencias.svg",
+      adaptive: true,
+    ),
+  )
 )
 
 // English translations
@@ -20,7 +38,7 @@
 #show "Concierto y actos de Clausura": [Ending ceremony & concert]
 
 
-#schedule("Day 1 (Mon, October 27)", "database/2025-10-27.csv")
+#schedule("Day 1 (Mon, October 27)", "database/2025-10-27.csv", start_time: "8:30")
 #pagebreak()
 
 #schedule("Day 2 (Tue, October 28)", "database/2025-10-28.csv")

@@ -100,7 +100,7 @@ def export_csvs():
         )
         for day in days_df["dia"]:
             daily_df = pd.read_sql_query(
-                "SELECT * FROM sessions WHERE dia = ? AND ocupados > 0 ORDER BY inicia ASC",
+                "SELECT * FROM sessions WHERE dia = ? AND ocupados > 0 ORDER BY time(inicia) ASC",
                 conn,
                 params=(day,),
             )

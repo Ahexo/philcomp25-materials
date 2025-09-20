@@ -12,6 +12,7 @@
 #let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
 #let illust = bytes(read("/assets/tiles/tile4-front5.svg").replace("#000", third_color.to-hex(),))
 
+/* Se usan para desplegar el formato de la presentación. */
 #let chip(color: third_color, content) = {
   box(
     width: auto,
@@ -64,7 +65,7 @@
 }
 
 /* La sección completa destinada a una sola jornada de la conferencia. */
-#let schedule(title, path, show_timetable: false) = {
+#let schedule(title, path, start_time: "9:00", show_timetable: false) = {
   [
     #set page(
       background:
@@ -82,7 +83,7 @@
     } else {
       text(24pt)[#heading(level: 1, [#title])]
     }
-    Registration and coffee table start at 9:00, open all day.\
+    Registration and coffee table start at #start_time, open all day.\
     Break from 15:00 to 16:00.
     #v(1fr)
   ]
@@ -177,6 +178,7 @@
   edition: 1,
   fecha: datetime.today(),
   updates_url: "https://philcomp.org/programa/",
+  partners: (),
   doc,
 ) = {
   set document(
@@ -232,6 +234,37 @@
 
     #link(updates_url)[Check for updates following this link] as our materials are usually featured with new details, re-compiled and deployed daily.
   ]
+
+  let contraportada() = align(center + top)[
+    #set page(
+      background:
+        rect(
+          fill: main_color,
+          width: 100%,
+          height: 100%
+        ),
+      footer: [],
+      header: []
+    )
+    #set text(
+      fill: third_color
+    )
+    #v(1fr)
+
+    #grid(
+    columns: (1fr,) * partners.len(),
+    gutter: 16pt,
+    ..partners.map(partner => {
+      let logo = partner.logo
+      if partner.adaptive { logo = bytes(read(partner.logo).replace("#000", third_color.to-hex(),)) }
+      align(horizon+center)[#rect()[#image(logo, width: 100%)]]
+    }))
+    #v(0.1fr)
+    #sym.copyright Grupo de Investigación en Filosofía de la Computación, México, 2025.
+  ]
+
+
   portada()
   doc
+  contraportada()
 }
