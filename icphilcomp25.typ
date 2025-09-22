@@ -156,7 +156,6 @@
         [#box(width: auto, inset: 0.5em, fill: reduced_third_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
         [
           #chip([#presentation.formato])
-
           *#presentation.titulo*\
           #if presentation.autores != "" [#presentation.autores\ ]
           #if presentation.afiliacion != "" {
@@ -232,6 +231,8 @@
 
     Last updated: #read(".cut"), Revision #edition.
 
+    This schedule is subject to changes at *any time*.
+
     #link(updates_url)[Check for updates following this link] as our materials are usually featured with new details, re-compiled and deployed daily.
   ]
 
@@ -253,11 +254,11 @@
 
     #grid(
     columns: (1fr,) * partners.len(),
-    gutter: 16pt,
+    gutter: 14pt,
     ..partners.map(partner => {
       let logo = partner.logo
       if partner.adaptive { logo = bytes(read(partner.logo).replace("#000", third_color.to-hex(),)) }
-      align(horizon+center)[#rect()[#image(logo, width: 100%)]]
+      align(horizon+center)[#image(logo, width: 100%)]
     }))
     #v(0.1fr)
     #sym.copyright Grupo de Investigación en Filosofía de la Computación, México, 2025.

@@ -8,6 +8,7 @@ DB_NAME = "database/conference.db"
 CSV_OUTPUT_DIR = "database"
 PRESENTATIONS_CSV = "database/presentations.csv"
 SESSIONS_CSV = "database/sessions.csv"
+SPEAKERS_CSV = "database/speakers.csv"
 
 
 def download_file(url: str, local_filename: str):
@@ -40,22 +41,25 @@ def setup_database():
     load_dotenv()
     URL_PRESENTATIONS = os.getenv("URL_PRESENTATIONS")
     URL_SESSIONS = os.getenv("URL_SESSIONS")
+    URL_SPEAKERS = os.getenv("URL_SPEAKERS")
 
-    if not all([URL_PRESENTATIONS, URL_SESSIONS]):
-        print("Error: URL_PRESENTATIONS and URL_SESSIONS must be set in the .env file.")
+    if not all([URL_PRESENTATIONS, URL_SESSIONS, URL_SPEAKERS]):
+        print("Error: Sources must be set in the .env file.")
         return False
 
     try:
         presentations_downloaded = download_file(URL_PRESENTATIONS, PRESENTATIONS_CSV)
         sessions_downloaded = download_file(URL_SESSIONS, SESSIONS_CSV)
+        speakers_downloaded = download_file(URL_SPEAKERS, SPEAKERS_CSV)
 
-        if not (presentations_downloaded and sessions_downloaded):
+        if not (presentations_downloaded and sessions_downloaded and speakers_downloaded):
             print("Could not download necessary files. Aborting.")
             return
 
         print("Loading data into pandas DataFrames...")
         presentations_df = pd.read_csv(PRESENTATIONS_CSV)
         sessions_df = pd.read_csv(SESSIONS_CSV)
+        speakers_df = pd.read_csv(SPEAKERS_CSV)
 
         print(f"Creating SQLite database at '{DB_NAME}'...")
         if os.path.exists(DB_NAME):
