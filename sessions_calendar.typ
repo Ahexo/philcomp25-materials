@@ -9,6 +9,10 @@
       adaptive: false,
     ),
     (
+      logo: "assets/partners/sectei.svg",
+      adaptive: true,
+    ),
+    (
       logo: "assets/partners/philcomp.svg",
       adaptive: true,
     ),

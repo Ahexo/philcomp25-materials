@@ -52,7 +52,9 @@ def setup_database():
         sessions_downloaded = download_file(URL_SESSIONS, SESSIONS_CSV)
         speakers_downloaded = download_file(URL_SPEAKERS, SPEAKERS_CSV)
 
-        if not (presentations_downloaded and sessions_downloaded and speakers_downloaded):
+        if not (
+            presentations_downloaded and sessions_downloaded and speakers_downloaded
+        ):
             print("Could not download necessary files. Aborting.")
             return
 
@@ -67,8 +69,8 @@ def setup_database():
 
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
-        cursor.execute("DROP TABLE IF EXISTS presentations")
-        cursor.execute("DROP TABLE IF EXISTS sessions")
+        ddl = open("database/DDL.sql", "r").read()
+        cursor.executescript(ddl)
 
         print("Creating tables and loading data...")
         presentations_df.to_sql("presentations", conn, if_exists="replace", index=False)

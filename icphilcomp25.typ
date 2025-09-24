@@ -10,7 +10,7 @@
 
 #let icon_external = bytes(read("/assets/external.svg").replace("#000", accent_color.to-hex(),))
 #let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
-#let illust = bytes(read("/assets/tiles/tile4-front5.svg").replace("#000", third_color.to-hex(),))
+#let illust = bytes(read("/assets/tiles/sociedad.svg").replace("#000", third_color.to-hex(),))
 
 /* Se usan para desplegar el formato de la presentación. */
 #let chip(color: third_color, content) = {
