@@ -8,13 +8,14 @@ DB_NAME = "conference.db"
 PRESENTATIONS_CSV = "presentations.csv"
 SESSIONS_CSV = "sessions.csv"
 
+
 def download_file(url, local_filename):
     """Downloads a file from a URL and saves it locally."""
     print(f"Downloading {local_filename} from {url}...")
     try:
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
-            with open(local_filename, 'wb') as f:
+            with open(local_filename, "wb") as f:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
         print(f"Successfully downloaded {local_filename}.")
@@ -22,6 +23,7 @@ def download_file(url, local_filename):
     except requests.exceptions.RequestException as e:
         print(f"Error downloading {url}: {e}")
         return False
+
 
 def create_database_and_tables(db_name):
     """Creates the SQLite database and the necessary tables with relationships."""
@@ -83,6 +85,7 @@ def create_database_and_tables(db_name):
     conn.close()
     print("Database and tables created successfully.")
 
+
 def populate_tables(db_name, presentations_df, sessions_df):
     """Populates the database tables from pandas DataFrames."""
     print("Populating tables with data from CSV files...")
@@ -90,13 +93,14 @@ def populate_tables(db_name, presentations_df, sessions_df):
     try:
         # Use pandas `to_sql` to efficiently insert data.
         # 'append' adds the data to our pre-defined tables.
-        sessions_df.to_sql('sessions', conn, if_exists='append', index=False)
-        presentations_df.to_sql('presentations', conn, if_exists='append', index=False)
+        sessions_df.to_sql("sessions", conn, if_exists="append", index=False)
+        presentations_df.to_sql("presentations", conn, if_exists="append", index=False)
         print("Tables populated successfully.")
     except Exception as e:
         print(f"An error occurred while populating tables: {e}")
     finally:
         conn.close()
+
 
 def main():
     """Main function to orchestrate the database creation process."""
@@ -130,5 +134,6 @@ def main():
 
     print("\nProcess complete! Your database 'conference.db' is ready.")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

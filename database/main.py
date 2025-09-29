@@ -2,13 +2,44 @@ import os
 import sqlite3
 import pandas as pd
 import requests
+from unicodedata import normalize
 from dotenv import load_dotenv
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
 DB_NAME = "database/conference.db"
+PHOTOS_DIR = "database/photos/"
 CSV_OUTPUT_DIR = "database"
 PRESENTATIONS_CSV = "database/presentations.csv"
 SESSIONS_CSV = "database/sessions.csv"
 SPEAKERS_CSV = "database/speakers.csv"
+
+
+def get_confirm_token(response):
+    for key, value in response.cookies.items():
+        if key.startswith("download_warning"):
+            return value
+    return None
+
+
+def save_response_content(response, destination):
+    CHUNK_SIZE = 32768
+    with open(destination, "wb") as f:
+        for chunk in response.iter_content(CHUNK_SIZE):
+            if chunk:  # filter out keep-alive new chunks
+                f.write(chunk)
+
+
+def download_file_gdrive(file_id, destination: str):
+    URL = "https://docs.google.com/uc?export=download&confirm=1"
+    session = requests.Session()
+    response = session.get(URL, params={"id": file_id}, stream=True)
+    token = get_confirm_token(response)
+    if token:
+        params = {"id": file_id, "confirm": token}
+        response = session.get(URL, params=params, stream=True)
+    save_response_content(response, destination)
 
 
 def download_file(url: str, local_filename: str):
@@ -21,13 +52,14 @@ def download_file(url: str, local_filename: str):
     """
     print(f"Downloading {local_filename} from {url}...")
     try:
-        with requests.get(url, stream=True) as r:
+        # Add the headers to your request
+        with requests.get(url, stream=True, headers=HEADERS) as r:
             r.raise_for_status()
             with open(local_filename, "wb") as f:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
-        print(f"Successfully downloaded {local_filename}.")
-        return True
+            print(f"Successfully downloaded {local_filename}.")
+            return True
     except requests.exceptions.RequestException as e:
         print(f"Error downloading {url}: {e}")
         return False
@@ -62,6 +94,17 @@ def setup_database():
         presentations_df = pd.read_csv(PRESENTATIONS_CSV)
         sessions_df = pd.read_csv(SESSIONS_CSV)
         speakers_df = pd.read_csv(SPEAKERS_CSV)
+
+        # La tabla de personas ocupa ciertos chanchuyos
+        pfps = speakers_df[["fullname", "pfp"]]
+        for entry in pfps.itertuples():
+            pfp_id = entry.pfp[33:]
+            print(f"proccesing {entry.fullname}, {pfp_id}")
+            filename = normalize("NFD", entry.fullname.lower().replace(" ", "_"))
+            download_file(
+                f"https://drive.google.com/uc?export=download&id={pfp_id}",
+                f"{PHOTOS_DIR}{filename}.png",
+            )
 
         print(f"Creating SQLite database at '{DB_NAME}'...")
         if os.path.exists(DB_NAME):
