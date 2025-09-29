@@ -2,10 +2,12 @@ import os
 import sqlite3
 import pandas as pd
 import requests
+import re
 from dotenv import load_dotenv
 
 DB_NAME = "database/conference.db"
 CSV_OUTPUT_DIR = "database"
+PFPS_DIR = "database/photos/"
 PRESENTATIONS_CSV = "database/presentations.csv"
 SESSIONS_CSV = "database/sessions.csv"
 SPEAKERS_CSV = "database/speakers.csv"
@@ -31,7 +33,6 @@ def download_file(url: str, local_filename: str):
     except requests.exceptions.RequestException as e:
         print(f"Error downloading {url}: {e}")
         return False
-
 
 def setup_database():
     """
@@ -76,6 +77,13 @@ def setup_database():
         presentations_df.to_sql("presentations", conn, if_exists="replace", index=False)
         sessions_df.to_sql("sessions", conn, if_exists="replace", index=False)
 
+        # Con la tabla de people hay que hacer unos chanchuyos porque trae las fotos
+        pfps = speakers_df[["fullname", "pfp"]]
+
+        for entry in pfps.itertuples():
+            drive_id = entry.pfp[33:]
+            download_file(f"https://drive.google.com/uc?id={drive_id}" , f"{PFPS_DIR}{entry.fullname.lower().replace(" ", "_")}.png")
+
         conn.close()
         print("Database setup complete.")
         return True
@@ -85,7 +93,6 @@ def setup_database():
     except Exception as e:
         print(f"An error occurred during database setup: {e}")
         return False
-
 
 def export_csvs():
     """

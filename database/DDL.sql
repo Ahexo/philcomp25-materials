@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS presentations;
 DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS people;
+DROP TABLE IF EXISTS association;
 
 CREATE TABLE sessions (
     bloque TEXT PRIMARY KEY,
@@ -42,14 +43,15 @@ CREATE TABLE presentations (
 );
 
 CREATE TABLE people (
-    fullname TEXT PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
+    fullname TEXT,
     pronouns TEXT,
     lang TEXT,
     resume TEXT,
     picture TEXT,
-    picture_source TEXT,
+    pfp TEXT,
     website TEXT,
-    email TEXT,
+    public_email TEXT,
     linkedin TEXT,
     twitter TEXT,
     bluesky TEXT,
@@ -59,3 +61,10 @@ CREATE TABLE people (
     tiktok TEXT,
     git TEXT
 );
+
+-- CREATE TABLE association (
+--     id_person INTEGER,
+--     (id_person) REFERENCES people (id),
+--     id_presentation INTEGER,
+--     (id_presentation) REFERENCES presentations (id)
+-- );
