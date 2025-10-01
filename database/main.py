@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import unicodedata
 from dotenv import load_dotenv
-import database.normalize as normalize
+import normalize
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
@@ -15,6 +15,7 @@ CSV_OUTPUT_DIR = "database"
 PRESENTATIONS_CSV = "database/presentations.csv"
 SESSIONS_CSV = "database/sessions.csv"
 SPEAKERS_CSV = "database/speakers.csv"
+ABSTRACTS_CSV = "database/abstracts.csv"
 pd.options.mode.copy_on_write = True
 
 def download_file(url: str, local_filename: str) -> bool:
@@ -71,6 +72,7 @@ def setup_database(process_photos=False) -> bool:
     URL_PRESENTATIONS = os.getenv("URL_PRESENTATIONS")
     URL_SESSIONS = os.getenv("URL_SESSIONS")
     URL_SPEAKERS = os.getenv("URL_SPEAKERS")
+    URL_ABSTRACTS = os.getenv("URL_ABSTRACTS")
 
     if not all([URL_PRESENTATIONS, URL_SESSIONS, URL_SPEAKERS]):
         print("Error: Sources must be set in the .env file.")
@@ -80,6 +82,7 @@ def setup_database(process_photos=False) -> bool:
         presentations_downloaded = download_file(URL_PRESENTATIONS, PRESENTATIONS_CSV)
         sessions_downloaded = download_file(URL_SESSIONS, SESSIONS_CSV)
         speakers_downloaded = download_file(URL_SPEAKERS, SPEAKERS_CSV)
+        abstracts_downloaded = download_file(URL_ABSTRACTS, ABSTRACTS_CSV)
 
         if not (
             presentations_downloaded and sessions_downloaded and speakers_downloaded
@@ -89,7 +92,9 @@ def setup_database(process_photos=False) -> bool:
 
         print("Loading data into pandas DataFrames...")
         presentations_df = pd.read_csv(PRESENTATIONS_CSV)
+
         sessions_df = pd.read_csv(SESSIONS_CSV)
+
         speakers_df = pd.read_csv(SPEAKERS_CSV)
         # We don't need these
         speakers_df = speakers_df.drop(columns=["Marca temporal", "email"], axis=1)
@@ -103,6 +108,8 @@ def setup_database(process_photos=False) -> bool:
         speakers_df["youtube"] = speakers_df["youtube"].apply(normalize.user)
         speakers_df["tiktok"] = speakers_df["tiktok"].apply(normalize.user)
         speakers_df["git"] = speakers_df["git"].apply(normalize.user)
+
+        abstracts_df = pd.read_csv(ABSTRACTS_CSV)
 
         if process_photos:
             pfps = speakers_df[["normalname", "pfp"]]
@@ -121,6 +128,7 @@ def setup_database(process_photos=False) -> bool:
         presentations_df.to_sql("presentations", conn, if_exists="append", index=False)
         sessions_df.to_sql("sessions", conn, if_exists="append", index=False)
         speakers_df.to_sql("people", conn, if_exists="append", index=False)
+        abstracts_df.to_sql("abstracts", conn, if_exists="append", index=False)
 
         conn.close()
         print("Database setup complete.")

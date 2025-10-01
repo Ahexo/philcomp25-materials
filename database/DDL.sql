@@ -62,7 +62,16 @@ CREATE TABLE people (
     git TEXT
 );
 
+CREATE TABLE abstracts (
+    id INTEGER REFERENCES presentations (id),
+    title TEXT,
+    authors TEXT,
+    abstract TEXT,
+    topic TEXT,
+    keywords TEXT
+);
+
 CREATE TABLE casting (
     id REFERENCES presentations (id),
     person REFERENCES people (normalname)
-)
+);
