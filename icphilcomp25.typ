@@ -10,7 +10,7 @@
 
 #let icon_external = bytes(read("/assets/external.svg").replace("#000", accent_color.to-hex(),))
 #let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
-#let illust = bytes(read("/assets/tiles/sociedad.svg").replace("#000", third_color.to-hex(),))
+#let illust = bytes(read("/assets/tiles/tecnica.svg").replace("#000", third_color.to-hex(),))
 
 /* Se usan para desplegar el formato de la presentación. */
 #let chip(color: third_color, content) = {
@@ -108,28 +108,25 @@
   let sessions = csv(path, row-type: dictionary)
   for session in sessions {
     // Session header
-    pad(top: 5pt,
     box(
       width: 100%,
       stroke: third_color,
       fill: reduced_third_color,
-      inset: 0.7em,
-      text(size: 10pt)[
-
-      #text(size:12pt, weight: "bold", fill: accent_color)[
+      inset: 0.6em,
+      text(size: 9pt)[
+      #text(size:11pt, weight: "bold", fill: accent_color)[
         #if session.bloque.first() != "X" {
           [== Session #session.bloque: #session.tematica]
-          text(size: 12pt, fill: black, weight: "regular")[#if session.nombre != "" [#session.nombre]]
+          text(size: 11pt, fill: black, weight: "regular")[#if session.nombre != "" [#session.nombre]]
         } else {[== #session.nombre]}
 
       ]
       #box(image("assets/door.svg",height: 0.8em,)) #session.sala #h(5pt)#box(image("assets/clock.svg",height: 0.8em,)) #session.inicia - #session.termina (#session.duracion min.)
       #if session.host != "" [#h(5pt) #box(image("assets/user.svg",height: 0.8em,)) #session.host]
       ]
-    ))
+    )
 
     let presentations = csv("database/" + session.bloque + ".csv", row-type: dictionary)
-
     // These are used to compute the timeframes between presentations
     let start_time_split = session.inicia.split(regex("[:]"))
     let start_time = datetime(hour: int(start_time_split.at(0)),minute: int(start_time_split.at(1)),second:0)
@@ -137,39 +134,45 @@
 
     // Does this session needs an intro?
     if int(session.delay) > 0 {
-      grid(
+      box()[#grid(
           columns: (auto, 1fr),
           rows: (auto),
-          gutter: 4pt,
-          [#box(width: auto, inset: 0.5em, fill: reduced_third_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
-          [#box(width: auto, inset: 0.5em, [*Introducción por el host*])]
-      )
+          gutter: 2pt,
+          [#box(width: auto, inset: 0.4em, fill: reduced_third_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
+          [#box(width: auto, inset: 0.4em, [*Introducción por el host*])]
+      )]
       runtime = runtime + duration(minutes: int(session.delay))
     }
 
     // Layout presentations
     for presentation in presentations {
-      grid(
+      box()[#grid(
         columns: (auto, 1fr),
-        rows: (auto),
+        rows: (auto, auto),
         gutter: 4pt,
-        [#box(width: auto, inset: 0.5em, fill: reduced_third_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
+        //Timestamp
+        [#box(width: auto, inset: 0.4em, fill: reduced_third_color, text(fill: accent_color)[*#runtime.display("[hour]:[minute]")*])],
+        //Tags
+        align(horizon)[#chip([#presentation.formato])],
+        //Guarda
+        [],
+        //Nombre y autores
         [
-          #chip([#presentation.formato])
           *#presentation.titulo*\
-          #if presentation.autores != "" [#presentation.autores\ ]
-          #if presentation.afiliacion != "" {
-            text(size:10pt, fill: accent_color)[#presentation.afiliacion]
+          #if presentation.autores != "" {
+            text(size: 10pt)[#presentation.autores\ ]
           }
-          #linebreak()
+          #if presentation.afiliacion != "" {
+            text(size:9pt, fill: accent_color)[#presentation.afiliacion]
+          }
         ]
-      )
+      )]
      // The unavoidable pass of time...
      let timespan = duration(minutes: int(presentation.timeframe))
      runtime = runtime + timespan + duration(minutes: 5)
     }
+    pad(bottom:1pt)[]
   }
-  //pagebreak()
 }
 
 #let icphilcomp25(
