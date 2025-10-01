@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS presentations;
 DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS people;
-DROP TABLE IF EXISTS association;
+DROP TABLE IF EXISTS casting;
 
 CREATE TABLE sessions (
     bloque TEXT PRIMARY KEY,
@@ -43,12 +43,12 @@ CREATE TABLE presentations (
 );
 
 CREATE TABLE people (
-    id INTEGER PRIMARY KEY,
     fullname TEXT,
+    normalname TEXT PRIMARY KEY,
+    affiliation TEXT,
     pronouns TEXT,
     lang TEXT,
     resume TEXT,
-    picture TEXT,
     pfp TEXT,
     website TEXT,
     public_email TEXT,
@@ -62,9 +62,16 @@ CREATE TABLE people (
     git TEXT
 );
 
--- CREATE TABLE association (
---     id_person INTEGER,
---     (id_person) REFERENCES people (id),
---     id_presentation INTEGER,
---     (id_presentation) REFERENCES presentations (id)
--- );
+CREATE TABLE abstracts (
+    id INTEGER REFERENCES presentations (id),
+    title TEXT,
+    authors TEXT,
+    abstract TEXT,
+    topic TEXT,
+    keywords TEXT
+);
+
+CREATE TABLE casting (
+    id REFERENCES presentations (id),
+    person REFERENCES people (normalname)
+);

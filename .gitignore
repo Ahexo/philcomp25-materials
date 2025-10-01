@@ -176,3 +176,5 @@ output/
 .cut
 database/*.csv
 database/*.db
+database/photos/*.jpg
+database/photos/*.png

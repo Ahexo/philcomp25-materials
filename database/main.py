@@ -2,47 +2,77 @@ import os
 import sqlite3
 import pandas as pd
 import requests
-import re
+import unicodedata
 from dotenv import load_dotenv
+import normalize
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+}
 DB_NAME = "database/conference.db"
+PHOTOS_DIR = "database/photos/"
 CSV_OUTPUT_DIR = "database"
-PFPS_DIR = "database/photos/"
 PRESENTATIONS_CSV = "database/presentations.csv"
 SESSIONS_CSV = "database/sessions.csv"
 SPEAKERS_CSV = "database/speakers.csv"
+ABSTRACTS_CSV = "database/abstracts.csv"
+pd.options.mode.copy_on_write = True
 
-
-def download_file(url: str, local_filename: str):
-    """
+def download_file(url: str, local_filename: str) -> bool:
+    '''
     Downloads a file from a URL and saves it locally.
 
     Args:
         url: File source.
         local_filename: Where and how to name it.
-    """
+    Returns:
+        bool: True is successful, False if errors occured.
+    '''
     print(f"Downloading {local_filename} from {url}...")
     try:
-        with requests.get(url, stream=True) as r:
+        # Add the headers to your request
+        with requests.get(url, stream=True, headers=HEADERS) as r:
             r.raise_for_status()
             with open(local_filename, "wb") as f:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
-        print(f"Successfully downloaded {local_filename}.")
-        return True
+            print(f"Successfully downloaded {local_filename}.")
+            return True
     except requests.exceptions.RequestException as e:
         print(f"Error downloading {url}: {e}")
         return False
 
-def setup_database():
-    """
+
+def setup_photos_database(name_and_pfp: pd.core.frame.DataFrame):
+    '''
+    Downloads and procceses all of the profile photos for the speakers and staff.
+    Args:
+        name_and_pfp: A dataframe with two columns, first for names and second for source urls.
+    '''
+    for entry in name_and_pfp.itertuples():
+        # We always assume a Google Drive download, so we can guarantee the id starts from the 33th char on.
+        pfp_id = entry.pfp[33:]
+        print(f"proccesing {entry.normalname}, {pfp_id}")
+        download_file(
+            f"https://drive.google.com/uc?export=download&id={pfp_id}",
+            f"{PHOTOS_DIR}{entry.normalname}.png")
+
+
+def setup_database(process_photos=False) -> bool:
+    '''
     Downloads CSVs and builds the SQLite database.
-    """
+
+    Args:
+        process_photos: Download and proccess photos or not
+    Returns:
+        bool: True is successful, False if errors occured.
+    '''
     print("--- Starting Database Setup ---")
     load_dotenv()
     URL_PRESENTATIONS = os.getenv("URL_PRESENTATIONS")
     URL_SESSIONS = os.getenv("URL_SESSIONS")
     URL_SPEAKERS = os.getenv("URL_SPEAKERS")
+    URL_ABSTRACTS = os.getenv("URL_ABSTRACTS")
 
     if not all([URL_PRESENTATIONS, URL_SESSIONS, URL_SPEAKERS]):
         print("Error: Sources must be set in the .env file.")
@@ -52,6 +82,7 @@ def setup_database():
         presentations_downloaded = download_file(URL_PRESENTATIONS, PRESENTATIONS_CSV)
         sessions_downloaded = download_file(URL_SESSIONS, SESSIONS_CSV)
         speakers_downloaded = download_file(URL_SPEAKERS, SPEAKERS_CSV)
+        abstracts_downloaded = download_file(URL_ABSTRACTS, ABSTRACTS_CSV)
 
         if not (
             presentations_downloaded and sessions_downloaded and speakers_downloaded
@@ -61,8 +92,28 @@ def setup_database():
 
         print("Loading data into pandas DataFrames...")
         presentations_df = pd.read_csv(PRESENTATIONS_CSV)
+
         sessions_df = pd.read_csv(SESSIONS_CSV)
+
         speakers_df = pd.read_csv(SPEAKERS_CSV)
+        # We don't need these
+        speakers_df = speakers_df.drop(columns=["Marca temporal", "email"], axis=1)
+        # We will use this plenty to name photo files and so on
+        normalnames = speakers_df["fullname"]
+        speakers_df["normalname"] = normalnames.apply(normalize.fullname)
+        # Sigh, sometimes people won't hear basic instructions...
+        speakers_df["linkedin"] = speakers_df["linkedin"].apply(normalize.user)
+        speakers_df["instagram"] = speakers_df["instagram"].apply(normalize.user)
+        speakers_df["twitter"] = speakers_df["twitter"].apply(normalize.user)
+        speakers_df["youtube"] = speakers_df["youtube"].apply(normalize.user)
+        speakers_df["tiktok"] = speakers_df["tiktok"].apply(normalize.user)
+        speakers_df["git"] = speakers_df["git"].apply(normalize.user)
+
+        abstracts_df = pd.read_csv(ABSTRACTS_CSV)
+
+        if process_photos:
+            pfps = speakers_df[["normalname", "pfp"]]
+            setup_photos_database(pfps)
 
         print(f"Creating SQLite database at '{DB_NAME}'...")
         if os.path.exists(DB_NAME):
@@ -74,15 +125,10 @@ def setup_database():
         cursor.executescript(ddl)
 
         print("Creating tables and loading data...")
-        presentations_df.to_sql("presentations", conn, if_exists="replace", index=False)
-        sessions_df.to_sql("sessions", conn, if_exists="replace", index=False)
-
-        # Con la tabla de people hay que hacer unos chanchuyos porque trae las fotos
-        pfps = speakers_df[["fullname", "pfp"]]
-
-        for entry in pfps.itertuples():
-            drive_id = entry.pfp[33:]
-            download_file(f"https://drive.google.com/uc?id={drive_id}" , f"{PFPS_DIR}{entry.fullname.lower().replace(" ", "_")}.png")
+        presentations_df.to_sql("presentations", conn, if_exists="append", index=False)
+        sessions_df.to_sql("sessions", conn, if_exists="append", index=False)
+        speakers_df.to_sql("people", conn, if_exists="append", index=False)
+        abstracts_df.to_sql("abstracts", conn, if_exists="append", index=False)
 
         conn.close()
         print("Database setup complete.")
@@ -94,10 +140,14 @@ def setup_database():
         print(f"An error occurred during database setup: {e}")
         return False
 
-def export_csvs():
-    """
+
+def export_csvs() -> bool:
+    '''
     Queries the database and exports daily and session CSVs.
-    """
+
+    Returns:
+        bool: True is successful, False if errors occured.
+    '''
     print("\n--- Starting CSV Export ---")
     if not os.path.exists(DB_NAME):
         print(f"Error: Database '{DB_NAME}' not found. Cannot export CSVs.")
@@ -153,10 +203,10 @@ def export_csvs():
             conn.close()
 
 
-def run():
-    if setup_database():
+def main(proccess_photos=False):
+    if setup_database(proccess_photos):
         export_csvs()
 
 
 if __name__ == "__main__":
-    run()
+    main()
