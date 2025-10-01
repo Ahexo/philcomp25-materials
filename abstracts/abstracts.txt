@@ -5,6 +5,7 @@ Dana Andrea García Carrillo, Instituto de Investigaciones Filosóficas
 Topic: Philosophy of Science and Mathematics in the Era of Computing Machinery
 Keywords: Computer-assisted proofs, automated proof., mathematical understanding, philosophy of
 mathematical practice
+Abstract:
 This talk is about the epistemic value of computer-assisted proofs (CAPs), based on the case
 of the automated resolution of Robbins’ problem using the EQP system in 1996. A major
 objection to this type of proof is that, as they are leibnizian style proofs (Hacking, 2014) and
@@ -31,6 +32,7 @@ Ondrej Majer, Institute of Philosophy, The Czech Academy of Sciences
 Favio Miranda-Perea, Departamento de Matemáticas, Facultad de Ciencias, UNAM
 Topic: Theory of Computation, Formal Languages, Logic, and Foundational Mathematics
 Keywords: classical propositional logic, depth-bounded reasoning, game semantics, tractability
+Abstract:
 We put forward a game semantics for the "weak depth-bounded" tractable approximations
 to classical propositional logic introduced by Marcello D'Agostino and co-authors. Our
 semantics models an agent's computational or cognitive resource consumption in terms of
@@ -44,6 +46,7 @@ Authors:
 Melisa Lizbeth Saavedra Gutiérrez, Instituto de Investigaciones Filosóficas, UNAM.
 Topic: Ethical Issues in and of Computing
 Keywords: Epistemology, artificial intelligence, data bias., ethical framework
+Abstract:
 The separation of ethical and epistemic considerations in the evaluation of artificial
 intelligence has led to significant shortcomings in addressing issues of bias, opacity, and
 accountability on the part of the companies that fund them.
@@ -74,6 +77,7 @@ Authors:
 Victor Borja, Apache Software Foundation
 Topic: Philosophy of Computing and Computer Science
 Keywords: Rust, algebraic effects, effect handlers, modularity, safety, systems programming
+Abstract:
 Algebraic effects and handlers are a powerful abstraction for structuring programs by
 separating  effectful  computations  from  their  interpretation.  In  systems  programming
 languages, such as Rust, their adoption has been limited by challenges in safety, efficiency,
@@ -94,6 +98,7 @@ Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Com
 Keywords: Agent-relative computability, Computational realism, Finite agents, Hypercomputation,
 Implementation, Individuation of computation, Operationalism, Physical Church–Turing Thesis, Symbolic
 control, Thermodynamic constraints
+Abstract:
 I defend a pragmatic reinterpretation of the Physical Church–Turing Thesis (PCTT), arguing
 that computability should be understood not as an intrinsic property of physical systems, but
 as a constraint on what finite agents can operationally stabilise and exploit. Existing
@@ -126,6 +131,7 @@ Nezij Mendoza Castellanos, Facultad de Ciencias, UNAM
 Topic: Frontier Artificial Intelligence, Neurocomputation, and Computational Linguistics
 Keywords: AI Governance, Blockchain, Cryptography, Decentralized AI, Ethereum ZKSync, Philosophy of
 Technology, Trustless Systems, Zero-Knowledge Proofs
+Abstract:
 In this paper, we propose a theoretical schema that illustrates how an architecture similar
 to ledger protocols such as Ethereum, Bitcoin, and ZKSync could be used to build a trustless
 decentralized AI network using Zero-Knowledge Proofs (ZKPs). We begin by critically
@@ -145,6 +151,7 @@ Authors:
 Israel Sandoval Grajeda, Instituto de Investiagaciones en Matemáticas Aplicadas y en Sistemas UNAM
 Topic: Philosophy of Computing and Computer Science
 Keywords: abstractions in software, computational thinking, problem solving process
+Abstract:
 Nowadays,there are a lot of software development methodologies and technologies that help
 guide the programmer in the development process, allowing the related tasks to be done
 easier. However, solving a problem and representing a possible solution as code in a
@@ -170,6 +177,7 @@ Authors:
 Luis Alberto Dacomba Méndez, UNAM
 Topic: Computational Philosophy
 Keywords: AI, cognitive processes, creativity
+Abstract:
 In a constantly changing world, the integration of tecnology and society has become
 increasingly evident and inevitable. The unprecedented generation of data has driven the
 implementation of artificial intelligence in different areas of our lives, from industry and
@@ -188,6 +196,7 @@ Topic: Gender, Politics, and Society in Computing
 Keywords: Accelerationism, Algorithmic Governance, Artificial Intelligence (AI), Computational Capitalism,
 Digital Reductionism, Epistemology and Computation, Ontological Assumptions of the Human,
 Posthumanism, Technofeudalism, Transhumanism
+Abstract:
 In recent years, artificial intelligence has been heralded as a revolutionary step in human
 progress. However, this paper argues the opposite: AI has become the ultimate tool for
 accelerating the most alienating and oppressive structures already embedded within techno
@@ -216,6 +225,7 @@ Natzue Mendoza Jaimes, -
 Topic: Aesthetic Issues in and of Computing
 Keywords: Algorithmic Aesthetics, Artificial Intelligence, Artificial Subjectivity, Digital Visual Culture,
 Platform Ethics, Recommendation Systems
+Abstract:
 This  paper  explores  how  artificial  intelligence,  through  algorithmic  recommendation
 systems on social media platforms, not only organizes but actively shapes aesthetic norms in
 contemporary digital environments. Far from being neutral filters, these algorithms curate
@@ -239,7 +249,8 @@ Jesus Armando Tapia Gallegos, Self
 Topic: Ethical Issues in and of Computing
 Keywords: AI and Human Rights, Algorithmic Forgetting, Ethical AI, Machine Unlearning, Privacy-
 Preserving AI, Right to Be Forgotten (RTBF), Value-Sensitive Design
-The  ongoing  evolution  of  artificial  intelligence  (AI)  presents  both  unprecedented
+Abstract:
+The  ongoing evolution of artificial  intelligence  (AI)  presents  both  unprecedented
 opportunities  and  profound  ethical  challenges  for  organizations  navigating  digital
 transformation.  This  study  examines  the  intersection  of  transformational  and  agile
 leadership with responsible AI implementation in hybrid and remote work environments.
@@ -267,6 +278,7 @@ Authors:
 María Virginia Bon Pereira, Universidad de Monterrey
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Algorithmic justice; Emotion; Intersubjetivity; Communication; Socio-digital; Networks; Ethic.
+Abstract:
 Socio-digital communication technologies and platforms are currently agents of construction
 and intersubjective, social, cultural, economic and political change.
 However, socio-digital technologies and the use of increasingly refined algorithms as
@@ -289,6 +301,7 @@ Authors:
 Annabel Castro Meagher, Universidad de Monterrey
 Topic: Gender, Politics, and Society in Computing
 Keywords: IA antagonist, Touch language, classification stories, communication ecosystem, words' engine
+Abstract:
 The objective of this paper is to present the need to cultivate an alternative way of encoding
 meaning other than through AI driven systems. The multiplication of digital devices and
 applications (aiming to maximize user interactions that produce data from which behavioral
@@ -314,6 +327,7 @@ Authors:
 Wulfrano Arturo Luna Ramírez, Universidad Autónoma Metropolitana Cuajimalpa
 Topic: Philosophy of Computing and Computer Science
 Keywords: Decolonialidad, Filosofía Política, Filosofía de la ciencia y la tecnología, Inteligencia Artificial
+Abstract:
 Hoy  en  día  la  Inteligencia  Artificial  (IA)  ha  cobrado  gran  relevancia,  al  menos
 mediáticamente, entre otras cosas gracias al empuje que las herramientas generativas le ha
 dado. Resurgen también preocupaciones por las distintas problemáticas implicadas por su
@@ -368,6 +382,7 @@ Authors:
 Julio César Martínez Sánchez, Escuela Nacional de Ciencias Forenses
 Topic: Ethical Issues in and of Computing
 Keywords: Artificial intelligence, ChatGPT, ethics in the digital age
+Abstract:
 When we include texts or data generated with Artificial Intelligence in an academic work,
 who holds authorship over those elements? Who is responsible for the validity of the ideas?
 And more importantly, can we trust AI’s contributions to scholarly work? In this talk, we
@@ -389,9 +404,7 @@ Dr. José Víctor Rosendo Tamariz Flores, Benemérita Universidad Autónoma de P
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Critical ecology., Digital noise, Digital subjectivity, Philosophy of computing, Technological
 atmospheres
- 
-Atmospheric Computing: A Philosophical Approach to Digital Noise as a Technical,
-Symbolic, and Environmental Interface
+Abstract:
 In contemporary urban and digital environments, noise is no longer reducible to an acoustic
 phenomenon: it has become synonymous with data overload, stimulus saturation, and
 algorithmic interference. This paper offers a philosophical investigation into digital noise,
@@ -424,6 +437,7 @@ Juan Francisco Ortiz Moreno, Universidad Nacional Autónoma de México
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Epistemic opacity, Trustworthy AI, explainable artificial intelligence (xAI), model
 interpretability, stakeholder's desiderata
+Abstract:
 This  paper  challenges  the  common  assumption  that  epistemic  opacity  in  artificial
 intelligence systems is confined to algorithmic complexity. Instead, it argues that opacity is
 distributed across the full lifecycle of machine learning systems, encompassing data
@@ -451,7 +465,8 @@ physical and the virtual
 Authors:
 Rinnette Riande González, Master’s Program in Philosophy of Science, UNAM
 Topic: Ethical Issues in and of Computing
-Keywords: affordances, digital identity, personal identity, scaffoldings, social media
+Keywords: affordances, digital identity, personal identity, scaffoldings, social
+Abstract:
 Building personal identity in the digital age: Between the physical and the virtual
 Nowadays, it is practically impossible to separate virtual activities from our daily lives. From
 paying for services to interpersonal communication, our digital presence often seems to be
@@ -476,6 +491,7 @@ Authors:
 Juan Armando Ramírez García, UNAM
 Topic: Philosophy of Computing and Computer Science
 Keywords: Indecision, epistemic state, paradox, thought experiments
+Abstract:
 It is not far-fetched to assert that one of the most interesting thought experiments in the
 history of ideas is Buridan's donkey. It is not only a thought experiment, but a paradox with
 implications in various branches of speculative and practical philosophy, which can be
@@ -498,6 +514,7 @@ Andrés Ortiz-Muñoz, N/A
 Topic: Theory of Computation, Formal Languages, Logic, and Foundational Mathematics
 Keywords: autocatalysis, autopoiesis, category theory, closure, computation, deduction theorem, lambda
 calculus, logic, self-organization, type theory
+Abstract:
 Closure is a foundational concept appearing across biology, logic, and computation, often
 associated  with  autonomy,  self-reference,  and  the  capacity  for  self-maintenance.  In
 theoretical  biology,  closure  arises  in  organizational  schemes  such  as  autopoiesis ,
@@ -524,6 +541,7 @@ of Mexico
 Topic: Gender, Politics, and Society in Computing
 Keywords: Cognitive warfare, Cyber warfare, Information warfare, Psychological warfare, Soft power
 operations, Surveillance Capitalism
+Abstract:
 The creation of the concept of cognitive warfare  is relatively recent and, however, its
 development is as rich and complex as the implications of its implementation in the recent
 past, as well as in the near future, are transcendental.
@@ -542,6 +560,7 @@ Authors:
 Magda Lillalí Rendón García, FCPyS, UNAM
 Topic: Gender, Politics, and Society in Computing
 Keywords: , Artificial Intelligence, COIL, Communication Networks, Digital Literacy, Global Citizenship
+Abstract:
 Communication strategies in COIL virtual migration projects are essential for achieving
 participant interaction in the digital space, especially considering the variety of elements
 involved in these multicultural activities, which are carried out remotely from different
@@ -549,7 +568,6 @@ geographical  areas  in  the  same  virtual  space,  with  synchronous  and  asy
 communication.
 Therefore, different learning styles, different work areas, and diverse worldviews contribute
 to the comprehensive development of digital citizens.
- 
 Díaz said “The internet user then takes on an active role, able to create and disseminate
 information. At the same time, virtual platforms also provide the opportunity to interact,
 comment, and express opinions on shared information, using memes as social criticism”.
@@ -562,7 +580,6 @@ use of collaborative work resources such as Google Slides, or storage resources 
 Google Drive or Dropbox, are part of the knowledge acquisition spaces required for
 communication strategies to learn how to apply them, transform, and modify coexistence
 strategies in daily life, both personally, professionally, and academically.
- 
 Finally, with this presentation, I will present a quick workbook on what we need to know to
 communicate always, and especially in virtual spaces. Including concepts such as Global
 Citizenship,  Digital  Literacy,  Artificial  Intelligence,  COIL,  Communication  Networks,
@@ -573,6 +590,7 @@ Authors:
 Carlos Gaona, Universidad Veracruzana
 Topic: Biocomputation, Biomathematics, and Artificial Life
 Keywords: Drug repositioning, TBP, Trypanosoma cruzi, cheminformatics, computational tools
+Abstract:
 Parasitic diseases like Chagas remain a global health challenge, exacerbated by drug
 resistance and limited therapeutic options. This study illustrates how computational tools
 can drive new modes of knowledge production in biomedical research. We applied an in
@@ -603,6 +621,7 @@ Authors:
 Somogy Varga, Aarhus Universtiy
 Topic: Frontier Artificial Intelligence, Neurocomputation, and Computational Linguistics
 Keywords: Computational psychiatry, cognition, computational models, interoception
+Abstract:
 Computational  psychiatry  increasingly  models  interoception  (i.e.,  the  perception  and
 regulation of internal bodily signals) as central to understanding mental disorders. Two
 challenges arise. First, how can the pervasive influence of interoception on cognition be
@@ -622,6 +641,7 @@ Authors:
 Javier Toscano, Alice Salomon Hochschule, Berlin, Germany
 Topic: Frontier Artificial Intelligence, Neurocomputation, and Computational Linguistics
 Keywords: Neural networks, collective intentionalities, critical algorithm studies, habits
+Abstract:
 This presentation offers a comparative analysis of two conceptual frameworks— machine
 habitus  and collective intentionality —to critically assess neural networks (NNs) and large
 language models (LLMs) as socio-technical systems. Drawing on Massimo Airoldi’s Machine
@@ -654,6 +674,7 @@ Authors:
 Arturo Muñiz Colunga, DITE, DGTIC - UNAM
 Topic: Gender, Politics, and Society in Computing
 Keywords: Educación, humanidades digitales, tecnología
+Abstract:
 Este conversatorio tiene como propósito presentar y dialogar en torno al más reciente
 número  de  TIES,  Revista  de  Tecnología  e  Innovación  en  Educación  Superior,  una
 publicación semestral de acceso abierto editada por la Universidad Nacional Autónoma de
@@ -685,6 +706,7 @@ Martín A Lozano-Nevárez, Centro de Investigación en Ciencias Cognitivas
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: cognición corporeizada, corporalidad, dicotomía virtual/real, interacción digital, materialidad
 digital
+Abstract:
 Este trabajo propone una crítica profunda a la dicotomía tradicional entre lo virtual y lo real
 en la interacción humano-computadora. A través del estudio de experiencias digitales
 háptico-auditivas de personas con discapacidad visual, se demuestra que toda experiencia
@@ -705,6 +727,7 @@ Authors:
 Shaunette T. Ferguson, Barnard College, Columbia University
 Topic: Gender, Politics, and Society in Computing
 Keywords: affective states, complex netwworks, densification scaling
+Abstract:
 Human interaction has shifted from direct, face-to-face communication to large-scale, digital
 discourse where individuals engage with both content and each other. Platforms like
 YouTube provide an environment for dynamic social interactions, where discussions emerge
@@ -738,6 +761,7 @@ Andrés Jiménez Lizárraga, Facultad de Ciencias (UNAM)
 Topic: Gender, Politics, and Society in Computing
 Keywords: Capitalismo, Ciberespacio, Filosofía de la tecnología, Hauntología, Ideología, Marxismo,
 Melancolía de izquierda, Nostalgia política, Redes sociales
+Abstract:
 Esta  investigación  constituye  un  primer  acercamiento  al  estudio  de  las  principales
 manifestaciones en el ciberespacio de un fenómeno sociocultural: la idea colectiva sobre la
 presunta imposibilidad de concebir un futuro alternativo al capitalismo. Llamamos a este
@@ -772,6 +796,7 @@ Eric Rodríguez Ochoa, The Ludwig Wittgenstein Project
 Topic: Ethical Issues in and of Computing
 Keywords: Desiring machines, algorithmic resistance, digital biopolitics, digital ethics, individual
 autonomy, predictive algorithms
+Abstract:
 This proposal examines how predictive algorithms operate as “desiring machines” within a
 framework  of  digital  biopolitics,  extending  Deleuzian  theory  into  contemporary
 computational  practices.  By  analyzing  the  anticipatory  mechanisms  embedded  in
@@ -799,7 +824,8 @@ Jesus Manuel Niebla Zatarain, Universidad Autonoma de Sinaloa - Facultad de Dere
 Virginia Berenice Niebla Zatarain, Tecnologico Nacional de Mexico - ITES Los Cabos
 Gonzalo Armienta Hernandez, Facultad de Derecho Culiacan - Universidad Autonoma de Sinaloa
 Topic: Ethical Issues in and of Computing
-Keywords: Legal artificial intelligence - Authorship - Copyright law
+Keywords: Legal artificial intelligence, Authorship, Copyright law
+Abstract:
 AI is profoundly impacting areas once deemed incompatible with this technology, sparking
 ethical and legal debates concerning the copyright and legal status of AI-generated works.
 This proposal's core aim is twofold: first, to examine the effectiveness of authorship in the AI
@@ -832,6 +858,7 @@ Authors:
 Pablo Adrián Rivera Juvenal, Universidad Nacional Rosario Castellanos
 Topic: Philosophy of Interaction Design
 Keywords: Edupunk 2.0, inteligencias artificiales generativas., tecnofeudalismo, territorios digitales
+Abstract:
 En la presente ponencia se postula la propuesta educativa denominada Edupunk 2.0, la que
 es una reinterpretación del modelo Edupunk surgido en el inicio del siglo XXI y cuyo lema
 era “hazlo tú mismo”.
@@ -852,6 +879,7 @@ Leonardo Tomas Ruiz Mora, FFyL - UNAM
 Topic: Gender, Politics, and Society in Computing
 Keywords: cultura cibernética, desterritorialización, hegemonía cultural, internet, resistencia digital,
 semiocapitalismo, tecnocapitalismo, territorialización
+Abstract:
 Este trabajo propone una lectura crítica del internet como un territorio en disputa, donde se
 libra una constante lucha por la producción de subjetividades, sentidos y deseos. Lejos de
 ser un espacio neutral, el internet ha sido progresivamente territorializado por las lógicas
@@ -884,6 +912,7 @@ Authors:
 Abraham González Montaño, Universidad del Desarrollo Empresarial y Pedagógico
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Algoritmitariado, capitalismo, clase algorítmica, dataísmo
+Abstract:
 La era dataísta ha alterado drásticamente la constitución de las sociedades en el siglo XXI al
 modificar y crear para sí innovadores mecanismos de valor y, con ello, nuevos entramados
 de  relaciones  sociales  que  ahora  son  mediadas  por  la  producción,  acumulación  y
@@ -901,6 +930,7 @@ Authors:
 Qiu Lin, Department of Philosophy/Simon Fraser University
 Topic: Gender, Politics, and Society in Computing
 Keywords: AI-generated content, Comparative learning, assignment design, in-class discussion, pedagogy
+Abstract:
 This presentation introduces comparative learning , a pedagogical method where students
 critique AI-generated essays using the same rubric applied to their own philosophical
 writing. In recognition of the widespread use of various "AI assistants" in students'
@@ -918,6 +948,7 @@ Francisco Javier Suárez Vargas, Universidad de Guadalajara / Colegio Profesiona
 Mexicana de Estudiantes de Filosofía
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Epistemología, Inteligencia artificial, autoridad epistémica, conocimiento
+Abstract:
 Se afirma en círculos tecnológicos que las máquinas ya no solo realizan cálculos
 matemáticos complejos mediante comandos lógicos, sino que pueden comunicarse con los
 humanos  gracias  al  lenguaje  precargado  con  entrenamiento  profundo.  A  nivel
@@ -945,6 +976,7 @@ Gloria Daniela Martínez Caudillo, Universidad de Guanajuato
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Adaptive system, Artificial intelligence, Complex system, Computation, Emerging Property,
 Epistemology, Knowledge, Non-linearity
+Abstract:
 Is  knowledge  possible  for  artificial  intelligence?  What  would  be  the  necessary
 epistemological conditions for this to occur? This paper aims to provide an answer to these
 questions through a philosophical analysis. In order to address these inquiries, a hypothesis
@@ -966,6 +998,7 @@ María Martínez-Ordaz, Instituto de Investigaciones Filosóficas, UNAM
 Andrés Vázquez-Quijano, Instituto de Investigaciones Filosóficas, UNAM
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Epistemic opacity, SNIFS, empirical adequacy, reliability
+Abstract:
 Here, we explore the reliability of measurement processes in contexts governed by high
 degrees of ignorance due to heavy technological dependency. In particular, we focus on the
 reaction of the cosmologists towards the binary offset effect on the SuperNova Integral
@@ -994,6 +1027,7 @@ Diana Jacqueline Chagoya Galvan, UAM
 Topic: Frontier Artificial Intelligence, Neurocomputation, and Computational Linguistics
 Keywords: Convolutional neural network, Evolutionary algorithms, Facial emotion recognition, Green
 computing
+Abstract:
 Recent advances in machine learning, such as the use of convolutional neural networks,
 have driven significant improvements in emotion recognition. However, these achievements
 demand high energy use and contribute to a growing carbon footprint. This work draws on
@@ -1004,7 +1038,6 @@ accuracy, energy consumption, and CO ₂ emissions during training. Additionally
 fine model enhanced with evolutionary algorithms is implemented, showing that more
 efficient systems can be built without disregarding their broader environmental implications
 or the long-term trajectory of technological development.
- 
 Page 43Gender Bias in Artificial Intelligence Applied to Health: A
 Systematic Review
 Authors:
@@ -1014,7 +1047,7 @@ UNAM
 Alejandro Alayola Sansores, Departamento de Salud Digital, Facultad de Medicina. UNAM.
 Topic: Gender, Politics, and Society in Computing
 Keywords: Artificial Intelligence, Bias., Gender
- 
+Abstract:
 Artificial intelligence has been widely used in the healthcare field, the lack of regulation and
 its applications for diagnosis, prevention, and treatment have allowed its use to spread
 widely, however, there are risks associated with biases, especially demographic ones such
@@ -1030,7 +1063,8 @@ Page 44Ghost in the shell: El vínculo del hombre con la IA.
 Authors:
 Kenny Paul Arias García, FES Acatlán
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
-Keywords: Ghost in the shell: El vínculo del hombre con la IA ética ontología epistemología
+Keywords:
+Abstract:
 En este breve ensayo se examina el vínculo que el hombre tiene con la inteligencia artificial,
 la cual se refiere en sus siglas IA, para entender este vínculo se plantea la IA como una
 herramienta, como se le puede entender desde la obra de Schopenhauer, del mismo modo
@@ -1048,6 +1082,7 @@ Authors:
 Mario Ulises Maya Martínez, Universidad Anáhuac México
 Topic: Aesthetic Issues in and of Computing
 Keywords: Creativity, Definition, GenAI, Human, Machines
+Abstract:
 Creativity has become a topic of interest for researchers in various fields. However, despite
 this interest and the increase in empirical studies, aspects such as its definition and
 evaluation have been the subject of continuous debate. The “standard definition of
@@ -1079,6 +1114,7 @@ Authors:
 Josué H. Bojorges, Centro de Investigación en Ciencias Cognitivas
 Topic: Gender, Politics, and Society in Computing
 Keywords: Artificial Intelligence (AI), attention, cooperation., democratic deliberation
+Abstract:
 What are the conditions under which Artificial Intelligence (AI) and humans can coordinate
 in democratic deliberation processes? This proposal seeks to describe some parameters of
 cooperative interaction between human and artificial agents toward shared democratic
@@ -1098,6 +1134,7 @@ Authors:
 Gerardo Rossel, Universidad de Buenos Aires. FCEyN. Departametno de Computación
 Topic: Philosophy of Computing and Computer Science
 Keywords: Data Science, Epistemic Field, Epistemology, Interdisciplinarity, Theoretical Frameworks
+Abstract:
 Data Science has rapidly emerged as a pivotal interdisciplinary field, yet its conceptual
 boundaries remain ambiguous. Traditional models—such as Venn diagrams—fail to capture
 the true complexity and evolving nature of the discipline. This work proposes a shift in
@@ -1128,6 +1165,7 @@ Arnold Grigorian, NRU HSE, Int. Laboratory for Logic, Linguistics and Formal Phi
 Topic: Computational Philosophy
 Keywords: category theory, constructive logic, foundations of mathematics, homotopy type theory,
 univalent foundations
+Abstract:
 This  talk  explores  two  complementary  justifications  for  Univalent  Foundations  and
 homotopical logic. The first part addresses the role of internal language  in category theory
 as a foundational tool. Categories with sufficient structure—such as topoi—can serve as
@@ -1155,6 +1193,7 @@ Authors:
 Carles Tardío Pi, Centro de Ciencias Genómicas, UNAM
 Topic: Biocomputation, Biomathematics, and Artificial Life
 Keywords: bacteria, bioputing, cellular automata, open hardware, plasmids, unconventional computing
+Abstract:
 We present a heterotic hybrid computing device composed of a coevolving system that
 integrates in vivo  bacterial plasmid populations with in silico  elementary cellular automata
 (ECA). This biologically-algorithmic coupling enables dynamic updates of the bacterial
@@ -1179,6 +1218,7 @@ Authors:
 Vincent Alexis Peluce, College of Southern Nevada
 Topic: Ethical Issues in and of Computing
 Keywords: Artificial Intelligence, Compatibilism, Existential Danger, Freedom
+Abstract:
 Does the possibility of machine freedom pose an existential threat to humanity? In other
 words, should we add this to the list of worries related to Artificial Intelligence? In his 1993
 Artificial Intelligence , Jack Copeland argues that machines might achieve freedom, but only
@@ -1187,7 +1227,6 @@ available to machines, then machine freedom per se  does not pose an existential
 humanity. Alternatively, this means that if machine freedom in fact poses an existential
 threat, then some freedom beyond that of the compatibilist sort must be available to
 machines.
- 
 Page 51Modeling transitional probability learning and target
 detection from a neurocomputational framework
 Authors:
@@ -1196,6 +1235,7 @@ Mario E. Fischer Casco, Faculty of Psychology, National Autonomous University of
 Topic: Computational and Non-Computational Cognitive Science
 Keywords: artificial neural network, neurocomputational model, reaction time, target detection,
 transitional probability learning
+Abstract:
 Statistical  learning,  the  ability  to  identify  recurrent  distributional  patterns  in  the
 environment, is implicated in multiple cognitive abilities and complex behaviours, and
 numerous  neural  plasticity  mechanisms  are  thought  to  be  involved.  Transitional
@@ -1224,6 +1264,7 @@ Authors:
 Juan Sebastián Novoa Toledo, Universidad Nacional de Colombia
 Topic: Philosophy of Computing and Computer Science
 Keywords: Natural computing, mode of computing, predictive processing, representation
+Abstract:
 In his recent work, Dr. Luis Alberto Pineda explains that computing is a mixed process
 involving  an  objective  component—namely,  the  mechanical  transformation  of
 representations—and a subjective component, which consists in the interpretation of those
@@ -1248,6 +1289,7 @@ Authors:
 MARLENI REYES Monreal, Benemérita Universidad Autónoma de Puebla
 Topic: Aesthetic Issues in and of Computing
 Keywords: Computacional esthetics, glitch, non-human error
+Abstract:
 The expansion of computing into all areas of cultural life has generated new forms of
 perception, creation, and aesthetic reception. Categories such as the sublime or the
 beautiful are no longer understood solely through nature or traditional art; they now include
@@ -1268,6 +1310,7 @@ Authors:
 Jesus Omar Lara Arriaga, 1
 Topic: Frontier Artificial Intelligence, Neurocomputation, and Computational Linguistics
 Keywords: brodmann areas, ethical AGI, neuroethical computing, quantum state collapse
+Abstract:
 As  artificial  intelligence  systems  increasingly  operate  in  ethically  sensitive
 domains—autonomous warfare, policy-making, law enforcement, and smart cities—the
 challenge arises: how can we create AI that makes morally sound decisions under
@@ -1302,6 +1345,7 @@ Authors:
 Hector Omar Ruiz Rivera, University of St Andrews/University of Stirling
 Topic: Ethical Issues in and of Computing
 Keywords: Personal Assault; Ethics of the Extended Mind; Extended Cognition;
+Abstract:
 According to the extended mind hypothesis, originally proposed by Clark and Chalmers
 (1998), non-neural objects in our environment, under the right conditions, can become part
 of the mechanisms of our cognition. Proponents of this hypothesis argue that one of its
@@ -1330,6 +1374,7 @@ Authors:
 Ángel Gutiérrez Escobedo, Universidad de Guanajuato
 Topic: Ethical Issues in and of Computing
 Keywords: Ciencias Sociales, Decisiones Teóricas, Software, Teorizar, Ética
+Abstract:
 Las ciencias sociales hacen uso del computador en distintos  momentos, incluso sin ser
 capaces de reconocerlo . Esta condición es actual a la forma en que se produce conocimiento
 científico y nos lleva a problematizar sobre las decisiones teóricas y metodológicas que
@@ -1351,7 +1396,7 @@ Authors:
 Karen González Fernández, Universidad Panamericana
 Topic: Philosophy of Computing and Computer Science
 Keywords: filosofía, ingeniería, inteligencia artificial, libro
-Presentación del libro: Inteligencia Artificial. Enfoques multidisciplinares. 
+Abstract:
 Este libro contiene una compilación de artículos que tratan diversos problemas relacionados
 con el desarrollo de la Inteligencia Artificial desde varias disciplinas: ingeniería, filosofía de
 la ciencia, filosofía política, historia y filosofía de la IA, filosofía social, problemas lógicos de
@@ -1366,6 +1411,7 @@ Authors:
 Carlos Adolfo Piña García, Universidad Veracruzana
 Topic: Gender, Politics, and Society in Computing
 Keywords: ICL, LLM, LLaMA 3, Misinformation, Propaganda, Twitter
+Abstract:
 This study explores how Large Language Models (LLMs) can be used to detect political
 propaganda on social media, using the 2018 Mexican presidential election as a case study.
 By applying a few-shot prompting method within an In-Context Learning (ICL) framework,
@@ -1393,6 +1439,7 @@ Authors:
 Edmar Soria, Universidad Autónoma Metropolitana
 Topic: Theory of Computation, Formal Languages, Logic, and Foundational Mathematics
 Keywords: Quantum Computing, Quantum Convolutional Neural Networks
+Abstract:
 The primary aim of AGI research is to design computational systems that emulate, match or
 exceed human cognitive-consciousness capabilities across all domains of interest, and for
 that an extensive multi-interdisciplinary endeavour has been developed several decades
@@ -1404,10 +1451,8 @@ ontological and even a metaphysical perspective. In parallel, quantum computing 
 exploit superposition and entanglement to achieve algorithmic speed-ups and tackle large,
 complex problems that are intractable on classical hardware. And with the emerging field of
 Quantum Machine Learning, the convergence between Ai and Quantum Computing is
-beginning to open some speculative and philosophical perspectives about a core question: 
- 
-Can Quantum Computers Contribute to the Emergence of Superintelligence? 
- 
+beginning to open some speculative and philosophical perspectives about a core question:
+Can Quantum Computers Contribute to the Emergence of Superintelligence?
 This conference will provide a brief state of the Art analysis in Quantum AI / Quantum
 Machine  Learning  research,  alongside  with  a  brief  review  of  the  basic  theoretical
 foundations of AGI concepts of superintelligence  and  ultraintelligent machine, in order to
@@ -1424,6 +1469,7 @@ Authors:
 Karen González Fernández, Universidad Panamericana
 Topic: Ethical Issues in and of Computing
 Keywords: escritura híbrida, inteligencia artificial, investigación científica, plagio
+Abstract:
 A finales del siglo XX, con la aparición del internet y, posteriormente, con la aparición de las
 herramientas computacionales capaces de procesar grandes volúmenes de información, la
 investigación científica se vio revolucionada.
@@ -1447,6 +1493,7 @@ Karla Ramírez-Pulido, Facultad de Ciencias, UNAM
 Ana Cristina Cervantes-Arrioja, Facultad de Ciencias, UNAM
 Topic: Gender, Politics, and Society in Computing
 Keywords: Education, Ethics, Gender, Generative Artificial Intelligence
+Abstract:
 This paper analyzes the functioning of Generative Artificial Intelligence (GAI) and its
 application in educational contexts, highlighting its potential to personalize teaching,
 automate teaching tasks, and optimize institutional management. At the same time, it warns
@@ -1466,6 +1513,7 @@ Enrique F. Soto-Astorga, UNAM
 Topic: Philosophy of Computing and Computer Science
 Keywords: Hardware/Software, Ontology of Computing, Philosophy of Computing, Relational Science,
 Robert Rosen
+Abstract:
 This paper problematizes the assumed hardware/software dualism through Robert Rosen’s
 philosophical work. After revisiting the foundations of Turing machines and the physico-
 axiomatic extensions by Gandy and Sieg, it is argued that such models depend on the
@@ -1481,6 +1529,7 @@ Authors:
 Alejandro David Tamez, Center for Cyber-Social Dynamics at the University of Kansas
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Artificial Intelligence, Epistemic Environments, Epistemic Injustice, Social Dynamics
+Abstract:
 This paper argues that the increasing integration of artificial intelligence (AI) systems into
 public life demands a shift in how we understand and protect epistemic agency. I defend
 two  central  claims.  First,  generative  technologies  such  as  deepfakes,  algorithmic
@@ -1512,6 +1561,7 @@ Authors:
 Edmar Soria, Universidad Autónoma Metropolitana
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: AI spirituality, Apocalyptic AI religiosity, Escathological AI, Robots and Religion
+Abstract:
 This  research  explores  the  possibility  of  synthesizing  perspectives  from  technology,
 philosophy of AI, theology, and the science of religion in order to study the potential for
 machines and AI to achieve religiosity and spirituality through the  addressing of two
@@ -1525,6 +1575,7 @@ CP Hertogh, Chongqing University, VUB Brussels
 Topic: Theory of Computation, Formal Languages, Logic, and Foundational Mathematics
 Keywords: (extended) argument view, (extended) logic view, (non)classical logic, descriptive semantics,
 possible worlds semantics (PWS), progress of science and society, semantics, thought experiment (TE)
+Abstract:
 The research question of Semantics of Thought Experiments (TE) for a unified but
 nonreductionist theory of TE is answered by a provisional proposal involving four views,
 Extended Argument View (TE Matrix, TE Diagram), Extended Logic View (incl. plausibility
@@ -1546,6 +1597,7 @@ Ana Laura Ortiz Astudillo, irr4ti0n4L kawaii
 Topic: Aesthetic Issues in and of Computing
 Keywords: Arte Especulativo, Cultura Cibernetica, Estetica Digital, Futurología Critica, Hiperstición,
 Solarpunk, Tecnofeminismo
+Abstract:
 Esta ponencia propone una reflexión crítica sobre el papel del arte como agente activo en la
 configuración de futuros posibles, en un escenario marcado por la crisis ecológica, el
 colapso epistémico y la intensificación del tecnocapitalismo. A partir de una relectura
@@ -1569,6 +1621,7 @@ Philosophy (HSE University)
 Topic: Theory of Computation, Formal Languages, Logic, and Foundational Mathematics
 Keywords: Causality, Sylvan, computer science, counterfactuals, da Costa, non-monotonic logics, relevant
 logics
+Abstract:
 This report addresses the concept of causation in its connection with formal systems, as well
 as the logic of causal implication (CI) by Richard Sylvan (Routley) and Newton da Costa.
 This logic is founded on a novel connective, A \ni  B ("A causes B"), and a temporal, strict
@@ -1597,6 +1650,7 @@ Sara Barrios Rangel, Grupo de Investigación en Filosofía de la Computación. U
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Human–Machine Communication, communication science, incomputability, philosophy of
 computation, technocapitalism, technoscience
+Abstract:
 The integration of various artificial intelligence (AI) technologies into information and
 communication technologies (ICT) for communicative and conversational purposes, along
 with the proliferation of intelligent social agents, has opened new research frontiers in the
@@ -1612,15 +1666,13 @@ the  philosophy  of  computation  and  the  concept  of  incomputability.  It  e
 ontological assumptions and implications of treating machines as communicative subjects
 and meaning-makers, particularly within the context of technoscientific culture and the
 development of AI technologies that commodify affect under the logic of technocapitalism.
-Topic: The Uncomputable in Other Disciplines
- 
- 
-Page 69Technological adoption in the production of artisanal textiles
+Topic: The Uncomputable in Other DisciplinesPage 69Technological adoption in the production of artisanal textiles
 in Mexico
 Authors:
 Carla Espinosa Herrera, Universidad de Guanajuato
 Topic: Aesthetic Issues in and of Computing
 Keywords: Arte, Computation, History, México, Textil
+Abstract:
 Mexico is internationally recognized for its artisanal textile production, a cultural identity.
 The  practice  of  this  textile  reflects  the  worldview  and  adaptability  of  its  people.
 Economically, we can emphasize a number of other factors, such as technology and its
@@ -1644,6 +1696,7 @@ Authors:
 Ricardo Castillo Solano, PhD student at Universidad Iberoamericana Ciudad de México
 Topic: Gender, Politics, and Society in Computing
 Keywords: Human rights approach, education, engineering, technology development
+Abstract:
 Through an exploratory theoretical research, employing documentary and observational
 techniques, it was concluded that, as of 2024, the ten highest-ranked universities in Mexico
 (according to the QS World University Rankings) do not offer, within their engineering
@@ -1665,6 +1718,7 @@ Enrique F. Soto-Astorga, Facultad de Ciencias - UNAM
 Topic: Philosophy of Interaction Design
 Keywords: anticipation, computational systems, contextual variables, subjective experience, user cognition,
 user-system interaction
+Abstract:
 The Contextual Irruptive Forecasting Model (CIFM) proposes a novel framework for
 understanding  and  anticipating  user  cognition  during  interaction  with  computational
 systems. Grounded in a relational and temporally sensitive view of user-system engagement,
@@ -1699,6 +1753,7 @@ Andrea Carolina Camacho Yáñez, Corporación Unificada Nacional de Educación S
 Luis Fernando Gasca Bazurto, Corporación Unificada Nacional de Educación Superior CUN
 Topic: Aesthetic Issues in and of Computing
 Keywords: Aesthetic, Algorithmic Agency, Audiovisual Editing, Feeling Machine, Future AI
+Abstract:
 The expansion of artificial intelligence in creative processes has profoundly
 transformed the language of audiovisual montage, seemingly shifting human sensibility
 into a shared hybrid terrain: sentience and algorithms. This paper proposes to reflect,
@@ -1731,6 +1786,7 @@ Authors:
 Johanna Mildred Pinto García, UNAM
 Topic: Gender, Politics, and Society in Computing
 Keywords: Computational jurisprudence, digital governance, information ontology, lex digitalis
+Abstract:
 The Hybrid Ontology of Digital Normativity: Reconceptualizing Legal Authority in
 Computational Environments
 This investigation advances a sophisticated ontological framework for understanding lex
@@ -1769,6 +1825,7 @@ Authors:
 Brenda Areli Figueroa Ahumada, UNAM
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Epistemic networks, algorithms, digital communities, misinformation, social epistemology
+Abstract:
 By analyzing the digital ecosystem as an epistemic system, it is easier to explain the impact
 that personalized algorithmic sorting systems have on the creation and propagation of bad
 beliefs. In contrast with individualistic approaches to the subject, this view will explain the
@@ -1799,6 +1856,7 @@ Authors:
 Alejandro Axel Rodríguez-Sánchez, UNAM School of Sciences
 Topic: Ethical Issues in and of Computing
 Keywords: Data governance, Ethics of computing, STEM
+Abstract:
 Drawing from Luciano Floridi's vision of IT professionals as "priests of Janus", where like
 the Roman god of thresholds, they possess the rare ability to peer through the interfaces
 that remain opaque to most of humanity; this work argues that STEM professionals,
@@ -1826,6 +1884,7 @@ Authors:
 Miguel Angel Andrade, UNAM, School of Sciences
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: Interactive Computing, Metascience, Multiparty Computing, Philosophy of Science
+Abstract:
 Ever since the inception of modern computing, interaction has been theorized as a means to
 supercharge what machines are able to do. The power of this paradigm of computing has
 never been as evident as in today’s world, where distributed systems, user interfaces and
@@ -1844,6 +1903,7 @@ Authors:
 Nancy Abigail Nuñez Hernández, FES Acatlán, UNAM
 Topic: Philosophy of Computing and Computer Science
 Keywords: Artificial Intelligence, automation, computational complexity, mathematical proofs
+Abstract:
 Proof discovery in mathematics has been the pride of mathematicians since the discipline's
 early days. Due to the crucial role of proofs in mathematics, various values have been
 attributed to them: proofs have been described as having explanatory, aesthetic, or
@@ -1860,6 +1920,7 @@ Authors:
 Gerardo Islas Escobar, Student at UNAM
 Topic: Computational and Non-Computational Cognitive Science
 Keywords: consciousness, dreams, lucid dreaming, sleep
+Abstract:
 The existence of dreams poses intriguing questions regarding consciousness. Various
 attempts have been made to understand these phenomena, from spirituality to neuroscience
 in recent years. Still, we have some blind spots that do not allow us to grasp what dreams
@@ -1879,6 +1940,7 @@ Authors:
 Luis Diaz, ENAH
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: accelerationism, algorithmic dynamics, ideological sign
+Abstract:
 This essay explores the relationship between ideological signs  and algorithmic dynamics
 in the human mind. It forms part of a broader investigation into the philosophy of language
 and  the  embodied  basis  of  perception.  Algorithms  influence  not  only  our  musical
@@ -1895,7 +1957,6 @@ sign and Bayesian models of behavior, this presentation questions whether algori
 governance leads toward deterministic subjectivities. It aims to open a discussion on how
 sensation, identity, and power operate in digitally mediated societies increasingly shaped by
 probabilistic logic.
- 
 Page 81The Uniquely Human Elements in the Work of a Clinical
 Psychologist: What Artificial Intelligence Cannot Do
 Authors:
@@ -1907,6 +1968,7 @@ Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Com
 Keywords: Clinical psychology • Artificial intelligence • Phenomenology • Intersubjectivity • Embodied
 empathy • Therapeutic ethics • Therapeutic relationship • Authentic presence • Technological limitations •
 Technological complementarity
+Abstract:
 Este trabajo examina las dimensiones ontológicas irremplazables del encuentro
 terapéutico humano en comparación con las capacidades de la inteligencia
 artificial,  desde  una  perspectiva  fenomenológica  respaldada  por  evidencia
@@ -1930,6 +1992,7 @@ Authors:
 Leticia Flores-Pulido, Universidad Autónoma de Tlaxcala
 Topic: Philosophy of Computing and Computer Science
 Keywords: artificial intelligence, basic science., hermeneutics, intelligent systems, research process
+Abstract:
 Intelligent systems use the scientific method to achieve computational intelligence projects,
 but we sometimes ignore the process carried out by the main actor: the university student.
 This document reflects on the scientific research process through which university students
@@ -1946,6 +2009,7 @@ Abraham Yebra Pimentel, Centro de Estudios Filosóficos Tomás de Aquino
 Topic: Frontier Artificial Intelligence, Neurocomputation, and Computational Linguistics
 Keywords: Artificial Intelligence, Cognitive Ontology, Epistemic Limits, Exteriorization of Thought,
 Inorganic Ontology, Posthuman Reason, Reza Negarestani, Simondon, Technical Objects
+Abstract:
 The questions that concern us here are the following: is it possible to find a new form of
 thought within the human–AI relationship? And can this relationship modify the very
 structure of thought? We understand thought as a self-organizing process that, upon
@@ -1972,6 +2036,7 @@ Authors:
 Pedro Arturo Góngora Luna, unaffiliated
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: abstraction, information theory, metaphysics, ontology, phenomenology
+Abstract:
 We give the foundations for a complex theory of information. It is complex in the sense that
 it accounts for both qualitative and quantitative aspects of information, therefore beholding
 both subjective and objective informational phenomena. It is also complex in the sense that
@@ -1987,6 +2052,7 @@ Authors:
 Salvador Garcilita Arguello, Bioalgoritmia https://bioalgoritmia.com/index.html
 Topic: Gender, Politics, and Society in Computing
 Keywords: Digital transformation - Sustainability - Twin transition
+Abstract:
 Humanity—and the entire biosphere—is facing an unprecedented global crisis. Climate
 change, pollution, and biodiversity loss threaten the delicate balance of ecosystems,
 societies, and life as we know it. In response, urgent calls for action have emerged: from
@@ -2013,7 +2079,7 @@ Authors:
 Rinnette Riande González, Master’s Program in Philosophy of Science, UNAM
 Topic: Ontological, Epistemological, Metaphysical, and Axiological Issues in Computing
 Keywords: machine learning models, opaque models, practice-centered science, scientific understanding
-Understanding with machines: situated practices of machine learning
+Abstract:
 This paper analyzes Emily Sullivan's article Understanding from Machine Learning Models
 (2022), which argues that scientific practice using machine learning models can understand
 the  phenomena  studied  without  necessarily  relying  on  transparency  or  explanatory
@@ -2037,6 +2103,7 @@ Authors:
 Ricky Mouser, Johns Hopkins Berman Institute
 Topic: Ethical Issues in and of Computing
 Keywords: consequentialism, machine ethics, optimization
+Abstract:
 In 2025, the explosion of artificial agents has thrust old debates in machine ethics back into
 the spotlight. One central question is usually framed as follows: Should artificial agents be
 consequentialist or non-consequentialist ethical reasoners?
@@ -2068,6 +2135,7 @@ Authors:
 Daniel ortiz, Mathemathics department of the faculty of science unam
 Topic: Theory of Computation, Formal Languages, Logic, and Foundational Mathematics
 Keywords: Set theory, Turing machines, computability, radofunction
+Abstract:
 Set Theory has been the foundations par excellence for usual mathematics, capable of
 encoding Recursion Theory and computability theory, both extensive theories about what
 machines can do. We could think naively that Set Theory is enough for enlightening all the
@@ -2089,6 +2157,7 @@ UNAM
 Topic: Gender, Politics, and Society in Computing
 Keywords: crítica cultural, filosofía de la tecnología, imaginarios políticos, realismo capitalista,
 semiocapitalismo, tecnopolítica, transdisciplinariedad
+Abstract:
 En agosto de 2024, la Coordinación de Investigación de la Facultad de Filosofía y Letras
 impulsó espacios conformados enteramente por estudiantes, entre ellos el Grupo de
 Estudios  Transdisciplinarios  de  Tecnopolítica  y  Cibernética  (GETTEC),  integrado  por
@@ -2121,8 +2190,8 @@ Authors:
 HERRERA MENDEZ CARLOS MANUEL, UNIVERSIDAD DE GUADALAJARA
 Topic: Computational Philosophy
 Keywords: Autoría científica, Curiosidad científica, Edición de textos, Epistemología, Herramientas
-algorítmicas, Inteligencias artificiales, Marco ético., Pensamiento humano, Redacción académica, Ética
-académica
+algorítmicas, Inteligencias artificiales, Marco ético., Pensamiento humano, Redacción académica, Ética académica
+Abstract:
 En esta ponencia se explora la dimensión ética del uso de inteligencias artificiales (IAs) en
 la redacción académica, comparándolas con el papel tradicional de los editores. Se
 argumenta que, si bien las IAs pueden optimizar la expresión sintáctica y estilística de los
@@ -2138,6 +2207,7 @@ Authors:
 Carlos Lingan, Facultad de Filosofía y Letras, UNAM / Facultad de Ciencias, UNAM
 Topic: Aesthetic Issues in and of Computing
 Keywords: Latin America, Tidal Cycles, live coding, music
+Abstract:
 El surgimiento y consolidación del live coding audiovisual y el desarrollo de entornos de
 programación orientados a estas prácticas artísticas (SonicPi, Tidal Cycles o Hydra), han
 dado lugar a la conformación de gran número de producciones musicales y tentativas de

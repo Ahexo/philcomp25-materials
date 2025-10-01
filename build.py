@@ -3,7 +3,19 @@ import subprocess
 import sys
 from datetime import datetime
 import database.main as db
+import argparse
 
+PROCCESS_PHOTOS = False
+
+parser = argparse.ArgumentParser(
+                    prog="icphilcomp-materials",
+                    description="Building script",
+                    epilog="Philosophy of Computing Research Group 2025")
+
+parser.add_argument("-pp",
+                    "--processphotos",
+                    action='store_true',
+                    help="Download and proccess profile pictues.")
 
 def write_time_to_cut():
     """
@@ -58,7 +70,7 @@ def main():
     # --- Step 1 & 2: Run database and daily scripts ---
     # These commands will be run from within the 'database' module.
     print("--- Initializing database and exporting CSVs ---")
-    db.run()
+    db.main(PROCCESS_PHOTOS)
 
     # --- Step 3: Create the output directory ---
     print("\n--- Preparing output directory ---")
@@ -74,4 +86,8 @@ def main():
 
 
 if __name__ == "__main__":
+    args = parser.parse_args()
+    PROCCESS_PHOTOS = args.processphotos
+    print(PROCCESS_PHOTOS)
     main()
+

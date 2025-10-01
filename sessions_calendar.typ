@@ -5,6 +5,10 @@
   edition: 5,
   partners: (
     (
+      logo: "assets/partners/fciencias.svg",
+      adaptive: true,
+    ),
+    (
       logo: "assets/partners/agile_design_studio.svg",
       adaptive: false,
     ),
@@ -13,15 +17,11 @@
       adaptive: true,
     ),
     (
-      logo: "assets/partners/philcomp.svg",
-      adaptive: true,
-    ),
-    (
       logo: "assets/partners/licenciaturacc.svg",
       adaptive: true,
     ),
     (
-      logo: "assets/partners/fciencias.svg",
+      logo: "assets/partners/philcomp.svg",
       adaptive: true,
     ),
   )
@@ -55,4 +55,5 @@
 #pagebreak()
 
 #schedule("Day 5 (Fri, October 31)", "database/2025-10-31.csv")
+
 

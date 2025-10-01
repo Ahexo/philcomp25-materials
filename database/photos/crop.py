@@ -6,15 +6,15 @@ from pathlib import Path
 
 mp_face = mp.solutions.face_detection
 
-
 def crop_face_with_shoulders(
-    img, out_size=512, shoulder_scale=2, face_y_offset=0.5, min_confidence=0.4
+    img, out_size=512,
+    shoulder_scale=2,
+    face_y_offset=0.5,
+    min_confidence=0.4
 ):
     h, w = img.shape[:2]
     rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    with mp_face.FaceDetection(
-        model_selection=1, min_detection_confidence=min_confidence
-    ) as detector:
+    with mp_face.FaceDetection(model_selection=1, min_detection_confidence=min_confidence) as detector:
         results = detector.process(rgb)
     if not results.detections:
         return None
@@ -38,9 +38,7 @@ def crop_face_with_shoulders(
     pad_right = max(0, right - w)
 
     if any((pad_top, pad_left, pad_bottom, pad_right)):
-        img = cv2.copyMakeBorder(
-            img, pad_top, pad_bottom, pad_left, pad_right, borderType=cv2.BORDER_REFLECT
-        )
+        img = cv2.copyMakeBorder(img, pad_top, pad_bottom, pad_left, pad_right, borderType=cv2.BORDER_REFLECT)
         top += pad_top
         left += pad_left
         bottom += pad_top
@@ -55,24 +53,20 @@ def crop_face_with_shoulders(
 
 def batch_process_photos(
     input_dir=".",
-    output_dir="output",
+    output_dir="./proccesed",
     out_size=512,
     shoulder_scale=2,
     face_y_offset=0.5,
-    min_confidence=0.4,
-    recursive=False,
+    min_confidence=0.4
 ):
     input_path = Path(input_dir)
     out_path = input_path / output_dir
     out_path.mkdir(parents=True, exist_ok=True)
 
-    exts = ("*.jpg", "*.jpeg", "*.png")
+    exts = ("*.png", "*.bmp")
     files = []
     for ext in exts:
-        if recursive:
-            files.extend(input_path.rglob(ext))
-        else:
-            files.extend(input_path.glob(ext))
+        files.extend(input_path.glob(ext))
 
     files = [p for p in files if p.is_file() and out_path not in p.parents]
 
@@ -87,19 +81,17 @@ def batch_process_photos(
                 out_size=out_size,
                 shoulder_scale=shoulder_scale,
                 face_y_offset=face_y_offset,
-                min_confidence=min_confidence,
-            )
+                min_confidence=min_confidence)
             if cropped is None:
                 print(f"no face detected: {p.name}")
                 continue
             out_file = out_path / (p.stem + ".jpg")
             # Save as JPEG with quality 95
-            cv2.imwrite(str(out_file), cropped, [int(cv2.IMWRITE_JPEG_QUALITY), 95])
+            cv2.imwrite(str(out_file), cropped, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
             print(f"saved: {out_file.name}")
         except Exception as e:
             print(f"error processing {p.name}: {e}")
 
 
 if __name__ == "__main__":
-    # When run from photos/ folder, this will read images and write to photos/output
-    batch_process_photos(input_dir=".", output_dir="output", out_size=512)
+    batch_process_photos()
