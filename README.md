@@ -21,6 +21,7 @@ Make sure to also install the [Typst compiler](https://github.com/typst/typst) f
 URL_PRESENTATIONS="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=..."
 URL_SESSIONS="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=..."
 URL_SPEAKERS="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=..."
+URL_ABSTRACTS="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=..."
 ```
 
 2. Get into your virtual environment and issue:
