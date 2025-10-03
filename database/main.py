@@ -219,7 +219,7 @@ def setup_database(process_photos=False) -> bool:
 
 def export_csvs() -> bool:
     '''
-    Queries the database and exports daily and session CSVs.
+    Queries the database and exports the CSV needed to populate the program template.
 
     Returns:
         bool: True is successful, False if errors occured.
@@ -250,19 +250,19 @@ def export_csvs() -> bool:
             )
         print(f"Exported {len(days_df)} daily schedule CSVs.")
 
-        # Export presentations by session block
-        blocks_df = pd.read_sql_query(
+        # Export presentations by session session
+        sessions_df = pd.read_sql_query(
             "SELECT bloque FROM sessions GROUP BY bloque", conn
         )
-        for block in blocks_df["bloque"]:
+        for session in sessions_df["bloque"]:
             pres_df = pd.read_sql_query(
                 "SELECT * FROM presentations WHERE bloque = ? ORDER BY turno ASC",
                 conn,
-                params=(block,),
+                params=(session,),
             )
             if not pres_df.empty:
                 pres_df.to_csv(
-                    os.path.join(CSV_OUTPUT_DIR, f"{block}.csv"),
+                    os.path.join(CSV_OUTPUT_DIR, f"{session}.csv"),
                     index=False,
                     encoding="utf-8",
                 )
@@ -285,7 +285,6 @@ def export_csvs() -> bool:
             index=False,
             encoding="utf-8",
         )
-
         staff_resumes_df = pd.read_sql_query(
             """
             SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff
@@ -302,7 +301,6 @@ def export_csvs() -> bool:
             index=False,
             encoding="utf-8",
         )
-
         resumes_df = pd.read_sql_query(
             """
             SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff
@@ -322,7 +320,6 @@ def export_csvs() -> bool:
         )
 
         print(f"Exported CSVs for resumes.")
-
         print("CSV export complete.")
         return True
 

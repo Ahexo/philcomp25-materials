@@ -17,6 +17,12 @@ parser.add_argument("-pp",
                     action='store_true',
                     help="Download and proccess profile pictues.")
 
+parser.add_argument("-rc",
+                    "--regeneratecsv",
+                    action='store_true',
+                    help="Regenerate the csv files from the database.")
+
+
 def write_time_to_cut():
     """
     Typst is unable to fetch the current system fulltime (date only),
@@ -86,7 +92,10 @@ def main():
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    PROCCESS_PHOTOS = args.processphotos
-    print(PROCCESS_PHOTOS)
-    main()
+    if args.regeneratecsv:
+        db.export_csvs()
+    else:
+        PROCCESS_PHOTOS = args.processphotos
+        print(PROCCESS_PHOTOS)
+        main()
 

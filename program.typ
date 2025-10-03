@@ -31,24 +31,24 @@
 = Bienvenidos a ICPHILCOMP'25
 \
 #grid(
-  columns: (16em, 1fr),
+  columns: (14em, 1fr),
   gutter: 24pt,
   text(size: 8pt)[],
-  text(size: 7pt)[
-    *Entidades co-organizadoras*
+  text(size: 8pt)[
+  *Entidades co-organizadoras*
    - Universidad Nacional Autónoma de México
    - Grupo de Investigación en Filosofía de la Computación
    - Facultad de Ciencias, UNAM
    - Licenciatura en Ciencias de la Computación, Facultad de Ciencias, UNAM
    - Secretaría de Educación, Ciencia, Tecnología e Innovación del Gobierno de la Ciudad de México
 
-    *Comité Directivo*
+  *Comité Directivo*
    - Enrique F. Soto-Astorga (Facultad de Ciencias, UNAM), _presidente_
    - Karla Ramírez-Pulido (Facultad de Ciencias, UNAM)
    - Lourdes del Carmen González Huesca (Facultad de Ciencias, UNAM)
    - Francisco Vergara Silva (Instituto de Biología de la UNAM)
 
-    *Comité Organizador*
+  *Comité Organizador*
    - Enrique F. Soto-Astorga (Facultad de Ciencias, UNAM), _presidente_
    - Lucía Aumann Aso (DAUIC- Universidad Iberoamericana)
    - Alejandro Javier Solares-Rojas (ICC- Universidad de Buenos Aires)
@@ -59,7 +59,7 @@
    - Laura Itzel Rodríguez Dimayuga (Facultad de Ciencias, UNAM)
    - Sara Barrios Rangel (DCSH, UAM-Cuajimalpa)
 
-    *Comité de Programa*
+  *Comité de Programa*
    - Ana María Medeles-Hernández (IIMAS, UNAM), _presidenta_
    - Miguel Ángel Andrade Velázquez (Facultad de Ciencias, UNAM)
    - Karen González-Fernández (Universidad Panamericana)

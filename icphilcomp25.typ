@@ -258,7 +258,7 @@
         ]
         #if guest.bluesky != "" [
           #link(guest.bluesky)[
-            #chip(color: blue,[#grid(columns:(auto,auto,), column-gutter: 4pt, [#icon_bluesky(fill:white, size: 7pt)], align(horizon)[#text(size: 7pt, fill: white)[#guest.bluesky]])])
+            #chip(color: blue,[#grid(columns:(auto,auto,), column-gutter: 4pt, [#icon_bluesky(fill:white, size: 7pt)], align(horizon)[#text(size: 7pt, fill: white)[#guest.bluesky.match(regex("^(?:https?:\\/\\/bsky\\.app\\/profile\\/)?(.+)(?:\\.bsky\\.social)")).captures.first()]])])
           ]
         ]
         #if guest.facebook != "" [
@@ -291,7 +291,7 @@
       grid.cell(
         colspan: 1,
         [
-        == #guest.fullname #text(size: 10pt)[(#guest.pronouns)]
+        == #guest.fullname #text(size: 10pt)[(#guest.pronouns)] <guest.fullname>
         #if guest.public_email != "" [
           #link("mailto:" + guest.public_email)[
             #chip(color: accent_color,[#grid(columns:(auto,auto,), column-gutter: 4pt, [#icon_email(fill:white, size: 7pt)], align(horizon)[#text(size: 7pt, fill: white)[#guest.public_email]])])
