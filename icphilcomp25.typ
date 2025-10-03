@@ -4,6 +4,8 @@
 #let third_color = rgb("#BC5FD3")
 #let alternative_color = rgb("#e6b700")
 
+#let custom_margins = (top:5em, right:6em, bottom:4em, left:6em)
+
 #let icon_external(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/external.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
 
@@ -116,7 +118,8 @@
           #align(horizon+center)[#counter(page).display("1", both: false)]
         ]
       ]
-    }
+    },
+    //margin: (bottom: 10em)
   )
 
   let sessions = csv(path, row-type: dictionary)
@@ -132,13 +135,11 @@
       stroke_color = alternative_color
       fill_color = alternative_color.darken(40%)
     }
-
-
     // Session header
-    box(
+    pad(top:4pt)[#box(
       width: 100%,
       stroke: stroke_color,
-      fill: stroke_color.lighten(80%),
+      fill: stroke_color.lighten(75%),
       inset: 0.6em,
       text(size: 9pt)[
       #text(size:11pt, weight: "bold", fill: fill_color)[
@@ -157,8 +158,7 @@
       #box(image("assets/door.svg",height: 0.8em,)) #session.sala #h(5pt)#box(image("assets/clock.svg",height: 0.8em,)) #session.inicia - #session.termina (#session.duracion min.)
       #if session.host != "" [#h(5pt) #box(image("assets/user.svg",height: 0.8em,)) #session.host]
       ]
-    )
-
+    )]
 
     // These are used to compute the timeframes between presentations
     let start_time_split = session.inicia.split(regex("[:]"))
@@ -182,36 +182,43 @@
       box()[#grid(
         columns: (auto, 1fr),
         rows: (auto, auto),
-        gutter: 4pt,
+        gutter: 7pt,
         //Timestamp
         [#box(width: auto, inset: 0.4em, fill: fill_color.lighten(80%), text(fill: fill_color)[*#runtime.display("[hour]:[minute]")*])],
         //Tags
         align(horizon)[#chip(color: stroke_color.lighten(30%), [#presentation.formato])],
         //Guarda
-        [],
+        grid.cell(
+        colspan: 2,
+        [*#presentation.titulo*])
         //Nombre y autores
-        [
-          *#presentation.titulo*\
-          #if presentation.autores != "" {
-            let autores = csv("database/" + presentation.id + ".csv", row-type: dictionary)
-            for autor in autores {
+      )]
+        if presentation.autores != "" {
+          let autores = csv("database/" + presentation.id + ".csv", row-type: dictionary)
+          for autor in autores {
+            box()[#grid(
+              fill:white,
+              columns: (1fr),
+              rows: (auto, auto),
+              row-gutter: 4pt,
+              inset: 1pt,
               text(size: 10pt)[
               #autor.fullname
+              // Si tenemos el perfil del autor, hay que poner un link interno hacia allá
               #context {
                 let existe = query(label(autor.normalname)).len()
-                if existe > 0 [#link(label(autor.normalname))[#icon_external(size:8pt)]]
-              }\
-              #text(size: 8pt, fill: fill_color)[#autor.affiliation]\
-              ]
-            }
+                if existe > 0 [#link(label(autor.normalname))[#icon_external(size:8pt, fill: fill_color)]]
+              }],
+              text(size: 8pt, fill: fill_color)[#autor.affiliation]
+            )
+            ]
           }
-        ]
-      )]
+        }
+
      // The unavoidable pass of time...
      let timespan = duration(minutes: int(presentation.timeframe))
      runtime = runtime + timespan + duration(minutes: 5)
     }
-    pad(bottom:1pt)[]
   }
 }
 
