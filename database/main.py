@@ -273,7 +273,7 @@ def export_csvs() -> bool:
                 pres_authors_df = pd.read_sql_query(
                     # EN ESTA TENEMOS QUE TENER (author, affiliation)
                     """
-                    SELECT p.fullname, p.affiliation
+                    SELECT p.fullname, p.normalname, p.affiliation
                         FROM casting c
                         JOIN people p ON c.person = p.normalname
                         WHERE c.id = ?

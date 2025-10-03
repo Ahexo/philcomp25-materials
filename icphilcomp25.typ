@@ -4,7 +4,7 @@
 #let third_color = rgb("#BC5FD3")
 #let alternative_color = rgb("#e6b700")
 
-#let icon_external = bytes(read("/assets/external.svg").replace("#000", accent_color.to-hex(),))
+#let icon_external(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/external.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
 
 #let icon_email(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/email.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
@@ -194,10 +194,16 @@
           *#presentation.titulo*\
           #if presentation.autores != "" {
             let autores = csv("database/" + presentation.id + ".csv", row-type: dictionary)
-            text(size: 10pt)[#presentation.autores\ ]
-          }
-          #if presentation.afiliacion != "" {
-            text(size:9pt, fill: fill_color)[#presentation.afiliacion]
+            for autor in autores {
+              text(size: 10pt)[
+              #autor.fullname
+              #context {
+                let existe = query(label(autor.normalname)).len()
+                if existe > 0 [#link(label(autor.normalname))[#icon_external(size:8pt)]]
+              }\
+              #text(size: 8pt, fill: fill_color)[#autor.affiliation]\
+              ]
+            }
           }
         ]
       )]
@@ -287,7 +293,8 @@
       grid.cell(
         colspan: 1,
         [
-        == #guest.fullname #text(size: 10pt)[(#guest.pronouns)] <guest.fullname>
+        == #guest.fullname #text(size: 10pt)[(#guest.pronouns)]
+        #label(guest.normalname)
         #if guest.public_email != "" [
           #link("mailto:" + guest.public_email)[
             #chip(color: accent_color,[#grid(columns:(auto,auto,), column-gutter: 4pt, [#icon_email(fill:white, size: 7pt)], align(horizon)[#text(size: 7pt, fill: white)[#guest.public_email]])])
