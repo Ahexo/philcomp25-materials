@@ -250,7 +250,7 @@ def export_csvs() -> bool:
             )
         print(f"Exported {len(days_df)} daily schedule CSVs.")
 
-        # Export presentations by session session
+        # Export presentations by session
         sessions_df = pd.read_sql_query(
             "SELECT bloque FROM sessions GROUP BY bloque", conn
         )
@@ -266,6 +266,28 @@ def export_csvs() -> bool:
                     index=False,
                     encoding="utf-8",
                 )
+
+            # Now, finally, lets get the casting per presentations
+            for index, row in pres_df.iterrows():
+                lookup_id = row["id"]
+                pres_authors_df = pd.read_sql_query(
+                    # EN ESTA TENEMOS QUE TENER (author, affiliation)
+                    """
+                    SELECT p.fullname, p.affiliation
+                        FROM casting c
+                        JOIN people p ON c.person = p.normalname
+                        WHERE c.id = ?
+                    """,
+                    conn,
+                    params=(lookup_id,)
+                )
+                pres_authors_df.to_csv(
+                    os.path.join(CSV_OUTPUT_DIR, f"{lookup_id}.csv"),
+                    index=False,
+                    encoding="utf-8",
+                )
+
+
         print(f"Exported CSVs for session presentations.")
 
         # Export resumes

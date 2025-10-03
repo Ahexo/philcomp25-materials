@@ -193,6 +193,7 @@
         [
           *#presentation.titulo*\
           #if presentation.autores != "" {
+            let autores = csv("database/" + presentation.id + ".csv", row-type: dictionary)
             text(size: 10pt)[#presentation.autores\ ]
           }
           #if presentation.afiliacion != "" {
@@ -254,11 +255,6 @@
         #if guest.twitter != "" [
           #link("https://x.com/" + guest.twitter)[
             #chip(color: black,[#grid(columns:(auto,auto,), column-gutter: 4pt, [#icon_twitter(fill:white, size: 7pt)], align(horizon)[#text(size: 7pt, fill: white)[#guest.twitter]])])
-          ]
-        ]
-        #if guest.bluesky != "" [
-          #link(guest.bluesky)[
-            #chip(color: blue,[#grid(columns:(auto,auto,), column-gutter: 4pt, [#icon_bluesky(fill:white, size: 7pt)], align(horizon)[#text(size: 7pt, fill: white)[#guest.bluesky.match(regex("^(?:https?:\\/\\/bsky\\.app\\/profile\\/)?(.+)(?:\\.bsky\\.social)")).captures.first()]])])
           ]
         ]
         #if guest.facebook != "" [
