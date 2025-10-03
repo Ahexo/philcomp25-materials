@@ -21,7 +21,8 @@ CREATE TABLE sessions (
     nombre TEXT,
     tematica TEXT,
     notas TEXT,
-    host TEXT
+    host TEXT,
+    streaming TEXT
 );
 
 CREATE TABLE presentations (
@@ -59,7 +60,8 @@ CREATE TABLE people (
     instagram TEXT,
     youtube TEXT,
     tiktok TEXT,
-    git TEXT
+    git TEXT,
+    staff INTEGER
 );
 
 CREATE TABLE abstracts (
