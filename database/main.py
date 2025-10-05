@@ -96,7 +96,7 @@ def setup_database(process_photos=False) -> bool:
         # Load presentations, pretty straightforward
         presentations_df = pd.read_csv(PRESENTATIONS_CSV)
         # We don't need these
-        presentations_df = presentations_df.drop(columns=["atraccion", "pais", "notas"], axis=1)
+        presentations_df = presentations_df.drop(columns=["atraccion", "notas"], axis=1)
 
         # Load sessions, we need to zip authors and affiliations later
         sessions_df = pd.read_csv(SESSIONS_CSV)

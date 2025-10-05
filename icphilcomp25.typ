@@ -4,6 +4,8 @@
 #let third_color = rgb("#BC5FD3")
 #let alternative_color = rgb("#e6b700")
 
+#let page_decoration_1(fill: accent_color) = bytes(read("/assets/page_decoration_1.svg").replace("#000", fill.to-hex(),))
+
 // ICONOGRAPHY
 #let icon_videocamera(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/videocamera.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_external(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/external.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
@@ -80,15 +82,15 @@
 
 /* La sección completa destinada a una sola jornada de la conferencia. */
 #let schedule(day, globaldate, path, start_time: "9:00", show_timetable: false) = {
-
   // Primero, ponemos una página de portada.
   [
     #set page(
       background:
         rect(
           fill: third_color.lighten(60%),
-          width: 100%,
-          height: 100%
+          width: 110%,
+          height: 110%,
+          image(page_decoration_1())
         ),
     )
     #set text(fill: accent_color)
@@ -338,8 +340,9 @@
       background:
         rect(
           fill: third_color.lighten(60%),
-          width: 100%,
-          height: 100%
+          width: 110%,
+          height: 110%,
+          image(page_decoration_1())
         ),
     )
     #set text(fill: accent_color)
@@ -381,64 +384,6 @@
     v(1fr)
 
 }
-
-#let welcome() = [
-  = Bienvenidos a ICPHILCOMP'25
-  _Welcome to ICPHILCOMP'25_
-  \
-  #grid(
-    columns: (14em, 1fr),
-    gutter: 24pt,
-    text(size: 8pt)[],
-    text(size: 8pt)[
-    *Entidades co-organizadoras (Co-organizing entities)*
-    - Universidad Nacional Autónoma de México
-    - Grupo de Investigación en Filosofía de la Computación
-    - Facultad de Ciencias, UNAM
-    - Licenciatura en Ciencias de la Computación, Facultad de Ciencias, UNAM
-    - Secretaría de Educación, Ciencia, Tecnología e Innovación del Gobierno de la Ciudad de México
-
-    *Comité Directivo (Steering Committee)*
-    - Enrique F. Soto-Astorga (Facultad de Ciencias, UNAM), _Presidente_.
-    - Karla Ramírez-Pulido (Facultad de Ciencias, UNAM)
-    - Lourdes del Carmen González Huesca (Facultad de Ciencias, UNAM)
-    - Francisco Vergara Silva (Instituto de Biología de la UNAM)
-
-    *Comité Organizador (Organizing Committee)*
-    - Enrique F. Soto-Astorga (Facultad de Ciencias, UNAM), _Presidente_.
-    - Lucía Aumann Aso (DAUIC, Universidad Iberoamericana)
-    - Alejandro Javier Solares-Rojas (ICC, Universidad de Buenos Aires)
-    - Miguel Ángel Andrade Velázquez (Facultad de Ciencias, UNAM)
-    - Leonardo Abigail Castro Sánchez (Facultad de Derecho, UNAM)
-    - Alejandro Axel Rodríguez Sánchez (Facultad de Ciencias, UNAM)
-    - Sergio Mejía Caballero (Facultad de Ciencias, UNAM)
-    - Laura Itzel Rodríguez Dimayuga (Facultad de Ciencias, UNAM)
-    - Sara Barrios Rangel (DCSH, UAM-Cuajimalpa)
-
-    *Comité de Programa (Program Committee)*
-    - Ana María Medeles-Hernández (IIMAS, UNAM), _Presidenta_.
-    - Miguel Ángel Andrade Velázquez (Facultad de Ciencias, UNAM)
-    - Karen González-Fernández (Universidad Panamericana)
-    - Lourdes del Carmen González-Huesca (Facultad de Ciencias, UNAM)
-    - Marien Raat (Universidad de Leiden)
-    - Alfonso Arroyo Santos (Facultad de Filosofía y Letras, UNAM)
-    - José Antonio Neme Castillo (IIMAS, UNAM)
-    - Melina Gastelum-Vargas (Facultad de Filosofía y Letras, UNAM)
-    - Volodymyr Dziubinskyy (AgileEngine, LLC.)
-    - Hugo I. Cruz-Rosas (Facultad de Ciencias, UNAM)
-    - Annabel Castro-Meagher (Universidad de Monterrey)
-    - Karla Ramírez-Pulido (Facultad de Ciencias, UNAM)
-    - María Virginia Bon-Pereira (Universidad de Monterrey)
-    - Rafael Reyes Sánchez (Facultad de Ciencias, UNAM)
-
-    *Edición, diseño y composición tipográfica (Edition, design and typesetting)*
-    - Alejandro Axel Rodríguez Sánchez (Facultad de Ciencias, UNAM). _Diseñador y editor_.
-    - Lucía Aumann Aso (DAUIC, Universidad Iberoamericana), _Editora_.
-    - Sara Barrios Rangel (DCSH, UAM-Cuajimalpa), _Editora_.
-    ]
-  )
-]
-
 
 #let abstracts(path, title: "Abstracts", subtitle: "") = {
   [#separator(title: title, subtitle: subtitle)]
@@ -489,13 +434,112 @@
         text(size: 9pt)[#autor.affiliation\ ]
       }
       #v(8pt)
-      #if abstract.keywords != "" [#text(size: 10pt)[Palabras clave: #emph[#abstract.keywords]]]
+      #if abstract.keywords != "" [#text(size: 10pt)[Keywords: #emph[#abstract.keywords]]]
       #v(8pt)
       #text(size: 11pt)[#abstract.abstract]
     ]
     pagebreak()
   }
 }
+
+#let welcome() = [
+  #set page(
+      background:
+        rect(
+          width: 110%,
+          height: 110%,
+          image(page_decoration_1())
+        ),
+    )
+
+  = Bienvenidos a ICPHILCOMP'25
+  _Welcome to ICPHILCOMP'25_
+  \
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 24pt,
+    text(size: 7pt)[
+      75 years have passed since the publication of "Computing Machinery and Intelligence" in the journal Mind, published by the University of Oxford. This is the seminal text with which Alan Mathison Turing intellectually founded the discipline of Computer Science today known as Artificial Intelligence.
+
+      Since then, the conversation about the emergence of computing machines within our ecology in all its environments has never been more relevant and pertinent: In an age defined by information, Artificial Intelligence, as well as the undeniable epistemic and ontological dispute between the computable and the incomputable, a debate looms over whether machines are intelligent or not, and to what extent they are actively reshaping our world and our experience of the universe.
+
+      A critical line of discussion, removed from the positivist biases customary in modern technocracy, was founded three years ago with the teaching of the first course in Philosophy of Computing by the MSc. Enrique Francisco Soto-Astorga at the current School of Sciences of the National Autonomous University of Mexico, and subsequently catalyzed by the founding, within our institution, of the Philosophy of Computing Research Group; as well as by the holding of the First Symposium on Philosophy of Computing, which was a widely acclaimed event with excellent dissemination results, becoming a milestone in Latin America.
+
+      In order to feed the continuity and expansion of this _locus_, in 2025 we are pleased to present to the world the first edition of the International Conference on Philosophy of Computing. This is the most extensive and rich program we have put together to date: 70 meticulously peer-reviewed oral presentations (49 in Spanish and 21 in English), three keynote addresses, four roundtables, and a couple of cultural activities. Together, these add up to approximately 66 hours of content. We are joined by speakers from a diverse range of corners of the globe: Argentina, Canada, China, Colombia, Denmark, Germany, Italy, the United Kingdom, the United States and Mexico. We hope their voices will be useful in establishing a more nuanced and humanistic understanding of computing and technology, laying the groundwork for future research in a field of study of undeniable relevance.
+    ],
+    text(size: 7pt, lang:"es")[
+    75 años han transcurrido desde la publicación de "Computing Machinery and Intelligence" en la revista Mind, editada por la Universidad de Oxford. Se trata del texto seminal con el cual Alan Mathison Turing funda intelectualmente la disciplina de las Ciencias de la Computación hoy conocida como Inteligencia Artificial.
+
+    Desde entonces, la conversación sobre la irrupción de las máquinas de cómputo dentro de nuestra ecología en todos sus ambientes nunca había sido más relevante y pertinente: En una era definida por la información, la Inteligencia Artificial, así como la innegable disputa epistémica y ontológica entre lo computable contra lo incomputable, se cierne un debate sobre si las máquinas son o no inteligentes, y en qué medida están remodelando activamente nuestro mundo y nuestra experiencia del universo.
+
+    Una línea de discusión crítica y alejada de los sesgos positivistas que acostumbra la tecnocracia moderna fué fundada hace tres años con la impartición del primer curso en Filosofía de la Computación por el MSc. Enrique Francisco Soto-Astorga en la presente Facultad de Ciencias de la Universidad Nacional Autónoma de México, y catalizada posteriormente por la fundación, dentro del seno de nuestra casa de estudios, del Grupo de Investigación en Filosofía de la Computación; así mismo con la celebración del Primer Simposio de Filosofía de la Computación, el cual se trató de un encuentro ampliamente aclamado y con excelentes resultados de difusión, volviéndose todo un hito a nivel Latinoamérica.
+
+    En pos de continuar abonando a la continuidad y ampliación de este _locus_, este 2025 nos complace presentar ante el mundo la primera edición de la Conferencia Internacional en Filosofía de la Computación. Se trata de la cartelera más extensa y nutrida que hemos hilado hasta la fecha: 70 presentaciones orales revisadas meticulosamente por pares: 49 en Español y 21 en Inglés, 3 conferencias magistrales, 4 mesas redondas y un par de actividades culturales. En conjunto,  estas suman alrededor de 66 horas de contenidos. Nos acompañan ponentes de una variopinta de rincones del globo: Alemania, Argentina,  Canadá, Colombia, China, Dinamarca, Estados Unidos, Italia, Reino Unido y México. Es nuestra voluntad que sus voces encuentren utilidad en el establecimiento de una comprensión más matizada y humanística de la computación y de la tecnología, sentando las bases para próximas indagaciones en un campo de estudio de relevancia innegable.
+    ]
+  )
+  #pagebreak()
+]
+
+#let credits() = [
+  #set page(
+      background:
+        rect(
+          width: 110%,
+          height: 110%,
+          image(page_decoration_1())
+        ),
+    )
+  = Créditos
+  _Credits_
+
+  #text(size: 7pt)[
+    *Entidades co-organizadoras*\
+    *(Co-organizing entities)*
+      - Universidad Nacional Autónoma de México
+      - Grupo de Investigación en Filosofía de la Computación
+      - Facultad de Ciencias, UNAM
+      - Licenciatura en Ciencias de la Computación, Facultad de Ciencias, UNAM
+      - Secretaría de Educación, Ciencia, Tecnología e Innovación del Gobierno de la Ciudad de México
+    *Comité Directivo*\
+    *(Steering Committee)*
+      - Enrique F. Soto-Astorga (Facultad de Ciencias, UNAM), _Presidente_.
+      - Karla Ramírez-Pulido (Facultad de Ciencias, UNAM)
+      - Lourdes del Carmen González Huesca (Facultad de Ciencias, UNAM)
+      - Francisco Vergara Silva (Instituto de Biología de la UNAM)
+    *Comité Organizador*\
+    *(Organizing Committee)*
+      - Enrique F. Soto-Astorga (Facultad de Ciencias, UNAM), _Presidente_.
+      - Lucía Aumann Aso (DAUIC, Universidad Iberoamericana)
+      - Alejandro Javier Solares-Rojas (ICC, Universidad de Buenos Aires)
+      - Miguel Ángel Andrade Velázquez (Facultad de Ciencias, UNAM)
+      - Leonardo Abigail Castro Sánchez (Facultad de Derecho, UNAM)
+      - Alejandro Axel Rodríguez Sánchez (Facultad de Ciencias, UNAM)
+      - Sergio Mejía Caballero (Facultad de Ciencias, UNAM)
+      - Laura Itzel Rodríguez Dimayuga (Facultad de Ciencias, UNAM)
+      - Sara Barrios Rangel (DCSH, UAM-Cuajimalpa)
+    *Comité de Programa*\
+    *(Program Committee)*
+      - Ana María Medeles-Hernández (IIMAS, UNAM), _Presidenta_.
+      - Miguel Ángel Andrade Velázquez (Facultad de Ciencias, UNAM)
+      - Karen González-Fernández (Universidad Panamericana)
+      - Lourdes del Carmen González-Huesca (Facultad de Ciencias, UNAM)
+      - Marien Raat (Universidad de Leiden)
+      - Alfonso Arroyo Santos (Facultad de Filosofía y Letras, UNAM)
+      - José Antonio Neme Castillo (IIMAS, UNAM)
+      - Melina Gastelum-Vargas (Facultad de Filosofía y Letras, UNAM)
+      - Volodymyr Dziubinskyy (AgileEngine, LLC.)
+      - Hugo I. Cruz-Rosas (Facultad de Ciencias, UNAM)
+      - Annabel Castro-Meagher (Universidad de Monterrey)
+      - Karla Ramírez-Pulido (Facultad de Ciencias, UNAM)
+      - María Virginia Bon-Pereira (Universidad de Monterrey)
+      - Rafael Reyes Sánchez (Facultad de Ciencias, UNAM)
+    *Edición, diseño y composición tipográfica*\
+    *(Edition, design and typesetting)*
+      - Alejandro Axel Rodríguez Sánchez (Facultad de Ciencias, UNAM). _Diseñador y editor_.
+      - Lucía Aumann Aso (DAUIC, Universidad Iberoamericana), _Editora_.
+      - Sara Barrios Rangel (DCSH, UAM-Cuajimalpa), _Editora_.
+  ]
+]
 
 #let icphilcomp25(
   titulo: str,
@@ -614,6 +658,7 @@
   ]
   portada()
   welcome()
+  credits()
   informacion()
   doc
   contraportada()
