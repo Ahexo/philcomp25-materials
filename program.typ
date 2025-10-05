@@ -36,15 +36,15 @@
 #show "Presentaciones de libros": [Book presentations]
 
 // Horarios
-#schedule(1, datetime(year:2025, month: 10, day: 27), "database/2025-10-27.csv", start_time: "8:30")
+#schedule(1, datetime(year:2025, month: 10, day: 27), "database/2025-10-27.csv", start_time: "8:30", show_timetable: true)
 #pagebreak()
-#schedule(2, datetime(year:2025, month: 10, day: 28), "database/2025-10-28.csv")
+#schedule(2, datetime(year:2025, month: 10, day: 28), "database/2025-10-28.csv", show_timetable: true)
 #pagebreak()
-#schedule(3, datetime(year:2025, month: 10, day: 29), "database/2025-10-29.csv")
+#schedule(3, datetime(year:2025, month: 10, day: 29), "database/2025-10-29.csv", show_timetable: true)
 #pagebreak()
-#schedule(4, datetime(year:2025, month: 10, day: 30), "database/2025-10-30.csv")
+#schedule(4, datetime(year:2025, month: 10, day: 30), "database/2025-10-30.csv", show_timetable: true)
 #pagebreak()
-#schedule(5, datetime(year:2025, month: 10, day: 31), "database/2025-10-31.csv")
+#schedule(5, datetime(year:2025, month: 10, day: 31), "database/2025-10-31.csv", show_timetable: true)
 
 // Abstracts
 #abstracts("database/keynote_abstracts.csv", title:"Keynote abstracts")

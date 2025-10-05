@@ -4,6 +4,7 @@
 #let third_color = rgb("#BC5FD3")
 #let alternative_color = rgb("#e6b700")
 
+// PAGE DECORATIONS
 #let page_decoration_1(fill: accent_color) = bytes(read("/assets/page_decoration_1.svg").replace("#000", fill.to-hex(),))
 
 // ICONOGRAPHY
@@ -23,11 +24,21 @@
 #let icon_tiktok(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/tiktok.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_youtube(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/youtube.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 
+// VISUAL RESOURCES
 #let tile_filosofia(fill: main_color) = bytes(read("/assets/tiles/filosofia.svg").replace("#000", fill.to-hex(),))
 #let tile_sociedad(fill: main_color) = bytes(read("/assets/tiles/sociedad.svg").replace("#000", fill.to-hex(),))
 #let tile_teoria(fill: main_color) = bytes(read("/assets/tiles/teoria.svg").replace("#000", fill.to-hex(),))
 #let tile_tecnica(fill: main_color) = bytes(read("/assets/tiles/tecnica.svg").replace("#000", fill.to-hex(),))
 #let tile_colibri(fill: main_color) = bytes(read("/assets/tiles/colibri.svg").replace("#000", fill.to-hex(),))
+
+
+// GLOBAL AUXILIARS
+/* I found myself using these plenty, perhaps I should make them into a library. */
+#let str_to_time(str_time) = {
+  let digits = str_time.split(":")
+  let hora = datetime(hour: int(digits.at(0)), minute: int(digits.at(1)), second: 0)
+  hora
+}
 
 /* Se usan para desplegar el formato de la presentación y tags varios. */
 #let chip(color: third_color.lighten(30%), content) = {
@@ -43,40 +54,116 @@
  * sesiones en orden cronológico */
 #let timetable(path) = {
   let sessions = csv(path, row-type: dictionary)
+
+  // Vamos a asumir que todas las jornadas inician a las 9 y acaban a las 19.
   let start = datetime(hour:9, minute:0, second:0)
-  let cursor = start
   let finish = datetime(hour:19, minute:0, second:0)
+
+  // También asumimos que todos los intervalos son de media hora.
+  let cursor = start
   let step = duration(minutes:30)
 
   // Una funcioncita para convertir datetimes a strings de la forma HH:MM
-  let disp(timestamp) = {timestamp.display("[hour]:[minute]")}
+  let disp(timestamp) = timestamp.display("[hour padding:none]:[minute]")
+
+  let dispp(content) = {
+    if type(content) == dictionary {
+      table.cell(
+        rowspan: content.steps,
+        fill: accent_color.lighten(20%),
+        stroke: accent_color,
+        text(fill: white)[
+          #context {
+                let existe = query(label(content.bloque)).len()
+                if existe > 0 [#link(label(content.bloque))[#icon_external(size:10pt, fill: white.lighten(90%))]\ ]
+              }
+          #if content.bloque.first() != "X" [
+            *Sesión #content.bloque*\
+            #text(size: 8pt, content.nombre)
+          ] else [
+            *#content.nombre*
+          ]
+        ]
+      )
+    }
+    else {content}
+  }
 
   // Generar una lista de horarios con steps de media hora entre el inicio y el final
-  let timestamps = (start,)
+  // (No se si exista una mejor forma de hacer esto en typst, al parecer dedup hace algo cercano)
+  let timestamps = (disp(start),)
   while cursor < finish {
     cursor = cursor + step
     let frame = cursor
-    timestamps.push(frame)
+    timestamps.push(disp(frame))
   }
 
+  // Ahora vamos a determinar las columnas, para esto hay que agrupar las salas
   let columnas = ()
+  // Busquemos salas únicas y las metemos en la lista de columnas
   for session in sessions {
     if not columnas.contains(session.sala) {columnas.push(session.sala)}
   }
-  set table.hline(stroke: .6pt)
+
+  // Asumiendo que un step son 30 minutos, calculamos cuantas casillas de media hora va a ocupar un bloque.
+  let halfsteps(duracion) = {int(int(duracion)/30)}
+
+  /* Esta función verifica si una sala a hora determinada está ocupada.
+  Si no lo está, devuelve un elemento vacío.
+  Si sí lo está, pero no es header, devuelve una guarda.
+  Si sí lo está, y es un header (es decir, la primera hora de una sesión),
+    devuelve un contenido para poblar el timetable apropiadamente.
+    En particular nos interesa que este sepa cuantas medias horas abarca,
+    el nombre de la sesión y el ID de la sesión, es decir:
+    (session.bloque, session.halfsteps, session.nombre)
+  */
+  let isheader(room, timestamp) = {
+    let resultado = ""
+    for session in sessions {
+    // Si el timestamp es exactito el header, nos lo quedamos
+      if session.sala == room and timestamp == session.inicia {
+        resultado = (bloque: session.bloque, steps: halfsteps(session.duracion), name: session.nombre, end: session.termina, nombre: session.nombre)
+      } else if session.sala == room and str_to_time(timestamp) >= str_to_time(session.inicia) and str_to_time(timestamp) < str_to_time(session.termina) {
+        resultado = none
+      }
+    }
+    resultado
+  }
+
+  /* Nuestro array de arrays, este lo vamos a aplanar despues (flatten)
+  para obtener los contenidos que untar (spread) en la tabla.*/
+  let series = ()
+
+  for timestamp in timestamps {
+    let frame = (align(center+horizon)[#timestamp],)
+    for room in columnas {
+      let contenido = isheader(room, timestamp)
+      frame.push(contenido)
+    }
+    series.push(frame)
+  }
+
+  // aplanamos nuestra serie
+  series = series.flatten()
+  // Solo queremos quedarnos con los diccionarios y los strings
+  let legible(elem) = if elem != none {true} else {false}
+  series = series.filter(legible)
+
+  set text(size: 10pt, weight:"medium")
+  set table.vline(start: 1)
   table(
     fill: (x, y) =>
     if x == 0 or y == 0 {
       third_color.lighten(40%)
     },
-    rows: (1.5fr, (1fr,) * timestamps.len()).flatten(),
-    columns: (0.5fr, ((1fr,) * columnas.len())).flatten(),
+    //rows: (1fr, (1fr,) * timestamps.len()).flatten(),
+    columns: (0.4fr, ((1fr,) * columnas.len())).flatten(),
     align: bottom,
     stroke: none,
     [],
-    table.vline(start: 1),
+    table.hline(stroke: accent_color),
     ..columnas,
-    ..timestamps.map(disp),
+    ..series.map(dispp),
   )
 }
 
@@ -96,12 +183,13 @@
     #set text(fill: accent_color)
     #v(1fr)
     #text(20pt)[#heading(level: 1, [Day #day: #globaldate.display("[weekday repr:long], [month repr:long] [day padding:space]")\ ])
-    #if show_timetable == true [#timetable(path)]
-
-    #text(12pt)[Registration and coffee table start at #start_time and available throughout the day.  15:00 to 16:00.]
-
-    #text(12pt)[La mesa de registro y de café abren a las #start_time, disponibles durante toda la jornada. Receso de 15:00 a 16:00.]
+    #grid(
+      columns: (1fr, 1fr),
+      text(size:10pt)[Registration and coffee table start at #start_time and keeps available throughout the day. Recess from 15:00 to 16:00.],
+      text(size:10pt)[La mesa de registro y de café abren a las #start_time, disponibles durante toda la jornada. Receso de 15:00 a 16:00.]
+    )
     #v(1fr)
+    #if show_timetable == true [#timetable(path)]
   ]]
 
   // Ahora si, vamos con el contenido del horario.
@@ -378,7 +466,7 @@
         columns: (1em, auto),
         gutter: 6pt,
         [#icon_external()],align(horizon)[Click hyperlinks to go to speaker profiles, abstracts, sessions, and so on when available.],
-        [#icon_videocamera()],align(horizon)[This session will be recorded and/or livestreamed.]
+        [#icon_videocamera()],align(horizon)[This session will be recorded and/or livestreamed. *This may change at any time.*]
       )
     ]
     v(1fr)
@@ -489,8 +577,8 @@
           image(page_decoration_1())
         ),
     )
-  = Créditos
-  _Credits_
+  = Credits
+  _Créditos_
 
   #text(size: 7pt)[
     *Entidades co-organizadoras*\
