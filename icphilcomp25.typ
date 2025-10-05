@@ -350,6 +350,96 @@
   ]
 }
 
+#let informacion() = {
+    set page(
+      background:
+        rect(
+          width: 100%,
+          height: 100%,
+
+        ),
+      footer: [],
+      header: []
+    )
+    [
+      #heading(level:1)[#text(size: 20pt)[Venue map]]
+      #text(size: 24pt, fill: accent_color)[Conjunto Amoxcalli: Ground Floor]
+      Investigación Científica Avenue, Ciudad Universitaria, Coyoacán, 04510 Mexico City.#footnote([Auditorio ABC (Alberto Barajas Celis), where Keynote 2 will be held, is located outside the Amoxcalli Complex but still in the School of Sciences. Ask our staff for guidance to get there if needed.\ #link("https://maps.app.goo.gl/Rnebsf6tMo8VHweg7")[#chip("Click this button to get Google Maps instructions")]])\
+      #link("https://maps.app.goo.gl/8kRRCaDXFAXTXfvTA")[#chip(color: accent_color, [#text(size: 12pt, fill: white)[Google Maps #icon_external(fill: white, size: 10pt)]])]
+      #image(width: auto, "assets/mapa.svg")
+    ]
+    v(1fr)
+    [
+      = Pictograms
+      #grid(
+        columns: (1em, auto),
+        gutter: 6pt,
+        [#icon_external()],align(horizon)[Click hyperlinks to go to speaker profiles, abstracts, sessions, and so on when available.],
+        [#icon_videocamera()],align(horizon)[This session will be recorded and/or livestreamed.]
+      )
+    ]
+    v(1fr)
+
+}
+
+#let welcome() = [
+  = Bienvenidos a ICPHILCOMP'25
+  _Welcome to ICPHILCOMP'25_
+  \
+  #grid(
+    columns: (14em, 1fr),
+    gutter: 24pt,
+    text(size: 8pt)[],
+    text(size: 8pt)[
+    *Entidades co-organizadoras (Co-organizing entities)*
+    - Universidad Nacional Autónoma de México
+    - Grupo de Investigación en Filosofía de la Computación
+    - Facultad de Ciencias, UNAM
+    - Licenciatura en Ciencias de la Computación, Facultad de Ciencias, UNAM
+    - Secretaría de Educación, Ciencia, Tecnología e Innovación del Gobierno de la Ciudad de México
+
+    *Comité Directivo (Steering Committee)*
+    - Enrique F. Soto-Astorga (Facultad de Ciencias, UNAM), _Presidente_.
+    - Karla Ramírez-Pulido (Facultad de Ciencias, UNAM)
+    - Lourdes del Carmen González Huesca (Facultad de Ciencias, UNAM)
+    - Francisco Vergara Silva (Instituto de Biología de la UNAM)
+
+    *Comité Organizador (Organizing Committee)*
+    - Enrique F. Soto-Astorga (Facultad de Ciencias, UNAM), _Presidente_.
+    - Lucía Aumann Aso (DAUIC, Universidad Iberoamericana)
+    - Alejandro Javier Solares-Rojas (ICC, Universidad de Buenos Aires)
+    - Miguel Ángel Andrade Velázquez (Facultad de Ciencias, UNAM)
+    - Leonardo Abigail Castro Sánchez (Facultad de Derecho, UNAM)
+    - Alejandro Axel Rodríguez Sánchez (Facultad de Ciencias, UNAM)
+    - Sergio Mejía Caballero (Facultad de Ciencias, UNAM)
+    - Laura Itzel Rodríguez Dimayuga (Facultad de Ciencias, UNAM)
+    - Sara Barrios Rangel (DCSH, UAM-Cuajimalpa)
+
+    *Comité de Programa (Program Committee)*
+    - Ana María Medeles-Hernández (IIMAS, UNAM), _Presidenta_.
+    - Miguel Ángel Andrade Velázquez (Facultad de Ciencias, UNAM)
+    - Karen González-Fernández (Universidad Panamericana)
+    - Lourdes del Carmen González-Huesca (Facultad de Ciencias, UNAM)
+    - Marien Raat (Universidad de Leiden)
+    - Alfonso Arroyo Santos (Facultad de Filosofía y Letras, UNAM)
+    - José Antonio Neme Castillo (IIMAS, UNAM)
+    - Melina Gastelum-Vargas (Facultad de Filosofía y Letras, UNAM)
+    - Volodymyr Dziubinskyy (AgileEngine, LLC.)
+    - Hugo I. Cruz-Rosas (Facultad de Ciencias, UNAM)
+    - Annabel Castro-Meagher (Universidad de Monterrey)
+    - Karla Ramírez-Pulido (Facultad de Ciencias, UNAM)
+    - María Virginia Bon-Pereira (Universidad de Monterrey)
+    - Rafael Reyes Sánchez (Facultad de Ciencias, UNAM)
+
+    *Edición, diseño y composición tipográfica (Edition, design and typesetting)*
+    - Alejandro Axel Rodríguez Sánchez (Facultad de Ciencias, UNAM). _Diseñador y editor_.
+    - Lucía Aumann Aso (DAUIC, Universidad Iberoamericana), _Editora_.
+    - Sara Barrios Rangel (DCSH, UAM-Cuajimalpa), _Editora_.
+    ]
+  )
+]
+
+
 #let abstracts(path, title: "Abstracts", subtitle: "") = {
   [#separator(title: title, subtitle: subtitle)]
   let abstracts = csv(path, row-type: dictionary)
@@ -522,9 +612,9 @@
     #v(0.1fr)
     #sym.copyright Grupo de Investigación en Filosofía de la Computación, México, 2025.
   ]
-
-
   portada()
+  welcome()
+  informacion()
   doc
   contraportada()
 }
