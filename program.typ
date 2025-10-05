@@ -37,7 +37,6 @@
 
 // Horarios
 #schedule(1, datetime(year:2025, month: 10, day: 27), "database/2025-10-27.csv", start_time: "8:30")
-#schedule(1, datetime(year:2025, month: 10, day: 27), "database/2025-10-27.csv", start_time: "8:30")
 #pagebreak()
 #schedule(2, datetime(year:2025, month: 10, day: 28), "database/2025-10-28.csv")
 #pagebreak()

@@ -4,26 +4,12 @@
 #let third_color = rgb("#BC5FD3")
 #let alternative_color = rgb("#e6b700")
 
-<<<<<<< HEAD
 #let page_decoration_1(fill: accent_color) = bytes(read("/assets/page_decoration_1.svg").replace("#000", fill.to-hex(),))
 
 // ICONOGRAPHY
 #let icon_videocamera(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/videocamera.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_external(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/external.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
-=======
-// VISUAL RESOURCES
-#let page_decoration_1(fill: accent_color) = bytes(read("/assets/page_decoration_1.svg").replace("#000", fill.to-hex(),))
->>>>>>> 07f4be5 (Page decorator logic has been modularized)
 #let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
-#let tile_filosofia(fill: main_color) = bytes(read("/assets/tiles/filosofia.svg").replace("#000", fill.to-hex(),))
-#let tile_sociedad(fill: main_color) = bytes(read("/assets/tiles/sociedad.svg").replace("#000", fill.to-hex(),))
-#let tile_teoria(fill: main_color) = bytes(read("/assets/tiles/teoria.svg").replace("#000", fill.to-hex(),))
-#let tile_tecnica(fill: main_color) = bytes(read("/assets/tiles/tecnica.svg").replace("#000", fill.to-hex(),))
-#let tile_colibri(fill: main_color) = bytes(read("/assets/tiles/colibri.svg").replace("#000", fill.to-hex(),))
-
-// ICONOGRAPHY
-#let icon_videocamera(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/videocamera.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
-#let icon_external(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/external.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 
 // SOCIAL ICONS
 #let icon_email(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/email.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
@@ -37,7 +23,12 @@
 #let icon_tiktok(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/tiktok.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_youtube(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/youtube.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 
-// AUXILIARS
+#let tile_filosofia(fill: main_color) = bytes(read("/assets/tiles/filosofia.svg").replace("#000", fill.to-hex(),))
+#let tile_sociedad(fill: main_color) = bytes(read("/assets/tiles/sociedad.svg").replace("#000", fill.to-hex(),))
+#let tile_teoria(fill: main_color) = bytes(read("/assets/tiles/teoria.svg").replace("#000", fill.to-hex(),))
+#let tile_tecnica(fill: main_color) = bytes(read("/assets/tiles/tecnica.svg").replace("#000", fill.to-hex(),))
+#let tile_colibri(fill: main_color) = bytes(read("/assets/tiles/colibri.svg").replace("#000", fill.to-hex(),))
+
 /* Se usan para desplegar el formato de la presentación y tags varios. */
 #let chip(color: third_color.lighten(30%), content) = {
   box(
@@ -48,32 +39,6 @@
     text(fill: black, size: 8pt,[#content]))
 }
 
-/* Ponerle holanes y cambiar el color de fondo de la página*/
-#let decorate_page(colorize: true, doc) = {
-  set page(
-      background:
-        rect(
-          fill: if colorize {third_color.lighten(60%)} else {none},
-          width: 110%,
-          height: 110%,
-          image(page_decoration_1())
-        ),
-    )
-    doc
-}
-
-/* Página bonita para separar secciones */
-#let separator(title: "separator", subtitle:"") = {
-  decorate_page()[
-    #set text(fill: accent_color)
-    #v(1fr)
-    #text(20pt)[#heading(level: 1, [#title])]
-    #text(16pt)[#subtitle]
-    #v(1fr)
-  ]
-}
-
-// CONTENT TEMPLATES
 /* Es una tabla que por defecto va de las 9 a las 19 y despliega las salas y
  * sesiones en orden cronológico */
 #let timetable(path) = {
@@ -88,7 +53,6 @@
 
   // Generar una lista de horarios con steps de media hora entre el inicio y el final
   let timestamps = (start,)
-  set text(size: 10pt)
   while cursor < finish {
     cursor = cursor + step
     let frame = cursor
@@ -96,13 +60,9 @@
   }
 
   let columnas = ()
-
-  // Buscar las salas únicas
   for session in sessions {
     if not columnas.contains(session.sala) {columnas.push(session.sala)}
   }
-
-
   set table.hline(stroke: .6pt)
   table(
     fill: (x, y) =>
@@ -113,7 +73,7 @@
     columns: (0.5fr, ((1fr,) * columnas.len())).flatten(),
     align: bottom,
     stroke: none,
-    [/*guarda*/],
+    [],
     table.vline(start: 1),
     ..columnas,
     ..timestamps.map(disp),
@@ -123,7 +83,6 @@
 /* La sección completa destinada a una sola jornada de la conferencia. */
 #let schedule(day, globaldate, path, start_time: "9:00", show_timetable: false) = {
   // Primero, ponemos una página de portada.
-<<<<<<< HEAD
   [
     #set page(
       background:
@@ -134,9 +93,6 @@
           image(page_decoration_1())
         ),
     )
-=======
-  decorate_page()[
->>>>>>> 07f4be5 (Page decorator logic has been modularized)
     #set text(fill: accent_color)
     #v(1fr)
     #text(20pt)[#heading(level: 1, [Day #day: #globaldate.display("[weekday repr:long], [month repr:long] [day padding:space]")\ ])
@@ -378,7 +334,6 @@
   }
 }
 
-<<<<<<< HEAD
 #let separator(title: "separator", subtitle:"") = {
   [
     #set page(
@@ -430,9 +385,6 @@
 
 }
 
-=======
-/* Despegar un listado de abstracts extraídos de un csv */
->>>>>>> 07f4be5 (Page decorator logic has been modularized)
 #let abstracts(path, title: "Abstracts", subtitle: "") = {
   [#separator(title: title, subtitle: subtitle)]
   let abstracts = csv(path, row-type: dictionary)
@@ -490,7 +442,6 @@
   }
 }
 
-<<<<<<< HEAD
 #let welcome() = [
   #set page(
       background:
@@ -500,44 +451,6 @@
           image(page_decoration_1())
         ),
     )
-=======
-// HARD CODED CONTENTS
-/* Croquis del lugar y simbología pertinente de mencionar. */
-#let informacion() = {
-    set page(
-      background:
-        rect(
-          width: 100%,
-          height: 100%,
-
-        ),
-      footer: [],
-      header: []
-    )
-    [
-      #heading(level:1)[#text(size: 20pt)[Venue map]]
-      #text(size: 24pt, fill: accent_color)[Conjunto Amoxcalli: Ground Floor]
-      Investigación Científica Avenue, Ciudad Universitaria, Coyoacán, 04510 Mexico City.#footnote([Auditorio ABC (Alberto Barajas Celis), where Keynote 2 will be held, is located outside the Amoxcalli Complex but still in the School of Sciences. Ask our staff for guidance to get there if needed.\ #link("https://maps.app.goo.gl/Rnebsf6tMo8VHweg7")[#chip("Click this button to get Google Maps instructions")]])\
-      #link("https://maps.app.goo.gl/cr9gQZ4SR5BKSS3A8")[#chip(color: accent_color, [#text(size: 12pt, fill: white)[Google Maps #icon_external(fill: white, size: 10pt)]])]
-      #image(width: auto, "assets/mapa.svg")
-    ]
-    v(1fr)
-    [
-      = Pictograms
-      #grid(
-        columns: (1em, auto),
-        gutter: 6pt,
-        [#icon_external()],align(horizon)[Click hyperlinks to go to speaker profiles, abstracts, sessions, and so on when available.],
-        [#icon_videocamera()],align(horizon)[This session will be recorded and/or livestreamed.]
-      )
-    ]
-    v(1fr)
-
-}
-
-/* Página con la editorial del evento. */
-#let welcome() = [
->>>>>>> 07f4be5 (Page decorator logic has been modularized)
 
   = Bienvenidos a ICPHILCOMP'25
   _Welcome to ICPHILCOMP'25_
@@ -567,10 +480,6 @@
   #pagebreak()
 ]
 
-<<<<<<< HEAD
-=======
-/* Lista de involucrados */
->>>>>>> 07f4be5 (Page decorator logic has been modularized)
 #let credits() = [
   #set page(
       background:
@@ -632,10 +541,6 @@
   ]
 ]
 
-<<<<<<< HEAD
-=======
-/* Template function */
->>>>>>> 07f4be5 (Page decorator logic has been modularized)
 #let icphilcomp25(
   titulo: str,
   subtitulo: str,
@@ -662,19 +567,17 @@
     lang: "en"
   )
 
-  // Custom colored headings
   set strong(delta: 300)
   show strong: set text(weight: 400)
-  show heading: set text(fill: accent_color)
 
-  let portada(
-    titulo,
-    subtitulo,
-    updates_url: "https://philcomp.org",
-    main_color: black,
-    accent_color: gray,
-    third_color: silver,
-    ) = align(left + top)[
+  // Colored headings
+  show heading: set text(fill: accent_color)
+  // Pretty separators
+  //show "|": bar => text(fill: accent_color)[#sym.diamond.filled.medium]
+  // Show the external icon after all links
+  // show link: content => box[#content #box(image(icon_external ,height: 0.7em))]
+
+  let portada() = align(left + top)[
     #set page(
       margin: 30pt,
       background:
@@ -753,7 +656,7 @@
     #v(0.1fr)
     #sym.copyright Grupo de Investigación en Filosofía de la Computación, México, 2025.
   ]
-  portada(titulo, subtitulo, updates_url: updates_url, main_color: main_color, accent_color: accent_color, third_color: third_color)
+  portada()
   welcome()
   credits()
   informacion()
