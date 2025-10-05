@@ -1,14 +1,15 @@
-// Metadata
+// COLORS
 #let main_color = rgb("#291F3A")
 #let accent_color = rgb("#773898")
 #let third_color = rgb("#BC5FD3")
 #let alternative_color = rgb("#e6b700")
 
-#let custom_margins = (top:5em, right:6em, bottom:4em, left:6em)
-
+// ICONOGRAPHY
+#let icon_videocamera(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/videocamera.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_external(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/external.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
 
+// SOCIAL ICONS
 #let icon_email(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/email.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_git(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/github.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_www(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/www.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
@@ -26,10 +27,7 @@
 #let tile_tecnica(fill: main_color) = bytes(read("/assets/tiles/tecnica.svg").replace("#000", fill.to-hex(),))
 #let tile_colibri(fill: main_color) = bytes(read("/assets/tiles/colibri.svg").replace("#000", fill.to-hex(),))
 
-#let icon_videocamera(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/videocamera.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
-
-
-/* Se usan para desplegar el formato de la presentación. */
+/* Se usan para desplegar el formato de la presentación y tags varios. */
 #let chip(color: third_color.lighten(30%), content) = {
   box(
     width: auto,
@@ -37,7 +35,6 @@
     fill: color,
     radius: 5pt,
     text(fill: black, size: 8pt,[#content]))
-  linebreak()
 }
 
 /* Es una tabla que por defecto va de las 9 a las 19 y despliega las salas y
@@ -82,7 +79,9 @@
 }
 
 /* La sección completa destinada a una sola jornada de la conferencia. */
-#let schedule(title, path, start_time: "9:00", show_timetable: false) = {
+#let schedule(day, globaldate, path, start_time: "9:00", show_timetable: false) = {
+
+  // Primero, ponemos una página de portada.
   [
     #set page(
       background:
@@ -94,24 +93,24 @@
     )
     #set text(fill: accent_color)
     #v(1fr)
-    #if show_timetable == true {
-      heading(level: 1, [#title])
-      timetable(path)
-    } else {
-      text(20pt)[#heading(level: 1, [#title])]
-    }
-    La mesa de registro y de café abren a las #start_time, disponibles durante toda la jornada. Receso de 15:00 a 16:00.
+    #text(20pt)[#heading(level: 1, [Day #day: #globaldate.display("[weekday repr:long], [month repr:long] [day padding:space]")\ ])
+    #if show_timetable == true [#timetable(path)]
+
+    #text(12pt)[Registration and coffee table start at #start_time and available throughout the day.  15:00 to 16:00.]
+
+    #text(12pt)[La mesa de registro y de café abren a las #start_time, disponibles durante toda la jornada. Receso de 15:00 a 16:00.]
     #v(1fr)
-  ]
+  ]]
+
+  // Ahora si, vamos con el contenido del horario.
   set page(
     header: context{
       set text(size: 10pt)
-      let current_day = query(selector(heading.where(level: 1)).before(here())).last().body
       box(width: 26pt, height: 22pt)[
         #box(height: 100%)[#align(horizon)[#image(icon_icphilcomp)]]
       ]
       box(width: 1fr, height: 22pt)[
-        #box(height: 100%)[#align(horizon)[#text(fill: accent_color, weight: "bold", "ICPHILCOMP25 ") #current_day]]
+        #box(height: 100%)[#align(horizon)[#text(fill: accent_color, weight: "bold", "ICPHILCOMP25 ") #globaldate.display("[weekday repr:long], [month repr:long] [day padding:space]")]]
       ]
       box(width: 22pt, height: 22pt)[
         #if counter(page).get().first() > 0 [
@@ -119,12 +118,10 @@
         ]
       ]
     },
-    //margin: (bottom: 10em)
   )
 
   let sessions = csv(path, row-type: dictionary)
   for session in sessions {
-
     // Set session colors
     let stroke_color = third_color
     let fill_color = accent_color
@@ -142,21 +139,33 @@
       fill: stroke_color.lighten(75%),
       inset: 0.6em,
       text(size: 9pt)[
-      #text(size:11pt, weight: "bold", fill: fill_color)[
-        #if session.bloque.first() != "X" {
-          [
-          #heading(level: 2)[ #if session.streaming != "" [#icon_videocamera(fill: fill_color)] Sesión #session.bloque: #session.tematica]
+      #grid(
+        rows: (auto,auto),
+        columns: (1fr),
+        row-gutter: 16pt,
+        [
+          #text(size:11pt, weight: "bold", fill: fill_color)[
+          #if session.bloque.first() != "X" {
+            [#heading(level: 2)[ #if session.streaming != "" [#icon_videocamera(fill: fill_color)] Session #session.bloque: #session.tematica]]
+            if session.nombre != "" [#text(size: 12pt, fill: black, weight: "medium")[#session.nombre]\ ]
+            if session.nombre_en != "" [#text(size: 10pt, fill: black, weight: "medium")[#emph[#session.nombre_en]]]
+          } else {
+            // Es una mesa, keynote, algo así, no ocupa decir "Bloque"
+            show heading: set text(fill: fill_color)
+            heading(level: 2)[#if session.streaming != "" [#icon_videocamera(fill: fill_color)] #session.nombre]
+            if session.nombre_en != "" [#text(size: 10pt, fill: black, weight: "medium")[#emph[#session.nombre_en]]]
+          }
+          #label(session.bloque)
+          #v(1pt)
           ]
-          text(size: 11pt, fill: black, weight: "regular")[#if session.nombre != "" [#session.nombre]]
-        } else {
-          // Es una mesa, keynote, algo así, no ocupa decir "Bloque"
-          show heading: set text(fill: fill_color)
-          heading(level: 2)[ #if session.streaming != "" [#icon_videocamera(fill: fill_color)] #session.nombre]
-        }
-
-      ]
-      #box(image("assets/door.svg",height: 0.8em,)) #session.sala #h(5pt)#box(image("assets/clock.svg",height: 0.8em,)) #session.inicia - #session.termina (#session.duracion min.)
-      #if session.host != "" [#h(5pt) #box(image("assets/user.svg",height: 0.8em,)) #session.host]
+        ],
+        box(fill:stroke_color.lighten(10%), outset:7pt)[
+          #box(image("assets/door.svg",height: 0.8em,))
+          #session.sala #h(1fr) #box(image("assets/clock.svg",height: 0.8em,))
+          #session.inicia - #session.termina (#session.duracion min.) #if session.host != "" [#h(1fr)
+          #box(image("assets/user.svg",height: 0.8em,)) #session.host]
+        ]
+      )
       ]
     )]
 
@@ -182,15 +191,24 @@
       box()[#grid(
         columns: (auto, 1fr),
         rows: (auto, auto),
-        gutter: 7pt,
+        gutter: 6pt,
         //Timestamp
         [#box(width: auto, inset: 0.4em, fill: fill_color.lighten(80%), text(fill: fill_color)[*#runtime.display("[hour]:[minute]")*])],
         //Tags
-        align(horizon)[#chip(color: stroke_color.lighten(30%), [#presentation.formato])],
+        align(horizon)[
+          #chip(color: stroke_color.lighten(30%),[#presentation.lang])
+          #chip(color: stroke_color.lighten(30%),[#presentation.formato])
+        ],
         //Guarda
         grid.cell(
         colspan: 2,
-        [*#presentation.titulo*])
+        [
+          *#presentation.titulo*
+          #context {
+                  let existe = query(label(presentation.id)).len()
+                  if existe > 0 [#link(label(presentation.id))[#icon_external(size:8pt, fill: fill_color)]]
+                }
+        ])
         //Nombre y autores
       )]
         if presentation.autores != "" {
@@ -222,7 +240,7 @@
   }
 }
 
-
+/* Sección de semblanzas */
 #let resumes(title, comment, path) = {
   set page(
     header: context{
@@ -243,7 +261,7 @@
 
   [
   = #title
-  #comment
+  #text(size: 10pt)[#comment]
   ]
   let guests = csv(path, row-type: dictionary)
   for guest in guests {
@@ -305,7 +323,7 @@
         #if guest.public_email != "" [
           #link("mailto:" + guest.public_email)[
             #chip(color: accent_color,[#grid(columns:(auto,auto,), column-gutter: 4pt, [#icon_email(fill:white, size: 7pt)], align(horizon)[#text(size: 7pt, fill: white)[#guest.public_email]])])
-          ]
+          ]\
         ]
         #if guest.affiliation != "" [#text(size:8pt, fill: accent_color, weight:"bold")[#guest.affiliation\ ]]
         #text(size:8pt)[#guest.resume]
@@ -314,8 +332,84 @@
   }
 }
 
+#let separator(title: "separator", subtitle:"") = {
+  [
+    #set page(
+      background:
+        rect(
+          fill: third_color.lighten(60%),
+          width: 100%,
+          height: 100%
+        ),
+    )
+    #set text(fill: accent_color)
+    #v(1fr)
+    #text(20pt)[#heading(level: 1, [#title])]
+    #text(16pt)[#subtitle]
+    #v(1fr)
+  ]
+}
+
+#let abstracts(path, title: "Abstracts", subtitle: "") = {
+  [#separator(title: title, subtitle: subtitle)]
+  let abstracts = csv(path, row-type: dictionary)
+  for abstract in abstracts {
+    let autors = csv("database/" + abstract.id + ".csv", row-type: dictionary)
+    [
+      #set page(header: [
+        #context{
+        set text(size: 10pt)
+        box(width: 26pt, height: 22pt)[
+          #box(height: 100%)[#align(horizon)[#image(icon_icphilcomp)]]
+        ]
+        box(width: 1fr, height: 22pt)[
+          #box(height: 100%)[#align(horizon)[#text(fill: accent_color, weight: "bold", "ICPHILCOMP25 ")]]
+        ]
+        box(width: 22pt, height: 22pt)[
+          #if counter(page).get().first() > 0 [
+            #align(horizon+center)[#counter(page).display("1", both: false)]
+          ]
+        ]
+      }
+      ])
+      #grid(
+        columns: (1fr),
+        rows: (auto, auto),
+        row-gutter: 8pt,
+        text(fill:accent_color, size: 8pt, weight: "semibold")[#abstract.topic],
+        [
+          #heading(level: 2, text(size: 16pt)[
+          #abstract.titulo
+          #context {
+                let existe = query(label(abstract.bloque)).len()
+                if existe > 0 [#link(label(abstract.bloque))[#icon_external(size:12pt, fill: accent_color)]]
+              }
+          ])#label(abstract.id)
+        ]
+      )
+      #v(1fr)
+      #for autor in autors {
+        text(size: 12pt)[
+        *#autor.fullname*
+        #context {
+                let existe = query(label(autor.normalname)).len()
+                if existe > 0 [#link(label(autor.normalname))[#icon_external(size:8pt, fill: accent_color)]]
+              }\
+        ]
+        text(size: 9pt)[#autor.affiliation\ ]
+      }
+      #v(8pt)
+      #if abstract.keywords != "" [#text(size: 10pt)[Palabras clave: #emph[#abstract.keywords]]]
+      #v(8pt)
+      #text(size: 11pt)[#abstract.abstract]
+    ]
+    pagebreak()
+  }
+}
+
 #let icphilcomp25(
   titulo: str,
+  subtitulo: str,
   edition: 1,
   fecha: datetime.today(),
   updates_url: "https://philcomp.org/programa/",
@@ -345,7 +439,7 @@
   // Colored headings
   show heading: set text(fill: accent_color)
   // Pretty separators
-  show "|": bar => text(fill: accent_color)[#sym.diamond.filled.medium]
+  //show "|": bar => text(fill: accent_color)[#sym.diamond.filled.medium]
   // Show the external icon after all links
   // show link: content => box[#content #box(image(icon_external ,height: 0.7em))]
 
@@ -375,6 +469,7 @@
         rowspan: 4,
         align(horizon)[
           #text(size: 32pt, fill: third_color, weight: "bold")[#titulo]\
+          #text(size: 20pt, fill: third_color, weight: "semibold")[#subtitulo]
           #image("assets/icphilcomp25_logo_light_en.svg", width: 90%)
         ]
       ),
@@ -385,13 +480,17 @@
       align(horizon)[#box(image(tile_tecnica(), height: auto))],
 
       align(horizon)[#box(image(tile_colibri(), height: auto))],
-      text(size: 10pt)[
-        Revision \##edition\
-        Última actualización: #read(".cut").
+      text(size: 10pt, weight: "semibold")[
+        Ver. #edition - #read(".cut").
 
-        El contenido de este programa está sujeto a cambios de horario y disponibilidad *en cualquier momento y sin previo aviso*.
+        El contenido de este programa está sujeto a cambios de horario y disponibilidad *en cualquier momento y sin previo aviso*.\
 
-        #link(updates_url)[#chip(color:third_color, text(fill: main_color)[Descarga la edición más reciente haciendo clic en este link])]
+        Program contents are subject to schedule and availability changes *at any time and without prior notice*.
+
+        #link(updates_url)[#chip(color:third_color, text(fill: main_color)[
+        Descarga la edición más reciente haciendo clic en este botón\
+        Download the latest edition by clicking this button
+        ])]
       ]
     )]
   ]

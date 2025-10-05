@@ -340,8 +340,49 @@ def export_csvs() -> bool:
             index=False,
             encoding="utf-8",
         )
-
         print(f"Exported CSVs for resumes.")
+
+        # Finally, let's import abstracts
+        keynote_abstracts_df = pd.read_sql_query(
+            """
+            SELECT p.id, p.titulo, a.abstract, a.keywords, p.bloque, a.topic
+            FROM presentations p
+            JOIN abstracts a
+            ON p.id = a.id
+            WHERE p.bloque IS NOT NULL
+            AND a.id = 73
+            OR a.id = 74
+            OR a.id = 75
+            ORDER BY a.id ASC;
+            """,
+            conn,
+        )
+        keynote_abstracts_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"keynote_abstracts.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+
+        available_abstracts_df = pd.read_sql_query(
+            """
+            SELECT p.id, p.titulo, a.abstract, a.keywords, p.bloque, a.topic
+            FROM presentations p
+            JOIN abstracts a
+            ON p.id = a.id
+            WHERE p.bloque IS NOT NULL
+            AND a.id != 73
+            AND a.id != 74
+            AND a.id != 75
+            ORDER BY p.titulo ASC;
+            """,
+            conn,
+        )
+        available_abstracts_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"available_abstracts.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+
         print("CSV export complete.")
         return True
 
