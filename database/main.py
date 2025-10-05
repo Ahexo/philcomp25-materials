@@ -323,6 +323,22 @@ def export_csvs() -> bool:
             index=False,
             encoding="utf-8",
         )
+        keynote_resumes_df = pd.read_sql_query(
+            """
+            SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff
+            FROM people
+            WHERE
+            staff = "3"
+            AND resume IS NOT NULL
+            ORDER BY normalname ASC;
+            """,
+            conn,
+        )
+        keynote_resumes_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"keynote_resumes.csv"),
+            index=False,
+            encoding="utf-8",
+        )
         resumes_df = pd.read_sql_query(
             """
             SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff

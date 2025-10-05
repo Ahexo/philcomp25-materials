@@ -61,4 +61,6 @@
 
 #resumes("Comité organizador (Organizing Committee)", [Conoce a los responsables de esta edición de nuestra conferencia.\ Meet the people in charge of this edition of our conference.], "database/staff_resumes.csv")
 
+#resumes("Conferencistas Magistrales (Keynote Speakers)", [Conoce a nuestros ponentes magistrales invitados para esta conferencia.\ Meet our guest keynote speakers for this conference.], "database/keynote_resumes.csv")
+
 #resumes("Participantes (Speakers)", [Conoce a los ponentes y participantes varios de esta edición:\ Meet the speakers and various participants of this edition:#footnote("Esta está en orden alfababético y no es exhaustiva: Dependiendo la disponibilidad de sus datos, puede que algunos ponentes no estén incluidos en ella.\nThis list is in alphabetical order and is not exhaustive: Depending on the availability of their data, some speakers may not be included.")], "database/resumes.csv")
