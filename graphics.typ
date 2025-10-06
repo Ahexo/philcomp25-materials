@@ -32,13 +32,14 @@
 #let tile_tecnica(fill: main_color) = bytes(read("/assets/tiles/tecnica.svg").replace("#000", fill.to-hex(),))
 #let tile_colibri(fill: main_color) = bytes(read("/assets/tiles/colibri.svg").replace("#000", fill.to-hex(),))
 
+// AUXILIARS
 #let maybe_image(path, ..args) = context {
   let path-label = label(path)
    let first-time = query((context {}).func()).len() == 0
    if first-time or query(path-label).len() > 0 {
     [#image(path, ..args)#path-label]
   } else {
-    rect(width: 50%, height: 5em, fill: luma(235), stroke: 1pt)[
+    rect(fill: luma(235), stroke: 1pt)[
       #set align(center + horizon)
       Could not find #raw(path)
     ]
