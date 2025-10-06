@@ -3,8 +3,9 @@ import sqlite3
 import pandas as pd
 import requests
 import unicodedata
-from dotenv import load_dotenv
 import normalize
+import database.photos.crop as crop
+from dotenv import load_dotenv
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
@@ -50,13 +51,15 @@ def setup_photos_database(name_and_pfp: pd.core.frame.DataFrame):
         name_and_pfp: A dataframe with two columns, first for names and second for source urls.
     '''
     for entry in name_and_pfp.itertuples():
-        # We always assume a Google Drive download, so we can guarantee the id starts from the 33th char on.
+        # We always assume a Google Drive download like the ones Google Forms automatically sets up, so we can guarantee the id starts from the 33th char on.
         pfp_id = entry.pfp[33:]
         print(f"proccesing {entry.normalname}, {pfp_id}")
         if not os.path.exists(f"{PHOTOS_DIR}{entry.normalname}.png"):
             download_file(
                 f"https://drive.google.com/uc?export=download&id={pfp_id}",
                 f"{PHOTOS_DIR}{entry.normalname}.png")
+    # Finally, we crop them
+    crop.batch_process_photos()
 
 
 def setup_database(process_photos=False) -> bool:

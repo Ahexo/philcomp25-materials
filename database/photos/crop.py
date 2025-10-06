@@ -3,6 +3,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 from pathlib import Path
+import shutil
 
 mp_face = mp.solutions.face_detection
 
@@ -52,8 +53,8 @@ def crop_face_with_shoulders(
 
 
 def batch_process_photos(
-    input_dir=".",
-    output_dir="./proccesed",
+    input_dir="./database/photos",
+    output_dir="proccesed",
     out_size=512,
     shoulder_scale=2,
     face_y_offset=0.5,
@@ -63,7 +64,7 @@ def batch_process_photos(
     out_path = input_path / output_dir
     out_path.mkdir(parents=True, exist_ok=True)
 
-    exts = ("*.png", "*.bmp")
+    exts = ("*.png",)
     files = []
     for ext in exts:
         files.extend(input_path.glob(ext))
@@ -91,6 +92,15 @@ def batch_process_photos(
             print(f"saved: {out_file.name}")
         except Exception as e:
             print(f"error processing {p.name}: {e}")
+
+    # The stash is a directory at database/photos/ that keeps photos that you
+    # want to deliberately override on the automatic cropping output.
+    stash = "./database/photos/stash/"
+    if os.path.exists(stash):
+        shutil.copytree(stash, out_path, dirs_exist_ok=True)
+        print("Stash contents have been overwritten.")
+    else:
+        print("No photos to override.")
 
 
 if __name__ == "__main__":
