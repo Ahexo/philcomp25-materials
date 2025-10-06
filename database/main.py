@@ -106,7 +106,7 @@ def setup_database(process_photos=False) -> bool:
         # Load speakers, these need some special treatment
         speakers_df = pd.read_csv(SPEAKERS_CSV)
         # We don't need these
-        speakers_df = speakers_df.drop(columns=["Marca temporal", "email"], axis=1)
+        speakers_df = speakers_df.drop(columns=["Marca temporal"], axis=1)
         # We will use this plenty to name photo files and so on
         normalnames = speakers_df["fullname"]
         speakers_df["normalname"] = normalnames.apply(normalize.fullname)
@@ -395,6 +395,19 @@ def export_csvs() -> bool:
         )
         available_abstracts_df.to_csv(
             os.path.join(CSV_OUTPUT_DIR, f"available_abstracts.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+
+        gafetes_df = pd.read_sql_query(
+            """
+            SELECT fullname, normalname, pronouns, affiliation, staff FROM people
+            ORDER BY staff;
+            """,
+            conn,
+        )
+        gafetes_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"gafetes.csv"),
             index=False,
             encoding="utf-8",
         )

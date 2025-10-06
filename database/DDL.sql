@@ -63,7 +63,8 @@ CREATE TABLE people (
     youtube TEXT,
     tiktok TEXT,
     git TEXT,
-    staff INTEGER
+    staff INTEGER,
+    organization INTEGER
 );
 
 CREATE TABLE abstracts (
