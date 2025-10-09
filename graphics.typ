@@ -1,12 +1,17 @@
+// COLORS
 #let main_color = rgb("#291F3A")
 #let accent_color = rgb("#773898")
 #let third_color = rgb("#BC5FD3")
-#let alternative_color = rgb("#e6b700")
+#let alternative_color = rgb("#ff7f2a")
 
-#let logo(fill: accent_color) = bytes(read("./assets/icphilcomp25_logo_black_en.svg").replace("#000", fill.to-hex(),))
+
+// LOGOS
+#let logo(fill: accent_color) = bytes(read("/assets/icphilcomp25_logo_black_en.svg").replace("#000", fill.to-hex(),))
 
 // PAGE DECORATIONS
 #let bg_gafete(fill: accent_color) = bytes(read("/assets/gafete.svg").replace("#000", fill.to-hex(),))
+
+#let bg_gafete_staff(fill: accent_color) = bytes(read("/assets/gafete_staff.svg").replace("#000", fill.to-hex(),))
 
 // ICONOGRAPHY
 #let icon_videocamera(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/videocamera.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
@@ -33,15 +38,16 @@
 #let tile_colibri(fill: main_color) = bytes(read("/assets/tiles/colibri.svg").replace("#000", fill.to-hex(),))
 
 // AUXILIARS
-#let maybe_image(path, ..args) = context {
+#let maybe_image(
+  path,
+  fallback: rect(width: 8em, height: 8em, fill: luma(235), stroke: 1pt)[
+              #set align(center + horizon)],
+  ..args) = context {
   let path-label = label(path)
    let first-time = query((context {}).func()).len() == 0
    if first-time or query(path-label).len() > 0 {
     [#image(path, ..args)#path-label]
   } else {
-    rect(fill: luma(235), stroke: 1pt)[
-      #set align(center + horizon)
-      Could not find #raw(path)
-    ]
+      fallback
   }
 }
