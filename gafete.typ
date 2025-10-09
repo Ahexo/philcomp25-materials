@@ -17,27 +17,31 @@
   affiliation: "Philosophy Of Computing Research Group, UNAM",
   staff: false) = [
 
-  #set page(
-    background: image(graphics.bg_gafete())
-  )
-
-  #let role = if staff == true {"Staff"} else {"Speaker"}
+  #let role = if staff == true {"STAFF"} else {"SPEAKER"}
 
 
   #align(center+horizon)[
-    #text(size:20pt, fill: white, weight: "bold")[#role]
-    #v(1fr)
+    #let color = graphics.accent_color
+    #let bg = graphics.bg_gafete(fill: color)
+    #if staff == true{
+      color = graphics.accent_color
+      bg = graphics.bg_gafete_staff(fill: color)
+    }
 
+    #set page(
+      background: image(bg),
+      foreground: {rotate(-45deg, text(size: 60pt, weight: "bold", fill: rgb("#0000003a"))[SAMPLE])}
+    )
+
+    #show heading: set text(size: 14pt, fill: color, weight: "bold")
+    #text(size:20pt, fill: white, weight: "bold")[#role #h(1fr) #text(size: 12pt, fill: white, weight: "bold")[#pronouns]]
+    #v(1fr)
     #graphics.maybe_image(
       "database/photos/proccesed/" + normalname + ".jpg",
-      width: 3cm,
-      height: 3cm,
-      alt: "photo")
-    //#rect(width: 3cm, height: 3cm, fill: graphics.accent_color)
-
-    #text(size: 14pt, fill: graphics.accent_color, weight: "bold")[#name ]
-    #text(size: 8pt, fill: graphics.accent_color, weight: "bold")[#pronouns]\
-    #text(size: 10pt, weight: "medium")[#affiliation]
+      width: 2.8cm,
+      height: 2.8cm)
+    #heading(level:1, name)
+    #text(size: 9pt, weight: "medium")[#affiliation]
     #v(1fr)
     #image(graphics.logo(fill: white))
   ]
