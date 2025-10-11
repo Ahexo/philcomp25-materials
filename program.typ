@@ -1,9 +1,10 @@
 #import "icphilcomp25.typ": icphilcomp25, schedule, timetable, resumes, abstracts, separator
+
 #show: icphilcomp25.with(
   titulo: "Conference program",
   subtitulo: "Programa",
   updates_url: "https://drive.google.com/file/d/1P6Q7BNf8e_h03Z9nysydlVLi31Dheahy/view?usp=sharing",
-  edition: 2,
+  edition: 3,
   partners: (
     (
       logo: "assets/partners/fciencias.svg",
@@ -11,7 +12,7 @@
     ),
     (
       logo: "assets/partners/agile_design_studio.svg",
-      adaptive: false,
+      adaptive: true,
     ),
     (
       logo: "assets/partners/sectei.svg",

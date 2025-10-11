@@ -1,8 +1,10 @@
+#import "graphics.typ"
+
 // COLORS
-#let main_color = rgb("#291F3A")
-#let accent_color = rgb("#773898")
-#let third_color = rgb("#BC5FD3")
-#let alternative_color = rgb("#e6b700")
+#let main_color = graphics.main_color
+#let accent_color = graphics.accent_color
+#let third_color = graphics.third_color
+#let alternative_color = graphics.alternative_color
 
 // PAGE DECORATIONS
 #let page_decoration_1(fill: accent_color) = bytes(read("/assets/page_decoration_1.svg").replace("#000", fill.to-hex(),))
@@ -279,6 +281,7 @@
 
     // Layout presentations
     for presentation in presentations {
+      //Presentation header
       box()[#grid(
         columns: (auto, 1fr),
         rows: (auto, auto),
@@ -300,8 +303,8 @@
                   if existe > 0 [#link(label(presentation.id))[#icon_external(size:8pt, fill: fill_color)]]
                 }
         ])
-        //Nombre y autores
       )]
+        //Authors (out of the header box so they can split over pages)
         if presentation.autores != "" {
           let autores = csv("database/" + presentation.id + ".csv", row-type: dictionary)
           for autor in autores {
@@ -313,7 +316,8 @@
               inset: 1pt,
               text(size: 10pt)[
               #autor.fullname
-              // Si tenemos el perfil del autor, hay que poner un link interno hacia allá
+              #label(session.bloque + autor.fullname)
+              // Si tenemos el perfil del autor, hay que poner un hipervínculo hacia allá
               #context {
                 let existe = query(label(autor.normalname)).len()
                 if existe > 0 [#link(label(autor.normalname))[#icon_external(size:8pt, fill: fill_color)]]
@@ -541,8 +545,8 @@
         ),
     )
 
-  = Bienvenidos a ICPHILCOMP'25
-  _Welcome to ICPHILCOMP'25_
+  = Welcome to ICPHILCOMP'25
+  _Bienvenidos a ICPHILCOMP'25_
   \
   #grid(
     columns: (1fr, 1fr),
@@ -741,7 +745,7 @@
     gutter: 14pt,
     ..partners.map(partner => {
       let logo = partner.logo
-      if partner.adaptive { logo = bytes(read(partner.logo).replace("#000", third_color.to-hex(),)) }
+      if partner.adaptive { logo = graphics.decode_logo(fill: third_color, partner.logo) }
       align(horizon+center)[#image(logo, width: 100%)]
     }))
     #v(0.1fr)
