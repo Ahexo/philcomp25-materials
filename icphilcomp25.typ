@@ -256,6 +256,7 @@
           #box(image("assets/door.svg",height: 0.8em,))
           #session.sala #h(1fr) #box(image("assets/clock.svg",height: 0.8em,))
           #session.inicia - #session.termina (#session.duracion min.) #if session.host != "" [#h(1fr)
+          #label(session.host)
           #box(image("assets/user.svg",height: 0.8em,)) #session.host]
         ]
       )

@@ -346,8 +346,11 @@ def export_csvs() -> bool:
             """
             SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff
             FROM people
-            WHERE
-            EXISTS (SELECT person FROM casting WHERE normalname = person)
+            WHERE(
+                SELECT p.bloque
+                FROM presentations p
+                JOIN casting c ON p.id = c.id
+                WHERE normalname = c.person) IS NOT NULL
             AND resume IS NOT NULL
             AND staff IS NULL
             ORDER BY normalname ASC;
