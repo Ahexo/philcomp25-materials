@@ -8,8 +8,8 @@
 #let logo(fill: accent_color) = bytes(read("/assets/icphilcomp25_logo_black_en.svg").replace("#000", fill.to-hex(),))
 
 // PAGE DECORATIONS
-#let bg_gafete(fill: accent_color) = bytes(read("/assets/gafete.svg").replace("#000", fill.to-hex(),))
-#let bg_gafete_staff(fill: accent_color) = bytes(read("/assets/gafete_staff.svg").replace("#000", fill.to-hex(),))
+#let bg_gafete(fill: accent_color) = bytes(read("/assets/gafete_.svg").replace("#000", fill.to-hex(),))
+#let bg_gafete_staff(fill: accent_color) = bytes(read("/assets/gafete_staff_.svg").replace("#000", fill.to-hex(),))
 
 // ICONOGRAPHY
 #let icon_videocamera(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/videocamera.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
@@ -35,6 +35,7 @@
 #let tile_teoria(fill: main_color) = bytes(read("/assets/tiles/teoria.svg").replace("#000", fill.to-hex(),))
 #let tile_tecnica(fill: main_color) = bytes(read("/assets/tiles/tecnica.svg").replace("#000", fill.to-hex(),))
 #let tile_colibri(fill: main_color) = bytes(read("/assets/tiles/colibri.svg").replace("#000", fill.to-hex(),))
+#let guest(fill: main_color) = bytes(read("/assets/guest.svg").replace("#000", fill.to-hex(),))
 
 // AUXILIARS
 #let maybe_image(
