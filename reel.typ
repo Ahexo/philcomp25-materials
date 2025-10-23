@@ -1,3 +1,6 @@
+// Recibe un bloque como entrada y genera un carrusel de insta con las presentaciones correspondientes.
+// Incluye una portada con los datos: Tipo, nominalización, titulo, hora, fecha, sala y moderador.
+
 #import "graphics.typ"
 
 #set page(
