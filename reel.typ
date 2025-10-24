@@ -15,3 +15,4 @@
 
 Esto es un reel #box(image(bytes(graphics.icon_icphilcomp), width: 2em))
 
+Y esto es una modificación pequeña.
