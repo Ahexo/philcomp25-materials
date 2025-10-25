@@ -4,7 +4,7 @@
   titulo: "Conference program",
   subtitulo: "Programa",
   updates_url: "https://drive.google.com/file/d/1P6Q7BNf8e_h03Z9nysydlVLi31Dheahy/view?usp=sharing",
-  edition: 6,
+  edition: 8,
   partners: (
     (
       logo: "assets/partners/fciencias.svg",
