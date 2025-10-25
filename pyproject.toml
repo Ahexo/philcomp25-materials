@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Templates and typesettings for ICPHILCOMP 25 materials"
 readme = "README.md"
 authors = [{ name = "Axel Rodríguez", email = "ahexo@ciencias.unam.mx" }]
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = []
 
 [project.scripts]
