@@ -67,13 +67,16 @@
       #box(width:18%, height: 100%, fill: main_color)[]
       // Logo en el header
       #box(width:1fr, height: 100%, inset: 18pt)[
-        #align(center+horizon)[#image(width: 80%, graphics.logo(fill: main_color))]
+        #align(center+horizon)[
+          #image(width: 70%, graphics.logo(fill: main_color))
+        ]
       ]
     ]
     // Body
     #box(width: 100%, height: 73%, inset: 24pt,
       [
         #v(1fr)
+        #rect(width: 10em, height: 10em, fill: gray)
         #text(size: 20pt, weight: "bold", fill: accent_color, upper(formato))\
         #v(1pt)
         #text(size: 36pt, weight: "bold", fill: accent_color, titulo)\
@@ -98,8 +101,23 @@
       )
     ]
   ]
-
-
 ]
 
 #matchcard()
+
+#let sessions = csv("database/2025-10-27.csv", row-type: dictionary)
+
+  #for session in sessions {
+    if session.bloque.first() != "X" {
+      let presentations = csv("database/" + session.bloque + ".csv", row-type: dictionary)
+      for presentation in presentations [
+        #matchcard(
+          titulo: presentation.titulo,
+          formato: presentation.formato,
+          fecha: "fecha",
+          lugar: "lugar",
+          transmision: false,
+        )
+      ]
+    }
+  }
