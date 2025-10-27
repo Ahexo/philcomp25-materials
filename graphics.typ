@@ -10,9 +10,15 @@
 // PAGE DECORATIONS
 #let bg_gafete(fill: accent_color) = bytes(read("/assets/gafete_.svg").replace("#000", fill.to-hex(),))
 #let bg_gafete_staff(fill: accent_color) = bytes(read("/assets/gafete_staff_.svg").replace("#000", fill.to-hex(),))
+#let bg_filosofia(fill: accent_color) = bytes(read("/assets/bg_filosofia.svg").replace("#000", fill.to-hex(),))
+#let bg_sociedad(fill: accent_color) = bytes(read("/assets/bg_sociedad.svg").replace("#000", fill.to-hex(),))
+#let bg_tecnica(fill: accent_color) = bytes(read("/assets/bg_tecnica.svg").replace("#000", fill.to-hex(),))
+#let bg_teoria(fill: accent_color) = bytes(read("/assets/bg_teoria.svg").replace("#000", fill.to-hex(),))
 
 // ICONOGRAPHY
 #let icon_videocamera(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/videocamera.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
+#let icon_door(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/door.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
+#let icon_clock(fill: accent_color, size: 12pt) =  box(image(bytes(read("/assets/clock.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_external(fill: accent_color, size: 12pt) = box(image(bytes(read("/assets/external.svg").replace("#000", fill.to-hex(),)), width: size, height: size))
 #let icon_icphilcomp = bytes(read("/assets/icphilcomp.svg").replace("#000", accent_color.to-hex(),))
 
