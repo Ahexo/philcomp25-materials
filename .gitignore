@@ -178,3 +178,5 @@ database/*.csv
 database/*.db
 database/photos/*.jpg
 database/photos/*.png
+database/photos/proccesed
+database/photos/stash

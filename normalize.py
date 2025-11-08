@@ -3,7 +3,6 @@ from urllib.parse import unquote
 import unicodedata
 
 URL_PATTERN = r"^(.*)(\.com\/(in\/)?)(.+?)(\/)?(\?.+)?$"
-LINKEDIN_PATTERN = r"^(.*)(\.com\/(in\/)?)(.+?)(\/)?(\?.+)?$"
 
 
 def fullname(unistr: str) -> str:
@@ -35,23 +34,6 @@ def user(url: str) -> str:
     if isinstance(url, str):
         decoded = unquote(url)
         match = re.match(URL_PATTERN, decoded)
-        print(f"{decoded}: {match.group(4)}")
-        return match.group(4)
-    else:
-        return ""
-
-def linkedin(url: str) -> str:
-    '''
-    Extracts the username from a linkedin url.
-    Args:
-        url: URL to filter.
-    Returns:
-        str: username.
-    '''
-    if isinstance(url, str):
-        decoded = unquote(url)
-        match = re.match(LINKEDIN_PATTERN, decoded)
-        print(f"{decoded}: {match.group(4)}")
         return match.group(4)
     else:
         return ""

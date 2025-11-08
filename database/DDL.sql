@@ -19,15 +19,18 @@ CREATE TABLE sessions (
     tolerancia INTEGER,
     advertencias TEXT,
     nombre TEXT,
+    nombre_en TEXT,
     tematica TEXT,
     notas TEXT,
-    host TEXT
+    host TEXT,
+    streaming TEXT
 );
 
 CREATE TABLE presentations (
     id INTEGER PRIMARY KEY,
     titulo TEXT,
     atraccion INTEGER,
+    lang TEXT,
     formato TEXT,
     timeframe INTEGER,
     eje TEXT,
@@ -59,7 +62,9 @@ CREATE TABLE people (
     instagram TEXT,
     youtube TEXT,
     tiktok TEXT,
-    git TEXT
+    git TEXT,
+    staff INTEGER,
+    organization INTEGER
 );
 
 CREATE TABLE abstracts (

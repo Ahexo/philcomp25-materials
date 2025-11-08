@@ -3,8 +3,9 @@ import sqlite3
 import pandas as pd
 import requests
 import unicodedata
-from dotenv import load_dotenv
 import normalize
+import database.photos.crop as crop
+from dotenv import load_dotenv
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
@@ -50,12 +51,15 @@ def setup_photos_database(name_and_pfp: pd.core.frame.DataFrame):
         name_and_pfp: A dataframe with two columns, first for names and second for source urls.
     '''
     for entry in name_and_pfp.itertuples():
-        # We always assume a Google Drive download, so we can guarantee the id starts from the 33th char on.
+        # We always assume a Google Drive download like the ones Google Forms automatically sets up, so we can guarantee the id starts from the 33th char on.
         pfp_id = entry.pfp[33:]
         print(f"proccesing {entry.normalname}, {pfp_id}")
-        download_file(
-            f"https://drive.google.com/uc?export=download&id={pfp_id}",
-            f"{PHOTOS_DIR}{entry.normalname}.png")
+        if not os.path.exists(f"{PHOTOS_DIR}{entry.normalname}.png"):
+            download_file(
+                f"https://drive.google.com/uc?export=download&id={pfp_id}",
+                f"{PHOTOS_DIR}{entry.normalname}.png")
+    # Finally, we crop them
+    crop.batch_process_photos()
 
 
 def setup_database(process_photos=False) -> bool:
@@ -74,7 +78,7 @@ def setup_database(process_photos=False) -> bool:
     URL_SPEAKERS = os.getenv("URL_SPEAKERS")
     URL_ABSTRACTS = os.getenv("URL_ABSTRACTS")
 
-    if not all([URL_PRESENTATIONS, URL_SESSIONS, URL_SPEAKERS]):
+    if not all([URL_PRESENTATIONS, URL_SESSIONS, URL_SPEAKERS, URL_ABSTRACTS]):
         print("Error: Sources must be set in the .env file.")
         return False
 
@@ -85,19 +89,27 @@ def setup_database(process_photos=False) -> bool:
         abstracts_downloaded = download_file(URL_ABSTRACTS, ABSTRACTS_CSV)
 
         if not (
-            presentations_downloaded and sessions_downloaded and speakers_downloaded
+            presentations_downloaded and sessions_downloaded and speakers_downloaded and abstracts_downloaded
         ):
             print("Could not download necessary files. Aborting.")
             return
 
         print("Loading data into pandas DataFrames...")
+
+        # Load presentations, pretty straightforward
         presentations_df = pd.read_csv(PRESENTATIONS_CSV)
+        # We don't need these
+        presentations_df = presentations_df.drop(columns=["atraccion", "notas"], axis=1)
 
+        # Load sessions, we need to zip authors and affiliations later
         sessions_df = pd.read_csv(SESSIONS_CSV)
+        # We don't need these
+        sessions_df = sessions_df.drop(columns=["advertencias"], axis=1)
 
+        # Load speakers, these need some special treatment
         speakers_df = pd.read_csv(SPEAKERS_CSV)
         # We don't need these
-        speakers_df = speakers_df.drop(columns=["Marca temporal", "email"], axis=1)
+        speakers_df = speakers_df.drop(columns=["Marca temporal"], axis=1)
         # We will use this plenty to name photo files and so on
         normalnames = speakers_df["fullname"]
         speakers_df["normalname"] = normalnames.apply(normalize.fullname)
@@ -109,25 +121,92 @@ def setup_database(process_photos=False) -> bool:
         speakers_df["tiktok"] = speakers_df["tiktok"].apply(normalize.user)
         speakers_df["git"] = speakers_df["git"].apply(normalize.user)
 
+        # Finally, we download abstracts.
         abstracts_df = pd.read_csv(ABSTRACTS_CSV)
 
+        # Downloading and naming photos use to take time, we do it only on demmand
         if process_photos:
             pfps = speakers_df[["normalname", "pfp"]]
             setup_photos_database(pfps)
 
+        # Let's build a fresh database to populate
         print(f"Creating SQLite database at '{DB_NAME}'...")
         if os.path.exists(DB_NAME):
             os.remove(DB_NAME)
-
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
         ddl = open("database/DDL.sql", "r").read()
         cursor.executescript(ddl)
 
         print("Creating tables and loading data...")
+
+        # Presentations one needs some special treatment since we have to split authors and affiliations
+        # and load them into the people database afterwards:
+        for index, row in presentations_df.iterrows():
+            if isinstance(row["autores"], str) and isinstance(row["afiliacion"], str):
+                authors = row["autores"].split(" | ")
+                affiliations = row["afiliacion"].strip('"').split(" | ") if row["afiliacion"] else [""]
+
+                # Ensure both lists have the same length
+                max_length = max(len(authors), len(affiliations))
+                authors.extend([""] * (max_length - len(authors)))  # Fill with empty strings if needed
+                affiliations.extend(affiliations * (max_length - len(affiliations)))  # Fill with empty strings if needed
+
+                # Normal names are the keys of people entries
+                normalnames = list(map(normalize.fullname, authors))
+
+                # Insert each author-affiliation pair into the database, and associate them with their presentations
+                for normalname, author, affiliation in zip(normalnames, authors, affiliations):
+                    cursor.execute("INSERT OR IGNORE INTO people (normalname, fullname, affiliation) VALUES (?, ?, ?)", (normalname, author.strip(), affiliation.strip()))
+                    cursor.execute("INSERT OR IGNORE INTO casting (id, person) VALUES (?, ?)", (row["id"], normalname) )
+
+
         presentations_df.to_sql("presentations", conn, if_exists="append", index=False)
+
         sessions_df.to_sql("sessions", conn, if_exists="append", index=False)
-        speakers_df.to_sql("people", conn, if_exists="append", index=False)
+
+        #speakers_df.to_sql("people", conn, if_exists="append", index=False)
+        for index, row in speakers_df.iterrows():
+            to_input = [
+                row['fullname'].strip(),
+                row['normalname'],
+                row['pronouns'],
+                row['lang'],
+                row['resume'].strip(),
+                row['linkedin'],
+                row['twitter'],
+                row['bluesky'],
+                row['facebook'],
+                row['website'],
+                row['public_email'],
+                row['youtube'],
+                row['instagram'],
+                row['tiktok'],
+                row['git'],
+                row['staff']]
+
+            cursor.execute('SELECT COUNT(*) FROM people WHERE normalname = ?', (to_input[1],))
+            exists = cursor.fetchone()[0]
+
+            if exists:
+                # Update the existing record, keeping the affiliation
+                # First, we have to relocate the normalname
+                argss = to_input.copy()
+                argss.append(to_input[1])
+                del argss[1]
+
+                cursor.execute('''
+                UPDATE people
+                SET fullname = ?, pronouns  = ?, lang = ?, resume = ?, linkedin = ?, twitter = ?, bluesky = ?, facebook = ?, website = ?, public_email = ? , youtube = ?, instagram = ?, tiktok = ?, git=?, staff = ?
+                WHERE normalname = ?
+                ''', argss)
+            else:
+                # Insert a new record
+                cursor.execute('''
+                INSERT OR REPLACE INTO people (fullname,normalname,pronouns,lang,resume,linkedin,twitter,bluesky,facebook,website,public_email,youtube,instagram,tiktok,git, staff)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', to_input)
+
         abstracts_df.to_sql("abstracts", conn, if_exists="append", index=False)
 
         conn.close()
@@ -143,7 +222,7 @@ def setup_database(process_photos=False) -> bool:
 
 def export_csvs() -> bool:
     '''
-    Queries the database and exports daily and session CSVs.
+    Queries the database and exports the CSV needed to populate the program template.
 
     Returns:
         bool: True is successful, False if errors occured.
@@ -174,23 +253,170 @@ def export_csvs() -> bool:
             )
         print(f"Exported {len(days_df)} daily schedule CSVs.")
 
-        # Export presentations by session block
-        blocks_df = pd.read_sql_query(
+        # Export presentations by session
+        sessions_df = pd.read_sql_query(
             "SELECT bloque FROM sessions GROUP BY bloque", conn
         )
-        for block in blocks_df["bloque"]:
+        for session in sessions_df["bloque"]:
             pres_df = pd.read_sql_query(
                 "SELECT * FROM presentations WHERE bloque = ? ORDER BY turno ASC",
                 conn,
-                params=(block,),
+                params=(session,),
             )
             if not pres_df.empty:
                 pres_df.to_csv(
-                    os.path.join(CSV_OUTPUT_DIR, f"{block}.csv"),
+                    os.path.join(CSV_OUTPUT_DIR, f"{session}.csv"),
                     index=False,
                     encoding="utf-8",
                 )
+
+            # Now, finally, lets get the casting per presentations
+            for index, row in pres_df.iterrows():
+                lookup_id = row["id"]
+                pres_authors_df = pd.read_sql_query(
+                    # EN ESTA TENEMOS QUE TENER (author, affiliation)
+                    """
+                    SELECT p.fullname, p.normalname, p.affiliation
+                        FROM casting c
+                        JOIN people p ON c.person = p.normalname
+                        WHERE c.id = ?
+                    """,
+                    conn,
+                    params=(lookup_id,)
+                )
+                pres_authors_df.to_csv(
+                    os.path.join(CSV_OUTPUT_DIR, f"{lookup_id}.csv"),
+                    index=False,
+                    encoding="utf-8",
+                )
+
+
         print(f"Exported CSVs for session presentations.")
+
+        # Export resumes
+        steering_resumes_df = pd.read_sql_query(
+            """
+            SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff
+            FROM people
+            WHERE
+            staff = "2"
+            AND resume IS NOT NULL
+            ORDER BY normalname ASC;
+            """,
+            conn,
+        )
+        steering_resumes_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"steering_resumes.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+        staff_resumes_df = pd.read_sql_query(
+            """
+            SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff
+            FROM people
+            WHERE
+            staff = "1"
+            AND resume IS NOT NULL
+            ORDER BY normalname ASC;
+            """,
+            conn,
+        )
+        staff_resumes_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"staff_resumes.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+        keynote_resumes_df = pd.read_sql_query(
+            """
+            SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff
+            FROM people
+            WHERE
+            staff = "3"
+            AND resume IS NOT NULL
+            ORDER BY normalname ASC;
+            """,
+            conn,
+        )
+        keynote_resumes_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"keynote_resumes.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+        resumes_df = pd.read_sql_query(
+            """
+            SELECT fullname, normalname, affiliation, pronouns, resume, website, public_email, linkedin, twitter, bluesky, facebook, instagram, youtube, tiktok, git, staff
+            FROM people
+            WHERE(
+                SELECT p.bloque
+                FROM presentations p
+                JOIN casting c ON p.id = c.id
+                WHERE normalname = c.person) IS NOT NULL
+            AND resume IS NOT NULL
+            AND staff IS NULL
+            ORDER BY normalname ASC;
+            """,
+            conn,
+        )
+        resumes_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"resumes.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+        print(f"Exported CSVs for resumes.")
+
+        # Finally, let's import abstracts
+        keynote_abstracts_df = pd.read_sql_query(
+            """
+            SELECT p.id, p.titulo, a.abstract, a.keywords, p.bloque, a.topic
+            FROM presentations p
+            JOIN abstracts a
+            ON p.id = a.id
+            WHERE p.bloque IS NOT NULL
+            AND a.id = 73
+            OR a.id = 74
+            OR a.id = 75
+            ORDER BY a.id ASC;
+            """,
+            conn,
+        )
+        keynote_abstracts_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"keynote_abstracts.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+
+        available_abstracts_df = pd.read_sql_query(
+            """
+            SELECT p.id, p.titulo, a.abstract, a.keywords, p.bloque, a.topic
+            FROM presentations p
+            JOIN abstracts a
+            ON p.id = a.id
+            WHERE p.bloque IS NOT NULL
+            AND a.id != 73
+            AND a.id != 74
+            AND a.id != 75
+            ORDER BY p.titulo ASC;
+            """,
+            conn,
+        )
+        available_abstracts_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"available_abstracts.csv"),
+            index=False,
+            encoding="utf-8",
+        )
+
+        gafetes_df = pd.read_sql_query(
+            """
+            SELECT fullname, normalname, pronouns, affiliation, staff FROM people
+            ORDER BY staff;
+            """,
+            conn,
+        )
+        gafetes_df.to_csv(
+            os.path.join(CSV_OUTPUT_DIR, f"gafetes.csv"),
+            index=False,
+            encoding="utf-8",
+        )
 
         print("CSV export complete.")
         return True
